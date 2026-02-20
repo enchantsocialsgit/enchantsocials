@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ascend Agency — AI That Closes While You Sleep</title>
-    <meta name="description" content="AI automation for real estate agents and law firms. Respond to every lead instantly, 24/7. Setup in 48 hours. Zero missed leads.">
+    <meta name="description" content="AI automation for real estate agents and law firms. Respond to every lead instantly, 24/7. Setup in 48 hours.">
     <meta property="og:title" content="Ascend Agency — AI That Closes While You Sleep">
     <meta property="og:description" content="AI automation that responds to leads in 3 seconds, books appointments, and runs 24/7.">
-    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #050505;
+            --bg2: #0a0a0a;
             --card: rgba(255,255,255,0.03);
-            --card-h: rgba(255,255,255,0.055);
+            --card-h: rgba(255,255,255,0.06);
             --border: rgba(255,255,255,0.07);
-            --border-h: rgba(255,255,255,0.14);
+            --border-h: rgba(255,255,255,0.15);
             --dim: #444;
             --muted: #777;
             --light: #bbb;
@@ -26,7 +26,7 @@
             --green: #22c55e;
             --pink: #ec4899;
             --blue: #3b82f6;
-            --radius: 14px;
+            --radius: 16px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,145 +41,230 @@
         }
 
         ::selection { background: var(--accent); color: #fff; }
-
         @media (pointer:fine) { body, a, button { cursor: none; } }
 
         .cursor {
             position: fixed; width: 16px; height: 16px;
-            border: 1.5px solid rgba(255,255,255,0.35);
-            border-radius: 50%; pointer-events: none; z-index: 9999;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            border-radius: 50%; pointer-events: none; z-index: 10000;
             transform: translate(-50%,-50%);
-            transition: width .2s, height .2s, border-color .2s, background .2s;
+            transition: width .25s, height .25s, border-color .25s, background .25s;
+            mix-blend-mode: difference;
         }
-        .cursor.active {
-            width: 48px; height: 48px;
-            border-color: var(--accent);
-            background: rgba(139,92,246,0.08);
-        }
+        .cursor.active { width: 56px; height: 56px; border-color: var(--accent); background: rgba(139,92,246,0.06); }
 
-        .w { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
-        .w-wide { max-width: 1300px; margin: 0 auto; padding: 0 28px; }
-        .w-narrow { max-width: 680px; margin: 0 auto; padding: 0 28px; }
+        /* LAYOUT */
+        .w { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+        .w-narrow { max-width: 720px; margin: 0 auto; padding: 0 32px; }
 
         /* NAV */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 18px 40px;
+            padding: 24px 40px;
             display: flex; align-items: center; justify-content: space-between;
-            background: rgba(5,5,5,0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid transparent;
-            transition: border-color .3s;
+            transition: background .4s, border-color .4s, padding .3s;
             opacity: 0;
         }
-        nav.scrolled { border-bottom-color: var(--border); }
-        .logo { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: -.3px; }
-        .logo span { color: var(--accent); }
-        .nav-r { display: flex; align-items: center; gap: 24px; }
-        .nav-r a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-        .nav-r a:hover { color: var(--white); }
-        .nav-cta {
-            font-size: 13px; font-weight: 600; color: #fff !important;
-            background: var(--accent); padding: 8px 20px; border-radius: 8px;
+        nav.scrolled {
+            background: rgba(5,5,5,0.85);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
         }
-        .nav-cta:hover { opacity: .85; }
+        .nav-logo {
+            font-size: 18px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+        .menu-btn {
+            background: none; border: 1px solid var(--border);
+            color: var(--muted); font-size: 12px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 10px 20px; border-radius: 100px;
+            transition: border-color .3s, color .3s;
+        }
+        .menu-btn:hover { border-color: var(--border-h); color: var(--white); }
+
+        /* MENU OVERLAY */
+        .menu-overlay {
+            position: fixed; inset: 0; z-index: 999;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity .5s cubic-bezier(0.65,0,0.35,1);
+        }
+        .menu-overlay.open { opacity: 1; pointer-events: all; }
+        .menu-close {
+            position: absolute; top: 24px; right: 40px;
+            background: none; border: 1px solid var(--border);
+            color: var(--muted); font-size: 12px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 10px 20px; border-radius: 100px;
+        }
+        .menu-close:hover { border-color: var(--border-h); color: var(--white); }
+        .menu-inner { text-align: center; }
+        .menu-link {
+            display: block; font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800; color: var(--white); text-decoration: none;
+            letter-spacing: -2px; line-height: 1.3;
+            opacity: 0; transform: translateY(30px);
+            transition: color .2s;
+        }
+        .menu-link:hover { color: var(--accent); }
+        .menu-contact {
+            margin-top: 48px; font-size: 14px; color: var(--dim);
+            opacity: 0; transform: translateY(20px);
+        }
+        .menu-contact a { color: var(--muted); text-decoration: none; }
+        .menu-contact a:hover { color: var(--accent); }
 
         /* HERO */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
-            padding: 120px 0 80px; position: relative; overflow: hidden;
+            padding: 140px 0 100px; position: relative; overflow: hidden;
         }
-        .hero::before {
-            content: ''; position: absolute; top: -40%; right: -20%;
-            width: 800px; height: 800px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%);
-            pointer-events: none;
+        .hero-glow {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            filter: blur(100px); opacity: 0.6;
+        }
+        .hero-glow-1 {
+            width: 600px; height: 600px; top: -15%; right: -10%;
+            background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
+            animation: glow-float 14s ease-in-out infinite;
+        }
+        .hero-glow-2 {
+            width: 450px; height: 450px; bottom: -20%; left: 5%;
+            background: radial-gradient(circle, rgba(59,130,246,0.08), transparent 70%);
+            animation: glow-float 18s ease-in-out infinite reverse;
+        }
+        @keyframes glow-float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -20px); }
+            66% { transform: translate(-20px, 15px); }
         }
         .hero-tag {
-            display: inline-block; font-size: 12px; font-weight: 500;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 24px;
-            padding: 6px 14px; border: 1px solid rgba(139,92,246,0.2);
-            border-radius: 20px; opacity: 0;
+            display: inline-block; font-size: 11px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 32px;
+            opacity: 0;
         }
         .hero h1 {
-            font-size: clamp(40px, 6vw, 72px); font-weight: 800;
-            line-height: 1.05; letter-spacing: -2.5px;
-            color: var(--white); margin-bottom: 28px;
+            font-size: clamp(48px, 7.5vw, 88px); font-weight: 900;
+            line-height: 1.02; letter-spacing: -3px;
+            color: var(--white); margin-bottom: 32px;
         }
         .hero h1 em { font-style: normal; color: var(--dim); }
-        .h-line { display: block; overflow: hidden; }
-        .h-line-i { display: block; transform: translateY(110%); }
+        .line { display: block; overflow: hidden; }
+        .line-inner { display: block; transform: translateY(110%); }
         .hero-sub {
-            font-size: 18px; line-height: 1.7; color: var(--muted);
-            max-width: 520px; margin-bottom: 44px; opacity: 0;
+            font-size: 18px; line-height: 1.8; color: var(--muted);
+            max-width: 540px; margin-bottom: 48px; opacity: 0;
         }
-        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; }
 
         /* BUTTONS */
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 28px; font-size: 14px; font-weight: 600;
-            text-decoration: none; border-radius: 10px; border: none;
-            transition: transform .15s, opacity .15s, box-shadow .2s;
+            padding: 16px 32px; font-size: 14px; font-weight: 600;
+            text-decoration: none; border-radius: 100px; border: none;
+            transition: transform .2s, box-shadow .3s;
+            font-family: inherit;
         }
-        .btn:hover { transform: translateY(-1px); }
+        .btn:hover { transform: translateY(-2px); }
         .btn-w { background: #fff; color: #000; }
-        .btn-w:hover { box-shadow: 0 8px 32px rgba(255,255,255,0.1); }
+        .btn-w:hover { box-shadow: 0 12px 40px rgba(255,255,255,0.12); }
         .btn-o { background: transparent; color: var(--light); border: 1px solid var(--border); }
         .btn-o:hover { border-color: var(--border-h); }
         .btn-a { background: var(--accent); color: #fff; }
-        .btn-a:hover { box-shadow: 0 8px 32px rgba(139,92,246,0.3); }
+        .btn-a:hover { box-shadow: 0 12px 40px rgba(139,92,246,0.35); }
         .btn-full { width: 100%; justify-content: center; }
 
-        /* TRUST BAR */
-        .trust {
-            padding: 60px 0; border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        /* MARQUEE */
+        .marquee {
+            padding: 40px 0; border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); overflow: hidden;
         }
-        .trust-inner {
-            display: flex; align-items: center; justify-content: center;
-            gap: 48px; flex-wrap: wrap;
+        .marquee-track {
+            display: flex; gap: 60px; white-space: nowrap;
+            animation: marquee-scroll 30s linear infinite;
         }
-        .trust-item {
-            font-size: 13px; color: var(--dim); display: flex;
-            align-items: center; gap: 8px; white-space: nowrap;
+        .marquee-item {
+            font-size: 13px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--dim);
+            display: flex; align-items: center; gap: 12px; flex-shrink: 0;
         }
-        .trust-item svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+        .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+        @keyframes marquee-scroll { to { transform: translateX(-50%); } }
 
-        /* LIVE DEMO */
-        .demo-section { padding: 140px 0; }
-        .demo-wrapper {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        /* STORY REVEAL */
+        .story-reveal {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 200px 0;
         }
-        .demo-text h2 {
-            font-size: 38px; font-weight: 800; letter-spacing: -1.5px;
-            color: var(--white); line-height: 1.15; margin-bottom: 20px;
+        .story-text {
+            font-size: clamp(28px, 4vw, 48px); font-weight: 700;
+            line-height: 1.4; letter-spacing: -1.5px;
         }
-        .demo-text p { font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
+        .story-text .word {
+            color: var(--dim);
+            transition: color .3s;
+        }
+        .story-text .word.lit { color: var(--white); }
+
+        /* BRIDGE */
+        .bridge {
+            padding: 160px 0; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .bridge h2 {
+            font-size: clamp(40px, 6vw, 80px); font-weight: 900;
+            color: var(--white); letter-spacing: -3px;
+            opacity: 0; transform: scale(0.9);
+        }
+        .bridge p {
+            font-size: 20px; line-height: 1.7; color: var(--muted);
+            max-width: 560px; margin: 24px auto 0;
+            opacity: 0;
+        }
+
+        /* DEMO */
+        .demo { padding: 160px 0; }
+        .demo-layout {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .demo-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+        }
+        .demo h2 {
+            font-size: clamp(28px, 3.5vw, 42px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .demo p { font-size: 16px; line-height: 1.8; margin-bottom: 12px; }
         .demo-phone {
-            background: #0a0a0a; border: 1px solid var(--border);
-            border-radius: 24px; padding: 20px; max-width: 380px;
-            margin: 0 auto; box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 24px; padding: 24px; max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
         }
         .demo-header {
-            display: flex; align-items: center; gap: 10px;
-            padding-bottom: 16px; border-bottom: 1px solid var(--border);
-            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 12px;
+            padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 18px;
         }
         .demo-avatar {
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             background: linear-gradient(135deg, var(--accent), var(--pink));
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 700; color: white;
+            font-size: 15px; font-weight: 700; color: white;
         }
         .demo-name { font-size: 14px; font-weight: 600; color: var(--white); }
         .demo-status { font-size: 11px; color: var(--green); }
-        .demo-messages { min-height: 280px; }
+        .demo-messages { min-height: 300px; }
         .demo-msg {
-            padding: 10px 14px; border-radius: 14px; font-size: 13px;
-            line-height: 1.5; margin-bottom: 10px; max-width: 85%;
+            padding: 11px 15px; border-radius: 16px; font-size: 13px;
+            line-height: 1.6; margin-bottom: 10px; max-width: 85%;
             opacity: 0; transform: translateY(10px);
         }
         .msg-user {
@@ -192,7 +277,7 @@
         }
         .msg-typing {
             background: rgba(255,255,255,0.06); color: var(--dim);
-            display: inline-flex; gap: 4px; padding: 12px 16px;
+            display: inline-flex; gap: 4px; padding: 14px 18px;
         }
         .msg-typing span {
             width: 6px; height: 6px; border-radius: 50%;
@@ -200,207 +285,286 @@
         }
         .msg-typing span:nth-child(2) { animation-delay: 0.2s; }
         .msg-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-6px); }
-        }
+        @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
 
-        /* STORY SCROLL */
-        .story { position: relative; }
-        .story-pin { height: 100vh; display: flex; align-items: center; position: relative; }
-        .story-slide { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; opacity: 0; }
-        .story-text { font-size: clamp(24px,4vw,42px); font-weight: 700; color: var(--white); letter-spacing: -1px; line-height: 1.3; }
-        .story-text em { font-style: normal; color: var(--dim); }
-        .story-count { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; }
-        .story-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); transition: background .3s, height .3s; }
-        .story-dot.on { background: var(--accent); height: 24px; border-radius: 3px; }
-
-        /* BREAK */
-        .break-section { padding: 140px 0; text-align: center; }
-        .break-section h2 {
-            font-size: clamp(28px,4vw,44px); font-weight: 800;
-            color: var(--white); letter-spacing: -1.5px; line-height: 1.2;
-            margin-bottom: 16px;
+        /* BENTO SERVICES */
+        .services { padding: 160px 0; }
+        .section-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 20px; text-align: center;
         }
-        .break-section p { font-size: 17px; max-width: 560px; margin: 0 auto; line-height: 1.7; }
-
-        /* NUMBERS */
-        .nums { padding: 80px 0; }
-        .nums-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; text-align: center; }
-        .nums-grid h3 {
-            font-size: 48px; font-weight: 800; color: var(--white);
-            letter-spacing: -2px; margin-bottom: 4px;
+        .section-title {
+            font-size: clamp(32px, 4.5vw, 52px); font-weight: 800;
+            color: var(--white); letter-spacing: -2px; line-height: 1.15;
+            text-align: center; margin-bottom: 64px;
         }
-        .nums-grid p { font-size: 13px; color: var(--dim); }
+        .section-title em { font-style: normal; color: var(--dim); }
 
-        /* SECTION HEADERS */
-        .sh { text-align: center; margin-bottom: 56px; }
-        .sh-tag {
-            font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(200px, auto);
+            gap: 16px;
         }
-        .sh h2 {
-            font-size: clamp(28px,3.5vw,40px); font-weight: 800;
-            color: var(--white); letter-spacing: -1.5px; line-height: 1.2;
-        }
-        .sh h2 em { font-style: normal; color: var(--dim); }
-
-        /* HOW IT WORKS */
-        section { padding: 140px 0; }
-        .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-        .how-card {
+        .bento-card {
             background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius); padding: 36px;
-            transition: border-color .2s, background .2s;
+            position: relative; overflow: hidden;
+            transition: border-color .3s, transform .3s, box-shadow .4s;
         }
-        .how-card:hover { border-color: var(--border-h); background: var(--card-h); }
-        .how-num { font-size: 48px; font-weight: 800; color: rgba(139,92,246,0.15); margin-bottom: 16px; }
-        .how-card h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-        .how-card p { font-size: 14px; line-height: 1.7; }
+        .bento-card:hover {
+            border-color: rgba(139,92,246,0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(139,92,246,0.06);
+        }
+        .bento-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(139,92,246,0.06), transparent 60%);
+            opacity: 0; transition: opacity .4s;
+            pointer-events: none;
+        }
+        .bento-card:hover::after { opacity: 1; }
 
-        /* SERVICES */
-        .svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        .svc {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px;
-            transition: border-color .2s, background .2s, transform .2s;
-        }
-        .svc:hover { border-color: var(--border-h); background: var(--card-h); transform: translateY(-2px); }
-        .svc-ic {
-            width: 40px; height: 40px; display: flex; align-items: center;
-            justify-content: center; background: rgba(139,92,246,0.1);
-            border-radius: 10px; margin-bottom: 16px;
-        }
-        .svc-ic svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .svc h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-        .svc p { font-size: 13px; line-height: 1.7; }
-        .pr { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--accent); }
+        .bento-featured { grid-column: span 2; grid-row: span 2; padding: 48px; }
+        .bento-wide { grid-column: span 2; }
 
-        /* RESULTS / PORTFOLIO */
-        .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-        .result-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px; position: relative;
-            overflow: hidden;
+        .bento-icon {
+            width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+            border-radius: 14px; margin-bottom: 20px;
+            transition: background .3s;
         }
-        .result-card::before {
+        .bento-icon svg { width: 22px; height: 22px; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+        .bento-icon.purple { background: rgba(139,92,246,0.1); }
+        .bento-icon.purple svg { stroke: var(--accent); }
+        .bento-icon.green { background: rgba(34,197,94,0.1); }
+        .bento-icon.green svg { stroke: var(--green); }
+        .bento-icon.pink { background: rgba(236,72,153,0.1); }
+        .bento-icon.pink svg { stroke: var(--pink); }
+        .bento-icon.blue { background: rgba(59,130,246,0.1); }
+        .bento-icon.blue svg { stroke: var(--blue); }
+
+        .bento-card h3 {
+            font-size: 18px; font-weight: 700; color: var(--white);
+            margin-bottom: 10px; letter-spacing: -0.3px;
+        }
+        .bento-featured h3 { font-size: 24px; letter-spacing: -0.5px; }
+        .bento-card p { font-size: 14px; line-height: 1.7; }
+        .bento-price {
+            display: inline-block; margin-top: 16px;
+            font-size: 13px; font-weight: 600; color: var(--accent);
+        }
+        .bento-featured .bento-badge {
+            position: absolute; top: 32px; right: 32px;
+            font-size: 11px; font-weight: 600; color: var(--green);
+            background: rgba(34,197,94,0.1); padding: 6px 14px;
+            border-radius: 100px; letter-spacing: 0.5px;
+        }
+
+        /* RESULTS */
+        .results { padding: 160px 0; }
+        .results-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 24px; margin-bottom: 48px;
+        }
+        .result-stat {
+            text-align: center; padding: 40px 20px;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card);
+            transition: border-color .3s, transform .3s;
+        }
+        .result-stat:hover { border-color: var(--border-h); transform: translateY(-2px); }
+        .result-number {
+            font-size: clamp(40px, 5vw, 56px); font-weight: 900;
+            color: var(--white); letter-spacing: -3px; margin-bottom: 6px;
+        }
+        .result-label { font-size: 13px; color: var(--dim); }
+
+        .dashboard {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 28px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+        }
+        .dash-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 24px;
+        }
+        .dash-title { font-size: 14px; font-weight: 600; color: var(--white); }
+        .dash-badge {
+            font-size: 11px; background: rgba(34,197,94,0.12); color: var(--green);
+            padding: 5px 14px; border-radius: 100px;
+        }
+        .dash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .dash-stat {
+            background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px;
+        }
+        .dash-stat-label { font-size: 11px; color: var(--dim); margin-bottom: 6px; }
+        .dash-stat-value { font-size: 28px; font-weight: 800; color: var(--white); letter-spacing: -1.5px; }
+        .dash-stat-change { font-size: 11px; color: var(--green); margin-top: 4px; }
+
+        /* PROCESS */
+        .process { padding: 160px 0; }
+        .process-steps { position: relative; max-width: 600px; margin: 0 auto; }
+        .process-line-bg {
+            position: absolute; left: 23px; top: 0; bottom: 0;
+            width: 2px; background: var(--border);
+        }
+        .process-line-fill {
+            position: absolute; left: 23px; top: 0;
+            width: 2px; height: 0; background: var(--accent);
+            transition: height .1s linear;
+        }
+        .process-step {
+            display: flex; gap: 32px; padding: 40px 0;
+            position: relative;
+        }
+        .process-num {
+            width: 48px; height: 48px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; border: 2px solid var(--border);
+            background: var(--bg); color: var(--dim);
+            font-size: 14px; font-weight: 700;
+            transition: border-color .4s, color .4s, box-shadow .4s;
+            position: relative; z-index: 2;
+        }
+        .process-step.active .process-num {
+            border-color: var(--accent); color: var(--accent);
+            box-shadow: 0 0 24px rgba(139,92,246,0.2);
+        }
+        .process-content { padding-top: 10px; }
+        .process-content h3 {
+            font-size: 20px; font-weight: 700; color: var(--white);
+            margin-bottom: 8px; letter-spacing: -0.3px;
+        }
+        .process-content p { font-size: 15px; line-height: 1.7; }
+
+        /* NICHES */
+        .niches { padding: 160px 0; }
+        .niche-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .niche-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 48px;
+            transition: border-color .3s, transform .3s;
+            position: relative; overflow: hidden;
+        }
+        .niche-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+        .niche-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0;
             height: 3px;
         }
-        .result-card:nth-child(1)::before { background: var(--accent); }
-        .result-card:nth-child(2)::before { background: var(--green); }
-        .result-card:nth-child(3)::before { background: var(--pink); }
-        .result-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 8px; }
-        .result-value { font-size: 42px; font-weight: 800; color: var(--white); letter-spacing: -2px; margin-bottom: 4px; }
-        .result-desc { font-size: 13px; line-height: 1.6; }
-        .result-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 16px; overflow: hidden; }
-        .result-bar-fill { height: 100%; border-radius: 2px; width: 0; transition: width 1.5s ease; }
-
-        /* TESTIMONIALS */
-        .testimonials { padding: 140px 0; }
-        .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-        .test-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 32px;
+        .niche-card:first-child::before { background: linear-gradient(90deg, var(--accent), var(--blue)); }
+        .niche-card:last-child::before { background: linear-gradient(90deg, var(--pink), var(--accent)); }
+        .niche-tag {
+            font-size: 11px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; margin-bottom: 20px;
         }
-        .test-stars { color: #facc15; font-size: 14px; margin-bottom: 12px; letter-spacing: 2px; }
-        .test-quote { font-size: 14px; line-height: 1.7; color: var(--light); margin-bottom: 20px; font-style: italic; }
-        .test-author { display: flex; align-items: center; gap: 10px; }
-        .test-av {
+        .niche-card:first-child .niche-tag { color: var(--accent); }
+        .niche-card:last-child .niche-tag { color: var(--pink); }
+        .niche-card h3 {
+            font-size: 26px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .niche-card > p { font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+        .niche-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .niche-list li {
+            font-size: 14px; color: var(--light);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .niche-list li::before {
+            content: ''; width: 5px; height: 5px; border-radius: 50%;
+            background: var(--accent); flex-shrink: 0;
+        }
+
+        /* TESTIMONIALS MARQUEE */
+        .testimonials { padding: 160px 0; overflow: hidden; }
+        .testi-row {
+            display: flex; gap: 20px; margin-bottom: 20px;
+            animation: testi-scroll 50s linear infinite;
+        }
+        .testi-row.reverse { animation-direction: reverse; }
+        .testi-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px;
+            min-width: 380px; max-width: 380px; flex-shrink: 0;
+        }
+        .testi-stars { color: #facc15; font-size: 13px; margin-bottom: 14px; letter-spacing: 2px; }
+        .testi-quote {
+            font-size: 14px; line-height: 1.7; color: var(--light);
+            margin-bottom: 20px; font-style: italic;
+        }
+        .testi-author { display: flex; align-items: center; gap: 10px; }
+        .testi-av {
             width: 36px; height: 36px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 14px; font-weight: 700; color: white;
         }
-        .test-info h4 { font-size: 13px; font-weight: 600; color: var(--white); }
-        .test-info p { font-size: 12px; color: var(--dim); }
-
-        /* NICHES */
-        .niche-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .niche {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 40px;
-            transition: border-color .2s;
-        }
-        .niche:hover { border-color: var(--border-h); }
-        .niche-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; }
-        .niche h3 { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 10px; }
-        .niche p { font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
-        .nl { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .nl li { font-size: 13px; color: var(--light); display: flex; align-items: center; gap: 8px; }
-        .nl li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+        .testi-name { font-size: 13px; font-weight: 600; color: var(--white); }
+        .testi-role { font-size: 12px; color: var(--dim); }
+        @keyframes testi-scroll { to { transform: translateX(-50%); } }
 
         /* PRICING */
-        .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        .pc {
+        .pricing { padding: 160px 0; }
+        .price-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .price-card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 36px;
-            transition: border-color .2s, transform .2s;
+            border-radius: var(--radius); padding: 40px;
+            transition: border-color .3s, transform .3s;
+            position: relative;
         }
-        .pc:hover { border-color: var(--border-h); }
-        .pc.pop {
-            border-color: var(--accent); position: relative;
+        .price-card:hover { border-color: var(--border-h); }
+        .price-card.featured {
+            border-color: rgba(139,92,246,0.3);
             background: rgba(139,92,246,0.04);
             transform: scale(1.02);
         }
-        .pc.pop::before {
-            content: 'Most Popular'; position: absolute; top: -12px; left: 50%;
+        .price-card.featured::before {
+            content: 'Most Popular'; position: absolute; top: -14px; left: 50%;
             transform: translateX(-50%); background: var(--accent); color: white;
-            font-size: 11px; font-weight: 700; padding: 4px 16px;
-            border-radius: 20px; letter-spacing: 0.5px;
+            font-size: 11px; font-weight: 700; padding: 5px 18px;
+            border-radius: 100px; letter-spacing: 0.5px;
         }
-        .tier { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
-        .amt { font-size: 44px; font-weight: 800; color: var(--white); letter-spacing: -2px; }
-        .per { font-size: 13px; color: var(--dim); margin-bottom: 24px; }
-        .fl { list-style: none; margin-bottom: 28px; }
-        .fl li {
-            padding: 8px 0; font-size: 13px; color: var(--light);
+        .price-tier { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 14px; }
+        .price-amount { font-size: 48px; font-weight: 900; color: var(--white); letter-spacing: -3px; }
+        .price-period { font-size: 13px; color: var(--dim); margin-bottom: 28px; }
+        .price-features { list-style: none; margin-bottom: 32px; }
+        .price-features li {
+            padding: 9px 0; font-size: 14px; color: var(--light);
             display: flex; align-items: center; gap: 10px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        .fl li svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2.5; stroke-linecap: round; flex-shrink: 0; }
-
-        /* DASHBOARD PREVIEW */
-        .dashboard {
-            background: #0a0a0a; border: 1px solid var(--border);
-            border-radius: 16px; padding: 24px; margin-top: 48px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        .price-features li svg {
+            width: 16px; height: 16px; stroke: var(--green);
+            fill: none; stroke-width: 2.5; stroke-linecap: round; flex-shrink: 0;
         }
-        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .dash-title { font-size: 14px; font-weight: 600; color: var(--white); }
-        .dash-badge { font-size: 11px; background: rgba(34,197,94,0.15); color: var(--green); padding: 4px 10px; border-radius: 20px; }
-        .dash-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-        .dash-stat {
-            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 16px;
-        }
-        .dash-stat-label { font-size: 11px; color: var(--dim); margin-bottom: 4px; }
-        .dash-stat-value { font-size: 24px; font-weight: 700; color: var(--white); letter-spacing: -1px; }
-        .dash-stat-change { font-size: 11px; color: var(--green); margin-top: 4px; }
 
         /* CTA */
-        .cta {
-            padding: 160px 0 120px; text-align: center;
+        .cta-section {
+            padding: 200px 0 160px; text-align: center;
             position: relative; overflow: hidden;
         }
-        .cta::before {
-            content: ''; position: absolute; bottom: -40%; left: 50%;
+        .cta-section::before {
+            content: ''; position: absolute; bottom: -30%; left: 50%;
             transform: translateX(-50%); width: 800px; height: 800px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(139,92,246,0.1), transparent 60%);
             pointer-events: none;
         }
-        .cta h2 {
-            font-size: clamp(32px,5vw,56px); font-weight: 800;
-            color: var(--white); letter-spacing: -2px; margin-bottom: 16px;
+        .cta-big {
+            font-size: clamp(48px, 8vw, 100px); font-weight: 900;
+            color: var(--white); letter-spacing: -4px; margin-bottom: 20px;
         }
-        .cta h2 em { font-style: normal; color: var(--dim); }
-        .cta p { font-size: 17px; max-width: 480px; margin: 0 auto 36px; line-height: 1.7; }
-        .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-        /* SOCIAL LINKS */
-        .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
+        .cta-big em { font-style: normal; color: var(--dim); }
+        .cta-sub {
+            font-size: 18px; color: var(--muted); max-width: 480px;
+            margin: 0 auto 44px; line-height: 1.7;
+        }
+        .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .social-links {
+            display: flex; gap: 20px; justify-content: center; margin-top: 32px;
+        }
         .social-links a {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 13px; color: var(--muted); text-decoration: none;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 13px; color: var(--dim); text-decoration: none;
             transition: color .2s;
         }
         .social-links a:hover { color: var(--white); }
@@ -408,33 +572,45 @@
 
         /* FOOTER */
         footer {
-            padding: 40px 0; border-top: 1px solid var(--border);
+            padding: 48px 0; border-top: 1px solid var(--border);
             text-align: center; font-size: 13px;
         }
         footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { color: var(--accent2); }
 
         /* RESPONSIVE */
-        @media (max-width:768px) {
+        @media (max-width: 900px) {
+            .bento { grid-template-columns: 1fr 1fr; }
+            .bento-featured { grid-column: span 2; grid-row: span 1; }
+            .results-grid { grid-template-columns: repeat(2, 1fr); }
+            .dash-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
             .cursor { display: none !important; }
             body, a, button { cursor: auto; }
             nav { padding: 16px 20px; }
-            .nav-r a:not(.nav-cta) { display: none; }
-            .svc-grid, .price-grid, .how-grid, .results-grid, .test-grid { grid-template-columns: 1fr; }
+            nav.scrolled { padding: 14px 20px; }
+            .demo-layout { grid-template-columns: 1fr; gap: 48px; }
+            .bento { grid-template-columns: 1fr; }
+            .bento-featured, .bento-wide { grid-column: span 1; }
             .niche-grid { grid-template-columns: 1fr; }
-            .nums-grid { grid-template-columns: repeat(2,1fr); }
-            .demo-wrapper { grid-template-columns: 1fr; }
-            .dash-grid { grid-template-columns: repeat(2,1fr); }
-            .story-count { display: none; }
-            section, .break-section, .testimonials, .demo-section { padding: 100px 0; }
-            .cta { padding: 120px 0 80px; }
+            .price-cards { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: 1fr 1fr; }
+            .testi-card { min-width: 300px; max-width: 300px; }
+            section, .services, .results, .process, .niches, .pricing, .demo, .testimonials {
+                padding: 100px 0;
+            }
+            .bridge { padding: 120px 0; }
+            .cta-section { padding: 140px 0 100px; }
         }
-        @media (max-width:480px) { .nums-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) {
+            .results-grid { grid-template-columns: 1fr; }
+            .dash-grid { grid-template-columns: 1fr; }
+        }
 
         /* GRAIN */
         body::after {
             content: ''; position: fixed; inset: 0; z-index: 9998;
-            pointer-events: none; opacity: 0.03;
+            pointer-events: none; opacity: 0.025;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
     </style>
@@ -443,66 +619,89 @@
 
 <div class="cursor"></div>
 
-<nav>
-    <div class="logo">Ascend <span>Agency</span></div>
-    <div class="nav-r">
-        <a href="#demo">Live Demo</a>
-        <a href="#services">Services</a>
-        <a href="#results">Results</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#cta" class="nav-cta">Book a Demo</a>
-    </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="w">
-        <div class="hero-tag">AI Automation Agency</div>
-        <h1>
-            <span class="h-line"><span class="h-line-i">Your next client called.</span></span>
-            <span class="h-line"><span class="h-line-i"><em>Nobody picked up.</em></span></span>
-        </h1>
-        <p class="hero-sub">We build AI systems that answer every lead in 3 seconds, qualify every prospect, and book every appointment — 24/7, even at 2 AM on a holiday.</p>
-        <div class="hero-btns">
-            <a href="#cta" class="btn btn-w">Book a Free Demo</a>
-            <a href="#demo" class="btn btn-o">Watch It Work →</a>
-        </div>
-    </div>
-</section>
-
-<!-- TRUST BAR -->
-<div class="trust">
-    <div class="w">
-        <div class="trust-inner">
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                No contracts, cancel anytime
-            </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                Live in 48 hours
-            </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                Money-back guarantee
-            </div>
-            <div class="trust-item">
-                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Trusted by 30+ businesses
-            </div>
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay">
+    <button class="menu-close" id="menuClose">CLOSE</button>
+    <div class="menu-inner">
+        <a href="#demo" class="menu-link" data-menu>Live Demo</a>
+        <a href="#services" class="menu-link" data-menu>Services</a>
+        <a href="#results" class="menu-link" data-menu>Results</a>
+        <a href="#pricing" class="menu-link" data-menu>Pricing</a>
+        <a href="#cta" class="menu-link" data-menu>Book a Demo</a>
+        <div class="menu-contact" data-menu>
+            <a href="mailto:teamascendagency@gmail.com">teamascendagency@gmail.com</a>
+            <span style="margin:0 12px;color:var(--dim);">·</span>
+            <a href="https://instagram.com/ascendagencyy" target="_blank">@ascendagencyy</a>
         </div>
     </div>
 </div>
 
-<!-- LIVE AI DEMO -->
-<div class="demo-section" id="demo">
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-logo">ASCEND<span>.</span></a>
+    <button class="menu-btn" id="menuBtn">MENU</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
     <div class="w">
-        <div class="demo-wrapper">
-            <div class="demo-text">
-                <div class="sh-tag" style="text-align:left;margin-bottom:16px;">See It In Action</div>
+        <div class="hero-tag">AI Automation Agency</div>
+        <h1>
+            <span class="line"><span class="line-inner">Your next client called.</span></span>
+            <span class="line"><span class="line-inner"><em>Nobody picked up.</em></span></span>
+        </h1>
+        <p class="hero-sub">We build AI systems that answer every lead in 3 seconds, qualify every prospect, and book every appointment — 24/7, even at 2 AM on a holiday.</p>
+        <div class="hero-btns">
+            <a href="#cta" class="btn btn-w">Book a Free Demo</a>
+            <a href="#demo" class="btn btn-o">Watch It Work</a>
+        </div>
+    </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+    <div class="marquee-track">
+        <div class="marquee-item"><span class="marquee-dot"></span>NO CONTRACTS</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>LIVE IN 48 HOURS</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>MONEY-BACK GUARANTEE</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>24/7 AUTOMATION</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>TRUSTED BY 30+ BUSINESSES</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>3 SECOND RESPONSE TIME</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>NO CONTRACTS</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>LIVE IN 48 HOURS</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>MONEY-BACK GUARANTEE</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>24/7 AUTOMATION</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>TRUSTED BY 30+ BUSINESSES</div>
+        <div class="marquee-item"><span class="marquee-dot"></span>3 SECOND RESPONSE TIME</div>
+    </div>
+</div>
+
+<!-- STORY REVEAL -->
+<div class="story-reveal">
+    <div class="w">
+        <p class="story-text" id="storyText">It's 11 PM. A potential client finds your website. They have a question. They need help now. They fill out your contact form. They send a DM. They call your number. But nobody answers. You're asleep. Your competitors respond in 3 seconds. By morning, your lead has signed with someone who picked up the phone. This happens every single night. And every lost lead costs you thousands.</p>
+    </div>
+</div>
+
+<!-- BRIDGE -->
+<div class="bridge">
+    <div class="w-narrow">
+        <h2>We make sure this never happens again.</h2>
+        <p>AI that responds in 3 seconds. Qualifies instantly. Books automatically. Runs 24/7 — holidays, weekends, 3 AM. No breaks.</p>
+    </div>
+</div>
+
+<!-- LIVE DEMO -->
+<div class="demo" id="demo">
+    <div class="w">
+        <div class="demo-layout">
+            <div>
+                <div class="demo-label">See It In Action</div>
                 <h2>This is what happens when someone DMs your page at midnight.</h2>
                 <p>Your AI responds in 3 seconds. Qualifies the lead. Books the appointment. All while you sleep.</p>
-                <p style="color:var(--accent);font-weight:600;font-size:14px;">This demo runs live — it's the same AI we install for clients.</p>
+                <p style="color:var(--accent);font-weight:600;font-size:14px;margin-top:8px;">This demo runs live — it's the same AI we install for clients.</p>
             </div>
             <div class="demo-phone" id="demoPhone">
                 <div class="demo-header">
@@ -518,88 +717,78 @@
     </div>
 </div>
 
-<!-- STORY SCROLL -->
-<div class="story">
-    <div class="story-pin">
-        <div class="w" style="position:relative;width:100%;">
-            <div class="story-slide" data-i="0">
-                <div class="story-text">It's 11 PM. A potential client finds your website.</div>
-            </div>
-            <div class="story-slide" data-i="1">
-                <div class="story-text">They have a question. <em>They fill out your form.</em></div>
-            </div>
-            <div class="story-slide" data-i="2">
-                <div class="story-text">You're asleep. <em>No one responds.</em></div>
-            </div>
-            <div class="story-slide" data-i="3">
-                <div class="story-text">By morning, they've signed <em>with someone who did.</em></div>
-            </div>
-            <div class="story-slide" data-i="4">
-                <div class="story-text">We make sure this <em>never happens again.</em></div>
-            </div>
-            <div class="story-count">
-                <div class="story-dot on" data-d="0"></div>
-                <div class="story-dot" data-d="1"></div>
-                <div class="story-dot" data-d="2"></div>
-                <div class="story-dot" data-d="3"></div>
-                <div class="story-dot" data-d="4"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- THE SHIFT -->
-<div class="break-section">
-    <div class="w-narrow">
-        <h2>We make sure you never miss another lead. Ever.</h2>
-        <p>AI that responds in 3 seconds. Qualifies instantly. Books automatically. Runs 24/7 — holidays, weekends, 3 AM. No breaks.</p>
-    </div>
-</div>
-
-<!-- NUMBERS -->
-<div class="nums">
+<!-- SERVICES BENTO -->
+<div class="services" id="services">
     <div class="w">
-        <div class="nums-grid">
-            <div><h3><span class="counter" data-target="3">0</span>s</h3><p>Average response time</p></div>
-            <div><h3><span class="counter" data-target="40">0</span>%</h3><p>More leads captured</p></div>
-            <div><h3>24/7</h3><p>Always responding</p></div>
-            <div><h3>48h</h3><p>Setup to live</p></div>
+        <div class="section-label">What We Build</div>
+        <h2 class="section-title">Every system has one job: <em>get you more clients.</em></h2>
+        <div class="bento">
+            <!-- Featured: Chatbot -->
+            <div class="bento-card bento-featured">
+                <div class="bento-badge">Most Requested</div>
+                <div class="bento-icon purple"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                <h3>24/7 AI Intake Chatbot</h3>
+                <p>An AI on your website that qualifies leads, answers questions, and books consultations — even at 2 AM on a Sunday. It learns your services, speaks in your tone, and never misses a single lead. The #1 automation that pays for itself in the first week.</p>
+                <span class="bento-price">From $200</span>
+            </div>
+            <!-- Comment to DM -->
+            <div class="bento-card">
+                <div class="bento-icon green"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <h3>Comment-to-DM</h3>
+                <p>Someone comments on your post — instant personalized DM with exactly what they need. Converts followers into leads on autopilot.</p>
+                <span class="bento-price">From $150</span>
+            </div>
+            <!-- Google Reviews -->
+            <div class="bento-card">
+                <div class="bento-icon pink"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <h3>Google Reviews</h3>
+                <p>Automated campaigns that turn happy clients into 5-star reviews. More reviews = higher ranking = more leads. Compounding growth.</p>
+                <span class="bento-price">From $100</span>
+            </div>
+            <!-- Lead Gen (wide) -->
+            <div class="bento-card bento-wide">
+                <div class="bento-icon blue"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+                <h3>Lead Generation + Cold Outreach</h3>
+                <p>We find your ideal prospects — names, emails, phones, social profiles — from Google Maps and public data. Then AI writes personalized outreach at scale. Follow-ups, A/B testing, response tracking. Your pipeline, automated.</p>
+                <span class="bento-price">From $75 per list · $200 for outreach setup</span>
+            </div>
+            <!-- Content -->
+            <div class="bento-card">
+                <div class="bento-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+                <h3>Content & Social</h3>
+                <p>AI-generated content posted weekly. Captions, Reels, hashtags — built to attract your ideal client.</p>
+                <span class="bento-price">From $300/mo</span>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- RESULTS -->
-<section id="results">
+<div class="results" id="results">
     <div class="w">
-        <div class="sh">
-            <div class="sh-tag">Proof</div>
-            <h2>Real results. <em>Not promises.</em></h2>
-        </div>
+        <div class="section-label">Proof</div>
+        <h2 class="section-title">Real results. <em>Not promises.</em></h2>
         <div class="results-grid">
-            <div class="result-card">
-                <div class="result-label">Lead Response Time</div>
-                <div class="result-value">3s</div>
-                <div class="result-desc">Down from 4+ hours. Leads get a human-quality response before they finish browsing your competitor's site.</div>
-                <div class="result-bar"><div class="result-bar-fill" data-width="95%" style="background:var(--accent);"></div></div>
+            <div class="result-stat">
+                <div class="result-number"><span class="counter" data-target="3">0</span>s</div>
+                <div class="result-label">Avg response time</div>
             </div>
-            <div class="result-card">
-                <div class="result-label">Consultation Bookings</div>
-                <div class="result-value">+312%</div>
-                <div class="result-desc">AI qualifies and books 24/7. More appointments while you sleep than most agents get during business hours.</div>
-                <div class="result-bar"><div class="result-bar-fill" data-width="82%" style="background:var(--green);"></div></div>
+            <div class="result-stat">
+                <div class="result-number">+<span class="counter" data-target="312">0</span>%</div>
+                <div class="result-label">Consultation bookings</div>
             </div>
-            <div class="result-card">
-                <div class="result-label">Google Reviews</div>
-                <div class="result-value">4.9★</div>
-                <div class="result-desc">Automated review campaigns that turn happy clients into 5-star reviews. More reviews = higher rankings = more leads.</div>
-                <div class="result-bar"><div class="result-bar-fill" data-width="98%" style="background:var(--pink);"></div></div>
+            <div class="result-stat">
+                <div class="result-number">24/7</div>
+                <div class="result-label">Always responding</div>
+            </div>
+            <div class="result-stat">
+                <div class="result-number">4.9<span style="font-size:0.6em">★</span></div>
+                <div class="result-label">Client satisfaction</div>
             </div>
         </div>
-
-        <!-- DASHBOARD MOCKUP -->
         <div class="dashboard">
             <div class="dash-header">
-                <div class="dash-title">📊 Your Automation Dashboard — Last 30 Days</div>
+                <div class="dash-title">Your Automation Dashboard — Last 30 Days</div>
                 <div class="dash-badge">● All Systems Live</div>
             </div>
             <div class="dash-grid">
@@ -626,113 +815,35 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- HOW IT WORKS -->
-<section>
+<!-- PROCESS -->
+<div class="process" id="process">
     <div class="w">
-        <div class="sh">
-            <div class="sh-tag">How It Works</div>
-            <h2>Three steps. Then it runs itself.</h2>
-        </div>
-        <div class="how-grid">
-            <div class="how-card">
-                <div class="how-num">01</div>
-                <h3>15-minute strategy call</h3>
-                <p>Tell us about your business. We identify exactly which automation will make the biggest impact on your revenue.</p>
-            </div>
-            <div class="how-card">
-                <div class="how-num">02</div>
-                <h3>We build it in 48 hours</h3>
-                <p>Custom-built for your brand, your services, your workflow. Not a template — a system engineered for you.</p>
-            </div>
-            <div class="how-card">
-                <div class="how-num">03</div>
-                <h3>You start closing more</h3>
-                <p>Go live, watch the leads roll in. We monitor, optimize, and scale until the numbers speak for themselves.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-    <div class="w">
-        <div class="sh">
-            <div class="sh-tag">What We Build</div>
-            <h2>Every system has one job: <em>get you more clients.</em></h2>
-        </div>
-        <div class="svc-grid">
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-                <h3>Comment-to-DM Automation</h3>
-                <p>Someone comments on your post — instant personalized DM with exactly what they asked for. Converts followers into leads on autopilot.</p>
-                <span class="pr">From $150</span>
-            </div>
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
-                <h3>24/7 AI Intake Chatbot</h3>
-                <p>An AI on your website that qualifies leads, answers questions, and books consultations. Even at 2 AM on a Sunday.</p>
-                <span class="pr">From $200</span>
-            </div>
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-                <h3>Google Review Campaigns</h3>
-                <p>Automated sequences that turn happy clients into 5-star reviews. More reviews, higher ranking, more leads. Compounding growth.</p>
-                <span class="pr">From $100</span>
-            </div>
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-                <h3>Lead Generation</h3>
-                <p>We find your ideal prospects — names, emails, phones, social profiles — from Google Maps and public data. Targeted, verified, ready to contact.</p>
-                <span class="pr">From $75</span>
-            </div>
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-                <h3>AI Cold Outreach</h3>
-                <p>Personalized email and DM sequences at scale. AI writes unique copy for every lead. Follow-ups, A/B testing, response tracking.</p>
-                <span class="pr">From $200</span>
-            </div>
-            <div class="svc">
-                <div class="svc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-                <h3>Content & Social Media</h3>
-                <p>AI-generated content posted weekly. Captions, Reels, hashtags, strategy — built to attract your exact ideal client.</p>
-                <span class="pr">From $300/mo</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<div class="testimonials">
-    <div class="w">
-        <div class="sh">
-            <div class="sh-tag">What Clients Say</div>
-            <h2>Don't take our word for it.</h2>
-        </div>
-        <div class="test-grid">
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-quote">"I was losing leads every single night. Ascend set up an AI chatbot that now books 3-4 consultations per week while I sleep. Paid for itself in the first week."</div>
-                <div class="test-author">
-                    <div class="test-av" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);">M</div>
-                    <div class="test-info"><h4>Marcus T.</h4><p>Real Estate Agent, Miami</p></div>
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Three steps. <em>Then it runs itself.</em></h2>
+        <div class="process-steps" id="processSteps">
+            <div class="process-line-bg"></div>
+            <div class="process-line-fill" id="processLine"></div>
+            <div class="process-step" data-step="0">
+                <div class="process-num">01</div>
+                <div class="process-content">
+                    <h3>15-minute strategy call</h3>
+                    <p>Tell us about your business. We identify exactly which automation will make the biggest impact on your revenue. No sales pitch — just clarity.</p>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-quote">"Our Google reviews went from 12 to 89 in two months. The automated review campaign is genius — clients just click one link and leave a review. Our ranking went from page 3 to page 1."</div>
-                <div class="test-author">
-                    <div class="test-av" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">S</div>
-                    <div class="test-info"><h4>Sarah K.</h4><p>Managing Partner, Austin Law</p></div>
+            <div class="process-step" data-step="1">
+                <div class="process-num">02</div>
+                <div class="process-content">
+                    <h3>We build it in 48 hours</h3>
+                    <p>Custom-built for your brand, your services, your workflow. Not a template — a system engineered specifically for your business.</p>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-quote">"48 hours. That's how long it took from our first call to having a fully working comment-to-DM system. My Instagram went from getting likes to getting actual clients."</div>
-                <div class="test-author">
-                    <div class="test-av" style="background:linear-gradient(135deg,#22c55e,#10b981);">D</div>
-                    <div class="test-info"><h4>David R.</h4><p>Broker, Austin TX</p></div>
+            <div class="process-step" data-step="2">
+                <div class="process-num">03</div>
+                <div class="process-content">
+                    <h3>You start closing more</h3>
+                    <p>Go live and watch the leads roll in. We monitor, optimize, and scale until the numbers speak for themselves.</p>
                 </div>
             </div>
         </div>
@@ -740,18 +851,16 @@
 </div>
 
 <!-- NICHES -->
-<section id="niches">
+<div class="niches">
     <div class="w">
-        <div class="sh">
-            <div class="sh-tag">Who We Work With</div>
-            <h2>We specialize in two niches. <em>And we dominate both.</em></h2>
-        </div>
+        <div class="section-label">Who We Work With</div>
+        <h2 class="section-title">We specialize in two niches. <em>And we dominate both.</em></h2>
         <div class="niche-grid">
-            <div class="niche">
+            <div class="niche-card">
                 <div class="niche-tag">Real Estate Agents</div>
                 <h3>Turn followers into buyers.</h3>
-                <p>Automation designed for how agents actually work — fast, mobile, relationship-driven. Every system built to close deals faster.</p>
-                <ul class="nl">
+                <p>Automation designed for how agents actually work — fast, mobile, relationship-driven.</p>
+                <ul class="niche-list">
                     <li>Instant DM with property details on comment</li>
                     <li>AI lead qualification and appointment booking</li>
                     <li>Automated showing reminders & follow-ups</li>
@@ -759,11 +868,11 @@
                     <li>Branded Reels and content that attract buyers</li>
                 </ul>
             </div>
-            <div class="niche">
-                <div class="niche-tag" style="color:var(--pink);">Law Firms</div>
+            <div class="niche-card">
+                <div class="niche-tag">Law Firms</div>
                 <h3>Sign clients at 2 AM.</h3>
-                <p>Intake, qualification, and follow-up systems built for legal — where responding first means winning the case.</p>
-                <ul class="nl">
+                <p>Intake, qualification, and follow-up systems built for legal — where responding first wins the case.</p>
+                <ul class="niche-list">
                     <li>24/7 AI intake that qualifies and books</li>
                     <li>After-hours lead capture via web + chat</li>
                     <li>Google Review request campaigns</li>
@@ -773,21 +882,159 @@
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<!-- TESTIMONIALS MARQUEE -->
+<div class="testimonials">
+    <div class="section-label" style="text-align:center;margin-bottom:20px;">What Clients Say</div>
+    <h2 class="section-title">Don't take our word for it.</h2>
+    <div class="testi-row">
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"I was losing leads every single night. Ascend set up an AI chatbot that now books 3-4 consultations per week while I sleep. Paid for itself in the first week."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);">M</div>
+                <div><div class="testi-name">Marcus T.</div><div class="testi-role">Real Estate Agent, Miami</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"Our Google reviews went from 12 to 89 in two months. The automated review campaign is genius — our ranking went from page 3 to page 1."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">S</div>
+                <div><div class="testi-name">Sarah K.</div><div class="testi-role">Managing Partner, Austin Law</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"48 hours from our first call to a fully working comment-to-DM system. My Instagram went from getting likes to getting actual clients."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#22c55e,#10b981);">D</div>
+                <div><div class="testi-name">David R.</div><div class="testi-role">Broker, Austin TX</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"The cold outreach system generated 14 responses in the first batch. Three turned into paying clients. Best ROI of anything I've ever tried."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">J</div>
+                <div><div class="testi-name">Jennifer L.</div><div class="testi-role">Personal Injury Attorney</div></div>
+            </div>
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"I was losing leads every single night. Ascend set up an AI chatbot that now books 3-4 consultations per week while I sleep. Paid for itself in the first week."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);">M</div>
+                <div><div class="testi-name">Marcus T.</div><div class="testi-role">Real Estate Agent, Miami</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"Our Google reviews went from 12 to 89 in two months. The automated review campaign is genius — our ranking went from page 3 to page 1."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">S</div>
+                <div><div class="testi-name">Sarah K.</div><div class="testi-role">Managing Partner, Austin Law</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"48 hours from our first call to a fully working comment-to-DM system. My Instagram went from getting likes to getting actual clients."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#22c55e,#10b981);">D</div>
+                <div><div class="testi-name">David R.</div><div class="testi-role">Broker, Austin TX</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"The cold outreach system generated 14 responses in the first batch. Three turned into paying clients. Best ROI of anything I've ever tried."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">J</div>
+                <div><div class="testi-name">Jennifer L.</div><div class="testi-role">Personal Injury Attorney</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="testi-row reverse">
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"They scraped 500 real estate leads in my zip code with emails and phone numbers. Loaded them into the outreach system and I had appointments that same week."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">R</div>
+                <div><div class="testi-name">Robert M.</div><div class="testi-role">Team Lead, RE/MAX</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"We were paying $3K/month for a receptionist who missed half the after-hours calls. Now our AI handles everything for a fraction of the cost."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#14b8a6,#22c55e);">A</div>
+                <div><div class="testi-name">Amanda W.</div><div class="testi-role">Family Law, Houston</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"The content they generate actually sounds like me. My followers can't tell it's AI-written. Engagement is up 60% since we started."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">K</div>
+                <div><div class="testi-name">Kevin P.</div><div class="testi-role">Luxury Agent, Scottsdale</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"Setup was painless. They hopped on a call, understood my workflow, and had everything running in two days. No contracts, no BS."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#6366f1,#3b82f6);">T</div>
+                <div><div class="testi-name">Tony S.</div><div class="testi-role">Criminal Defense, Dallas</div></div>
+            </div>
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"They scraped 500 real estate leads in my zip code with emails and phone numbers. Loaded them into the outreach system and I had appointments that same week."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">R</div>
+                <div><div class="testi-name">Robert M.</div><div class="testi-role">Team Lead, RE/MAX</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"We were paying $3K/month for a receptionist who missed half the after-hours calls. Now our AI handles everything for a fraction of the cost."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#14b8a6,#22c55e);">A</div>
+                <div><div class="testi-name">Amanda W.</div><div class="testi-role">Family Law, Houston</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"The content they generate actually sounds like me. My followers can't tell it's AI-written. Engagement is up 60% since we started."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">K</div>
+                <div><div class="testi-name">Kevin P.</div><div class="testi-role">Luxury Agent, Scottsdale</div></div>
+            </div>
+        </div>
+        <div class="testi-card">
+            <div class="testi-stars">★★★★★</div>
+            <div class="testi-quote">"Setup was painless. They hopped on a call, understood my workflow, and had everything running in two days. No contracts, no BS."</div>
+            <div class="testi-author">
+                <div class="testi-av" style="background:linear-gradient(135deg,#6366f1,#3b82f6);">T</div>
+                <div><div class="testi-name">Tony S.</div><div class="testi-role">Criminal Defense, Dallas</div></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- PRICING -->
-<section id="pricing">
+<div class="pricing" id="pricing">
     <div class="w">
-        <div class="sh">
-            <div class="sh-tag">Pricing</div>
-            <h2>No contracts. No surprises. <em>Cancel anytime.</em></h2>
-        </div>
-        <div class="price-grid">
-            <div class="pc">
-                <div class="tier">Starter</div>
-                <div class="amt">$497</div>
-                <div class="per">one-time setup</div>
-                <ul class="fl">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">No contracts. No surprises. <em>Cancel anytime.</em></h2>
+        <div class="price-cards">
+            <div class="price-card">
+                <div class="price-tier">Starter</div>
+                <div class="price-amount">$497</div>
+                <div class="price-period">one-time setup</div>
+                <ul class="price-features">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 automation system</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comment-to-DM or chatbot</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>48-hour delivery</li>
@@ -797,11 +1044,11 @@
                 </ul>
                 <a href="#cta" class="btn btn-o btn-full">Get Started</a>
             </div>
-            <div class="pc pop">
-                <div class="tier">Growth</div>
-                <div class="amt">$497</div>
-                <div class="per">per month</div>
-                <ul class="fl">
+            <div class="price-card featured">
+                <div class="price-tier">Growth</div>
+                <div class="price-amount">$497</div>
+                <div class="price-period">per month</div>
+                <ul class="price-features">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Starter</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3+ automation flows</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Google Review campaign</li>
@@ -811,11 +1058,11 @@
                 </ul>
                 <a href="#cta" class="btn btn-a btn-full">Get Started</a>
             </div>
-            <div class="pc">
-                <div class="tier">Premium</div>
-                <div class="amt">$1,497</div>
-                <div class="per">setup + $797/mo</div>
-                <ul class="fl">
+            <div class="price-card">
+                <div class="price-tier">Premium</div>
+                <div class="price-amount">$1,497</div>
+                <div class="price-period">setup + $797/mo</div>
+                <ul class="price-features">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Growth</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full multi-channel system</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30 AI-generated posts/mo</li>
@@ -827,13 +1074,13 @@
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <!-- CTA -->
-<section id="cta" class="cta">
+<div class="cta-section" id="cta">
     <div class="w-narrow">
-        <h2>15 minutes. <em>That's all we need.</em></h2>
-        <p>One call. We'll show you the exact automation that'll work for your business. If it's not a fit, no hard feelings.</p>
+        <h2 class="cta-big">Ready<em>?</em></h2>
+        <p class="cta-sub">One call. We'll show you the exact automation that'll work for your business. If it's not a fit, no hard feelings.</p>
         <div class="cta-btns">
             <a href="https://instagram.com/ascendagencyy" class="btn btn-w" target="_blank">DM Us on Instagram</a>
             <a href="mailto:teamascendagency@gmail.com?subject=Free%20Demo%20Request" class="btn btn-a">Book a Free Demo</a>
@@ -849,7 +1096,7 @@
             </a>
         </div>
     </div>
-</section>
+</div>
 
 <footer>
     <div class="w">
@@ -858,39 +1105,6 @@
         <p style="margin-top:6px;"><a href="https://instagram.com/ascendagencyy">@ascendagencyy</a> · <a href="mailto:teamascendagency@gmail.com">teamascendagency@gmail.com</a></p>
     </div>
 </footer>
-
-<!-- TIDIO CHATBOT — Live AI chat widget (free tier) -->
-<!-- Replace YOUR_TIDIO_KEY with actual key from tidio.com after account setup -->
-<script src="//code.tidio.co/YOUR_TIDIO_KEY.js" async></script>
-
-<!-- GOOGLE ANALYTICS 4 -->
-<!-- Replace G-XXXXXXXXXX with actual GA4 measurement ID -->
-<!--
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
--->
-
-<!-- META PIXEL -->
-<!-- Replace PIXEL_ID with actual Meta Pixel ID -->
-<!--
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'PIXEL_ID');
-fbq('track', 'PageView');
-</script>
--->
 
 <!-- GSAP + ScrollTrigger + Lenis -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -901,56 +1115,136 @@ fbq('track', 'PageView');
 (function() {
     'use strict';
 
-    // LENIS
+    // ── LENIS SMOOTH SCROLL ──
     const lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
+
+    // Smooth anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); if (el) lenis.scrollTo(el, { offset: -40 }); });
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const el = document.querySelector(a.getAttribute('href'));
+            if (el) lenis.scrollTo(el, { offset: -40 });
+            // Close menu if open
+            menuOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        });
     });
 
-    // CURSOR
+    // ── CUSTOM CURSOR ──
     const cur = document.querySelector('.cursor');
     let cx = 0, cy = 0, tx = 0, ty = 0;
     if (window.matchMedia('(pointer:fine)').matches) {
         document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-        (function loop() { cx += (tx - cx) * 0.15; cy += (ty - cy) * 0.15; cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(loop); })();
-        document.querySelectorAll('a,button,.btn,.svc,.pc,.how-card,.niche,.test-card,.result-card').forEach(el => {
+        (function loop() {
+            cx += (tx - cx) * 0.12;
+            cy += (ty - cy) * 0.12;
+            cur.style.left = cx + 'px';
+            cur.style.top = cy + 'px';
+            requestAnimationFrame(loop);
+        })();
+        document.querySelectorAll('a,button,.btn,.bento-card,.price-card,.niche-card,.result-stat').forEach(el => {
             el.addEventListener('mouseenter', () => cur.classList.add('active'));
             el.addEventListener('mouseleave', () => cur.classList.remove('active'));
         });
     } else { cur.style.display = 'none'; }
 
-    // NAV
-    gsap.to('nav', { opacity: 1, duration: 0.5, delay: 1.2, ease: 'power2.out' });
+    // ── BENTO CARD MOUSE GLOW ──
+    document.querySelectorAll('.bento-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+            card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+        });
+    });
+
+    // ── MENU OVERLAY ──
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuClose = document.getElementById('menuClose');
+    const menuLinks = document.querySelectorAll('[data-menu]');
+
+    function openMenu() {
+        menuOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        gsap.fromTo(menuLinks, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, delay: 0.2, ease: 'power3.out' });
+    }
+    function closeMenu() {
+        menuOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    menuBtn.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+
+    // ── NAV ──
+    gsap.to('nav', { opacity: 1, duration: 0.5, delay: 1.2 });
     let lastY = 0;
     lenis.on('scroll', ({ scroll }) => {
-        document.querySelector('nav').classList.toggle('scrolled', scroll > 50);
-        if (scroll > 200) gsap.to('nav', { y: scroll > lastY ? -80 : 0, duration: 0.3, ease: 'power2.out' });
+        document.querySelector('nav').classList.toggle('scrolled', scroll > 60);
+        if (scroll > 300) {
+            gsap.to('nav', { y: scroll > lastY ? -100 : 0, duration: 0.35, ease: 'power2.out' });
+        }
         lastY = scroll;
     });
 
-    // HERO
-    const tl = gsap.timeline({ delay: 0.15 });
-    tl.to('.hero-tag', { opacity: 1, duration: 0.4 })
-      .to('.h-line-i', { y: '0%', duration: 0.85, ease: 'power4.out', stagger: 0.1 }, '-=0.2')
-      .to('.hero-sub', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
-      .to('.hero-btns', { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2');
-    gsap.set('.hero-sub', { y: 12 });
-    gsap.set('.hero-btns', { y: 12 });
+    // ── HERO ANIMATION ──
+    const heroTl = gsap.timeline({ delay: 0.2 });
+    gsap.set('.hero-sub', { y: 16 });
+    gsap.set('.hero-btns', { y: 16 });
+    heroTl
+        .to('.hero-tag', { opacity: 1, duration: 0.5 })
+        .to('.line-inner', { y: '0%', duration: 0.9, ease: 'power4.out', stagger: 0.12 }, '-=0.25')
+        .to('.hero-sub', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.35')
+        .to('.hero-btns', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.25');
 
-    // LIVE DEMO CHAT
+    // ── STORY WORD REVEAL ──
+    const storyEl = document.getElementById('storyText');
+    const storyWords = storyEl.textContent.split(' ');
+    storyEl.innerHTML = storyWords.map(w => '<span class="word">' + w + '</span>').join(' ');
+    const wordEls = storyEl.querySelectorAll('.word');
+
+    ScrollTrigger.create({
+        trigger: '.story-reveal',
+        start: 'top 70%',
+        end: 'bottom 30%',
+        scrub: true,
+        onUpdate: self => {
+            const p = self.progress;
+            const total = wordEls.length;
+            wordEls.forEach((w, i) => {
+                const wordP = (p * total - i) / 2;
+                if (wordP > 0.5) {
+                    w.classList.add('lit');
+                } else {
+                    w.classList.remove('lit');
+                }
+            });
+        }
+    });
+
+    // ── BRIDGE REVEAL ──
+    gsap.to('.bridge h2', {
+        opacity: 1, scale: 1, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.bridge', start: 'top 65%', toggleActions: 'play none none none' }
+    });
+    gsap.to('.bridge p', {
+        opacity: 1, duration: 0.6, delay: 0.3, ease: 'power2.out',
+        scrollTrigger: { trigger: '.bridge', start: 'top 60%', toggleActions: 'play none none none' }
+    });
+
+    // ── LIVE DEMO CHAT ──
     const msgs = [
         { type: 'user', text: "Hi, I saw your post about AI for real estate. How does it work?", delay: 800 },
         { type: 'typing', delay: 1200 },
-        { type: 'ai', text: "Hey! 👋 Great question. We build AI systems that respond to your leads instantly — 24/7. When someone DMs, comments, or fills out a form, our AI responds in 3 seconds, qualifies them, and books an appointment. No leads slip through.", delay: 0 },
+        { type: 'ai', text: "Hey! Great question. We build AI systems that respond to your leads instantly — 24/7. When someone DMs, comments, or fills out a form, our AI responds in 3 seconds, qualifies them, and books an appointment.", delay: 0 },
         { type: 'user', text: "That sounds amazing. What does setup look like?", delay: 2000 },
         { type: 'typing', delay: 1000 },
-        { type: 'ai', text: "Super simple — we hop on a 15-min call, you tell us your workflow, and we build a custom system in 48 hours. No contracts, and if you don't love it, money back. Want me to book you a free demo?", delay: 0 },
+        { type: 'ai', text: "Super simple — 15-min call, you tell us your workflow, and we build it in 48 hours. No contracts. Money back if you don't love it. Want me to book you a free demo?", delay: 0 },
         { type: 'user', text: "Yes! I'm free tomorrow afternoon.", delay: 1800 },
         { type: 'typing', delay: 800 },
-        { type: 'ai', text: "Perfect! 🎯 I've got 2 PM and 4 PM open tomorrow. Which works better? I'll send you a calendar invite right away.", delay: 0 },
+        { type: 'ai', text: "Perfect! I've got 2 PM and 4 PM open. Which works better? I'll send a calendar invite right away.", delay: 0 },
     ];
 
     let demoStarted = false;
@@ -969,11 +1263,8 @@ fbq('track', 'PageView');
                     el.innerHTML = '<span></span><span></span><span></span>';
                     container.appendChild(el);
                     gsap.to(el, { opacity: 1, y: 0, duration: 0.3 });
-                    // Remove typing when next msg appears
                     const nextReal = msgs.slice(i + 1).find(m => m.type !== 'typing');
-                    if (nextReal) {
-                        setTimeout(() => el.remove(), nextReal.delay || 1000);
-                    }
+                    if (nextReal) setTimeout(() => el.remove(), nextReal.delay || 1000);
                 } else {
                     const el = document.createElement('div');
                     el.className = 'demo-msg msg-' + msg.type;
@@ -985,71 +1276,58 @@ fbq('track', 'PageView');
             }, total);
         });
     }
+    ScrollTrigger.create({ trigger: '#demoPhone', start: 'top 80%', once: true, onEnter: startDemo });
 
+    // ── PROCESS TIMELINE ──
     ScrollTrigger.create({
-        trigger: '#demoPhone', start: 'top 80%', once: true,
-        onEnter: startDemo
-    });
-
-    // STORY
-    const slides = document.querySelectorAll('.story-slide');
-    const dots = document.querySelectorAll('.story-dot');
-    const slideCount = slides.length;
-    gsap.set(slides[0], { opacity: 1 });
-    ScrollTrigger.create({
-        trigger: '.story', start: 'top top', end: '+=' + (slideCount * 100) + '%',
-        pin: '.story-pin', scrub: 0.5,
+        trigger: '#processSteps',
+        start: 'top 70%',
+        end: 'bottom 50%',
+        scrub: true,
         onUpdate: self => {
-            const idx = Math.min(Math.floor(self.progress * slideCount), slideCount - 1);
-            slides.forEach((s, i) => {
-                gsap.to(s, { opacity: i === idx ? 1 : 0, y: i === idx ? 0 : (i < idx ? -20 : 20), duration: 0.3, overwrite: true });
+            const p = self.progress;
+            document.getElementById('processLine').style.height = (p * 100) + '%';
+            document.querySelectorAll('.process-step').forEach((step, i) => {
+                const threshold = i / 3;
+                step.classList.toggle('active', p > threshold);
             });
-            dots.forEach((d, i) => d.classList.toggle('on', i === idx));
         }
     });
 
-    // RESULT BARS
-    document.querySelectorAll('.result-bar-fill').forEach(bar => {
+    // ── COUNTER ANIMATION ──
+    document.querySelectorAll('.counter').forEach(el => {
+        const target = +el.dataset.target;
+        const obj = { v: 0 };
         ScrollTrigger.create({
-            trigger: bar, start: 'top 90%', once: true,
-            onEnter: () => { bar.style.width = bar.dataset.width; }
+            trigger: el, start: 'top 85%', once: true,
+            onEnter: () => gsap.to(obj, { v: target, duration: 1.6, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(obj.v); } })
         });
     });
 
-    // FADE UP UTILITY
-    function fu(sel, opts = {}) {
+    // ── FADE UP UTILITY ──
+    function fadeUp(sel, opts = {}) {
         document.querySelectorAll(sel).forEach((el, i) => {
             gsap.from(el, {
-                opacity: 0, y: 32, duration: opts.dur || 0.6,
+                opacity: 0, y: 36, duration: opts.dur || 0.7,
                 delay: (opts.stagger || 0) * i, ease: 'power3.out',
                 scrollTrigger: { trigger: el, start: opts.start || 'top 88%', toggleActions: 'play none none none' }
             });
         });
     }
 
-    fu('.break-section h2'); fu('.break-section p');
-    fu('.nums-grid > div', { stagger: 0.06 });
-
-    document.querySelectorAll('.counter').forEach(el => {
-        const target = +el.dataset.target;
-        const obj = { v: 0 };
-        ScrollTrigger.create({
-            trigger: el, start: 'top 88%', once: true,
-            onEnter: () => gsap.to(obj, { v: target, duration: 1.4, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(obj.v); } })
-        });
-    });
-
-    fu('.sh-tag'); fu('.sh h2'); fu('.sh p');
-    fu('.how-card', { stagger: 0.06 });
-    fu('.svc', { stagger: 0.05 });
-    fu('.result-card', { stagger: 0.08 });
-    fu('.dashboard');
-    fu('.test-card', { stagger: 0.06 });
-    fu('.niche', { stagger: 0.08 });
-    fu('.pc', { stagger: 0.06 });
-    fu('.trust-item', { stagger: 0.04 });
-    fu('.cta h2'); fu('.cta p'); fu('.cta-btns'); fu('.social-links');
-    fu('footer');
+    fadeUp('.section-label');
+    fadeUp('.section-title');
+    fadeUp('.bento-card', { stagger: 0.06 });
+    fadeUp('.result-stat', { stagger: 0.05 });
+    fadeUp('.dashboard');
+    fadeUp('.process-step', { stagger: 0.08 });
+    fadeUp('.niche-card', { stagger: 0.1 });
+    fadeUp('.price-card', { stagger: 0.06 });
+    fadeUp('.cta-big');
+    fadeUp('.cta-sub');
+    fadeUp('.cta-btns');
+    fadeUp('.social-links');
+    fadeUp('footer');
 
 })();
 </script>
