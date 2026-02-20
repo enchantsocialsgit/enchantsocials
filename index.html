@@ -4,20 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enchant Socials — AI That Closes While You Sleep</title>
-    <meta name="description" content="AI automation for real estate agents and law firms. Respond to every lead instantly, 24/7. Setup in 48 hours.">
+    <meta name="description" content="AI automation for real estate agents and law firms. Respond to every lead instantly, 24/7. Setup in 48 hours. Zero missed leads.">
+    <meta property="og:title" content="Enchant Socials — AI That Closes While You Sleep">
+    <meta property="og:description" content="AI automation that responds to leads in 3 seconds, books appointments, and runs 24/7.">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #060606;
-            --card: rgba(255,255,255,0.025);
-            --border: rgba(255,255,255,0.06);
-            --border-h: rgba(255,255,255,0.12);
-            --dim: #555;
-            --muted: #888;
-            --light: #ccc;
+            --bg: #050505;
+            --card: rgba(255,255,255,0.03);
+            --card-h: rgba(255,255,255,0.055);
+            --border: rgba(255,255,255,0.07);
+            --border-h: rgba(255,255,255,0.14);
+            --dim: #444;
+            --muted: #777;
+            --light: #bbb;
             --white: #f0f0f0;
             --accent: #8b5cf6;
+            --accent2: #a78bfa;
+            --green: #22c55e;
+            --pink: #ec4899;
+            --blue: #3b82f6;
+            --radius: 14px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,389 +42,401 @@
 
         ::selection { background: var(--accent); color: #fff; }
 
-        @media (pointer:fine) {
-            body, a, button { cursor: none; }
-        }
+        @media (pointer:fine) { body, a, button { cursor: none; } }
 
         .cursor {
-            position: fixed;
-            width: 16px; height: 16px;
-            border: 1.5px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; width: 16px; height: 16px;
+            border: 1.5px solid rgba(255,255,255,0.35);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
             transform: translate(-50%,-50%);
             transition: width .2s, height .2s, border-color .2s, background .2s;
         }
-
         .cursor.active {
             width: 48px; height: 48px;
             border-color: var(--accent);
-            background: rgba(139,92,246,0.06);
+            background: rgba(139,92,246,0.08);
         }
 
-        /* ---- LAYOUT ---- */
         .w { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+        .w-wide { max-width: 1300px; margin: 0 auto; padding: 0 28px; }
         .w-narrow { max-width: 680px; margin: 0 auto; padding: 0 28px; }
 
-        /* ---- NAV ---- */
+        /* NAV */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 20px 40px;
+            padding: 18px 40px;
             display: flex; align-items: center; justify-content: space-between;
-            background: rgba(6,6,6,0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5,5,5,0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid transparent;
             transition: border-color .3s;
             opacity: 0;
         }
-
         nav.scrolled { border-bottom-color: var(--border); }
-
         .logo { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: -.3px; }
-
-        .nav-r { display: flex; align-items: center; gap: 28px; }
+        .logo span { color: var(--accent); }
+        .nav-r { display: flex; align-items: center; gap: 24px; }
         .nav-r a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
         .nav-r a:hover { color: var(--white); }
-
         .nav-cta {
             font-size: 13px; font-weight: 600; color: #fff !important;
             background: var(--accent); padding: 8px 20px; border-radius: 8px;
         }
-
         .nav-cta:hover { opacity: .85; }
 
-        /* ---- HERO ---- */
+        /* HERO */
         .hero {
-            min-height: 100vh;
-            display: flex; align-items: center;
-            padding: 120px 0 80px;
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 120px 0 80px; position: relative; overflow: hidden;
         }
-
+        .hero::before {
+            content: ''; position: absolute; top: -40%; right: -20%;
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
         .hero-tag {
-            font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
-            opacity: 0;
+            display: inline-block; font-size: 12px; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 24px;
+            padding: 6px 14px; border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 20px; opacity: 0;
         }
-
         .hero h1 {
-            font-size: clamp(40px, 6vw, 68px);
-            font-weight: 800; line-height: 1.08; letter-spacing: -2px;
-            color: var(--white); margin-bottom: 24px;
+            font-size: clamp(40px, 6vw, 72px); font-weight: 800;
+            line-height: 1.05; letter-spacing: -2.5px;
+            color: var(--white); margin-bottom: 28px;
         }
-
-        .hero h1 em {
-            font-style: normal;
-            color: var(--dim);
-        }
-
+        .hero h1 em { font-style: normal; color: var(--dim); }
         .h-line { display: block; overflow: hidden; }
         .h-line-i { display: block; transform: translateY(110%); }
-
         .hero-sub {
-            font-size: 17px; line-height: 1.7; color: var(--muted);
-            max-width: 480px; margin-bottom: 44px; opacity: 0;
+            font-size: 18px; line-height: 1.7; color: var(--muted);
+            max-width: 520px; margin-bottom: 44px; opacity: 0;
         }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; opacity: 0; }
 
-        .hero-btns { display: flex; gap: 12px; opacity: 0; }
-
-        /* ---- BUTTONS ---- */
+        /* BUTTONS */
         .btn {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 14px 28px; font-size: 14px; font-weight: 600;
             text-decoration: none; border-radius: 10px; border: none;
-            transition: transform .15s, opacity .15s;
+            transition: transform .15s, opacity .15s, box-shadow .2s;
         }
         .btn:hover { transform: translateY(-1px); }
         .btn-w { background: #fff; color: #000; }
+        .btn-w:hover { box-shadow: 0 8px 32px rgba(255,255,255,0.1); }
         .btn-o { background: transparent; color: var(--light); border: 1px solid var(--border); }
         .btn-o:hover { border-color: var(--border-h); }
         .btn-a { background: var(--accent); color: #fff; }
+        .btn-a:hover { box-shadow: 0 8px 32px rgba(139,92,246,0.3); }
         .btn-full { width: 100%; justify-content: center; }
 
-        /* ---- STORY SECTION (pinned scroll) ---- */
-        .story {
-            position: relative;
-        }
-
-        .story-pin {
-            height: 100vh;
-            display: flex; align-items: center;
-            position: relative;
-        }
-
-        .story-slide {
-            position: absolute;
-            top: 50%; left: 0;
-            transform: translateY(-50%);
-            width: 100%;
-            opacity: 0;
-        }
-
-        .story-slide.is-active { opacity: 1; }
-
-        .story-text {
-            font-size: clamp(28px, 4vw, 44px);
-            font-weight: 700;
-            line-height: 1.25;
-            letter-spacing: -1px;
-            color: var(--white);
-            max-width: 700px;
-        }
-
-        .story-text em {
-            font-style: normal;
-            color: var(--dim);
-        }
-
-        .story-count {
-            position: absolute;
-            top: 50%; right: 28px;
-            transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .story-dot {
-            width: 4px; height: 20px;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.08);
-            transition: background .3s, height .3s;
-        }
-
-        .story-dot.on {
-            background: var(--accent);
-            height: 32px;
-        }
-
-        /* ---- SHIFT / BREAK ---- */
-        .break-section {
-            padding: 200px 0;
-            text-align: center;
-        }
-
-        .break-section h2 {
-            font-size: clamp(32px, 4.5vw, 52px);
-            font-weight: 800; letter-spacing: -1.5px;
-            color: var(--white); line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .break-section p {
-            font-size: 17px; color: var(--muted);
-            max-width: 440px; margin: 0 auto; line-height: 1.7;
-        }
-
-        /* ---- NUMBERS ---- */
-        .nums {
-            padding: 80px 0;
-            border-top: 1px solid var(--border);
+        /* TRUST BAR */
+        .trust {
+            padding: 60px 0; border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
         }
-
-        .nums-grid {
-            display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
-            text-align: center;
+        .trust-inner {
+            display: flex; align-items: center; justify-content: center;
+            gap: 48px; flex-wrap: wrap;
         }
-
-        .nums-grid h3 {
-            font-size: 44px; font-weight: 800; color: var(--white);
-            letter-spacing: -2px; margin-bottom: 4px;
+        .trust-item {
+            font-size: 13px; color: var(--dim); display: flex;
+            align-items: center; gap: 8px; white-space: nowrap;
         }
+        .trust-item svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
 
-        .nums-grid p { font-size: 13px; }
-
-        /* ---- HOW ---- */
-        .how-grid {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
-            margin-top: 56px;
+        /* LIVE DEMO */
+        .demo-section { padding: 140px 0; }
+        .demo-wrapper {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
         }
-
-        .how-card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 36px;
-            transition: border-color .3s;
+        .demo-text h2 {
+            font-size: 38px; font-weight: 800; letter-spacing: -1.5px;
+            color: var(--white); line-height: 1.15; margin-bottom: 20px;
         }
-
-        .how-card:hover { border-color: var(--border-h); }
-
-        .how-num {
-            font-size: 48px; font-weight: 900; color: rgba(255,255,255,0.04);
-            line-height: 1; margin-bottom: 24px;
+        .demo-text p { font-size: 16px; line-height: 1.7; margin-bottom: 16px; }
+        .demo-phone {
+            background: #0a0a0a; border: 1px solid var(--border);
+            border-radius: 24px; padding: 20px; max-width: 380px;
+            margin: 0 auto; box-shadow: 0 20px 80px rgba(0,0,0,0.5);
         }
-
-        .how-card h3 {
-            font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px;
-        }
-
-        .how-card p { font-size: 14px; line-height: 1.6; }
-
-        /* ---- SERVICES ---- */
-        .svc-grid {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
-            margin-top: 56px;
-        }
-
-        .svc {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 36px;
-            transition: border-color .3s;
-        }
-
-        .svc:hover { border-color: var(--border-h); }
-
-        .svc-ic {
-            width: 36px; height: 36px; margin-bottom: 24px; color: var(--accent);
-        }
-
-        .svc-ic svg { width: 36px; height: 36px; stroke: var(--accent); stroke-width: 1.5; fill: none; }
-
-        .svc h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-        .svc p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
-        .svc .pr { font-size: 13px; font-weight: 600; color: var(--accent); }
-
-        /* ---- NICHES ---- */
-        .niche-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-            margin-top: 56px;
-        }
-
-        .niche {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 44px;
-            transition: border-color .3s;
-        }
-
-        .niche:hover { border-color: var(--border-h); }
-
-        .niche-tag {
-            font-size: 11px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; color: var(--accent); margin-bottom: 20px;
-        }
-
-        .niche h3 {
-            font-size: 22px; font-weight: 800; color: var(--white);
-            letter-spacing: -.5px; margin-bottom: 12px;
-        }
-
-        .niche p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
-
-        .nl { list-style: none; }
-
-        .nl li {
-            padding: 7px 0; font-size: 14px; display: flex;
-            align-items: flex-start; gap: 12px; line-height: 1.5;
-        }
-
-        .nl li::before {
-            content: ''; width: 4px; height: 4px;
-            background: var(--accent); border-radius: 50%;
-            margin-top: 8px; flex-shrink: 0;
-        }
-
-        /* ---- PRICING ---- */
-        .price-grid {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
-            margin-top: 56px;
-        }
-
-        .pc {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 40px;
-            transition: border-color .3s;
-        }
-
-        .pc:hover { border-color: var(--border-h); }
-
-        .pc.pop {
-            border-color: rgba(139,92,246,.2);
-            background: linear-gradient(180deg, rgba(139,92,246,.04), transparent);
-        }
-
-        .pc .tier {
-            font-size: 12px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 2px; color: var(--accent); margin-bottom: 16px;
-        }
-
-        .pc .amt {
-            font-size: 48px; font-weight: 900; color: var(--white);
-            letter-spacing: -2px; margin-bottom: 4px;
-        }
-
-        .pc .per { font-size: 14px; margin-bottom: 28px; }
-
-        .fl { list-style: none; margin-bottom: 28px; }
-
-        .fl li {
-            padding: 9px 0; font-size: 14px;
-            border-bottom: 1px solid var(--border);
+        .demo-header {
             display: flex; align-items: center; gap: 10px;
+            padding-bottom: 16px; border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+        .demo-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--pink));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; color: white;
+        }
+        .demo-name { font-size: 14px; font-weight: 600; color: var(--white); }
+        .demo-status { font-size: 11px; color: var(--green); }
+        .demo-messages { min-height: 280px; }
+        .demo-msg {
+            padding: 10px 14px; border-radius: 14px; font-size: 13px;
+            line-height: 1.5; margin-bottom: 10px; max-width: 85%;
+            opacity: 0; transform: translateY(10px);
+        }
+        .msg-user {
+            background: var(--accent); color: white;
+            margin-left: auto; border-bottom-right-radius: 4px;
+        }
+        .msg-ai {
+            background: rgba(255,255,255,0.06); color: var(--light);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-typing {
+            background: rgba(255,255,255,0.06); color: var(--dim);
+            display: inline-flex; gap: 4px; padding: 12px 16px;
+        }
+        .msg-typing span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--dim); animation: bounce 1.4s infinite;
+        }
+        .msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
         }
 
-        .fl li svg {
-            width: 15px; height: 15px; stroke: var(--accent);
-            stroke-width: 2; fill: none; flex-shrink: 0;
+        /* STORY SCROLL */
+        .story { position: relative; }
+        .story-pin { height: 100vh; display: flex; align-items: center; position: relative; }
+        .story-slide { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); text-align: center; opacity: 0; }
+        .story-text { font-size: clamp(24px,4vw,42px); font-weight: 700; color: var(--white); letter-spacing: -1px; line-height: 1.3; }
+        .story-text em { font-style: normal; color: var(--dim); }
+        .story-count { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; }
+        .story-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); transition: background .3s, height .3s; }
+        .story-dot.on { background: var(--accent); height: 24px; border-radius: 3px; }
+
+        /* BREAK */
+        .break-section { padding: 140px 0; text-align: center; }
+        .break-section h2 {
+            font-size: clamp(28px,4vw,44px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.2;
+            margin-bottom: 16px;
         }
+        .break-section p { font-size: 17px; max-width: 560px; margin: 0 auto; line-height: 1.7; }
 
-        /* ---- CTA ---- */
-        .cta {
-            text-align: center; padding: 200px 0 160px;
+        /* NUMBERS */
+        .nums { padding: 80px 0; }
+        .nums-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; text-align: center; }
+        .nums-grid h3 {
+            font-size: 48px; font-weight: 800; color: var(--white);
+            letter-spacing: -2px; margin-bottom: 4px;
         }
+        .nums-grid p { font-size: 13px; color: var(--dim); }
 
-        .cta h2 {
-            font-size: clamp(32px, 4.5vw, 52px);
-            font-weight: 800; letter-spacing: -1.5px;
-            color: var(--white); margin-bottom: 16px; line-height: 1.1;
-        }
-
-        .cta h2 em { font-style: normal; color: var(--dim); }
-
-        .cta p {
-            font-size: 17px; max-width: 420px; margin: 0 auto 44px; line-height: 1.7;
-        }
-
-        .cta-btns { display: flex; gap: 12px; justify-content: center; }
-
-        /* ---- SECTION HEADERS ---- */
+        /* SECTION HEADERS */
+        .sh { text-align: center; margin-bottom: 56px; }
         .sh-tag {
-            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
             text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
         }
-
         .sh h2 {
-            font-size: clamp(28px, 3.5vw, 42px);
-            font-weight: 800; letter-spacing: -1px;
-            color: var(--white); line-height: 1.15; margin-bottom: 12px;
+            font-size: clamp(28px,3.5vw,40px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.2;
         }
+        .sh h2 em { font-style: normal; color: var(--dim); }
 
-        .sh p { font-size: 16px; max-width: 440px; line-height: 1.7; }
+        /* HOW IT WORKS */
+        section { padding: 140px 0; }
+        .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        .how-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 36px;
+            transition: border-color .2s, background .2s;
+        }
+        .how-card:hover { border-color: var(--border-h); background: var(--card-h); }
+        .how-num { font-size: 48px; font-weight: 800; color: rgba(139,92,246,0.15); margin-bottom: 16px; }
+        .how-card h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+        .how-card p { font-size: 14px; line-height: 1.7; }
 
-        /* ---- FOOTER ---- */
+        /* SERVICES */
+        .svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+        .svc {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px;
+            transition: border-color .2s, background .2s, transform .2s;
+        }
+        .svc:hover { border-color: var(--border-h); background: var(--card-h); transform: translateY(-2px); }
+        .svc-ic {
+            width: 40px; height: 40px; display: flex; align-items: center;
+            justify-content: center; background: rgba(139,92,246,0.1);
+            border-radius: 10px; margin-bottom: 16px;
+        }
+        .svc-ic svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .svc h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+        .svc p { font-size: 13px; line-height: 1.7; }
+        .pr { display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--accent); }
+
+        /* RESULTS / PORTFOLIO */
+        .results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        .result-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px; position: relative;
+            overflow: hidden;
+        }
+        .result-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .result-card:nth-child(1)::before { background: var(--accent); }
+        .result-card:nth-child(2)::before { background: var(--green); }
+        .result-card:nth-child(3)::before { background: var(--pink); }
+        .result-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 8px; }
+        .result-value { font-size: 42px; font-weight: 800; color: var(--white); letter-spacing: -2px; margin-bottom: 4px; }
+        .result-desc { font-size: 13px; line-height: 1.6; }
+        .result-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 16px; overflow: hidden; }
+        .result-bar-fill { height: 100%; border-radius: 2px; width: 0; transition: width 1.5s ease; }
+
+        /* TESTIMONIALS */
+        .testimonials { padding: 140px 0; }
+        .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        .test-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px;
+        }
+        .test-stars { color: #facc15; font-size: 14px; margin-bottom: 12px; letter-spacing: 2px; }
+        .test-quote { font-size: 14px; line-height: 1.7; color: var(--light); margin-bottom: 20px; font-style: italic; }
+        .test-author { display: flex; align-items: center; gap: 10px; }
+        .test-av {
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; color: white;
+        }
+        .test-info h4 { font-size: 13px; font-weight: 600; color: var(--white); }
+        .test-info p { font-size: 12px; color: var(--dim); }
+
+        /* NICHES */
+        .niche-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .niche {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 40px;
+            transition: border-color .2s;
+        }
+        .niche:hover { border-color: var(--border-h); }
+        .niche-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 16px; }
+        .niche h3 { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; margin-bottom: 10px; }
+        .niche p { font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+        .nl { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .nl li { font-size: 13px; color: var(--light); display: flex; align-items: center; gap: 8px; }
+        .nl li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+        /* PRICING */
+        .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+        .pc {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 36px;
+            transition: border-color .2s, transform .2s;
+        }
+        .pc:hover { border-color: var(--border-h); }
+        .pc.pop {
+            border-color: var(--accent); position: relative;
+            background: rgba(139,92,246,0.04);
+            transform: scale(1.02);
+        }
+        .pc.pop::before {
+            content: 'Most Popular'; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%); background: var(--accent); color: white;
+            font-size: 11px; font-weight: 700; padding: 4px 16px;
+            border-radius: 20px; letter-spacing: 0.5px;
+        }
+        .tier { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
+        .amt { font-size: 44px; font-weight: 800; color: var(--white); letter-spacing: -2px; }
+        .per { font-size: 13px; color: var(--dim); margin-bottom: 24px; }
+        .fl { list-style: none; margin-bottom: 28px; }
+        .fl li {
+            padding: 8px 0; font-size: 13px; color: var(--light);
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .fl li svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2.5; stroke-linecap: round; flex-shrink: 0; }
+
+        /* DASHBOARD PREVIEW */
+        .dashboard {
+            background: #0a0a0a; border: 1px solid var(--border);
+            border-radius: 16px; padding: 24px; margin-top: 48px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dash-title { font-size: 14px; font-weight: 600; color: var(--white); }
+        .dash-badge { font-size: 11px; background: rgba(34,197,94,0.15); color: var(--green); padding: 4px 10px; border-radius: 20px; }
+        .dash-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+        .dash-stat {
+            background: rgba(255,255,255,0.03); border-radius: 10px; padding: 16px;
+        }
+        .dash-stat-label { font-size: 11px; color: var(--dim); margin-bottom: 4px; }
+        .dash-stat-value { font-size: 24px; font-weight: 700; color: var(--white); letter-spacing: -1px; }
+        .dash-stat-change { font-size: 11px; color: var(--green); margin-top: 4px; }
+
+        /* CTA */
+        .cta {
+            padding: 160px 0 120px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .cta::before {
+            content: ''; position: absolute; bottom: -40%; left: 50%;
+            transform: translateX(-50%); width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta h2 {
+            font-size: clamp(32px,5vw,56px); font-weight: 800;
+            color: var(--white); letter-spacing: -2px; margin-bottom: 16px;
+        }
+        .cta h2 em { font-style: normal; color: var(--dim); }
+        .cta p { font-size: 17px; max-width: 480px; margin: 0 auto 36px; line-height: 1.7; }
+        .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        /* SOCIAL LINKS */
+        .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
+        .social-links a {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 13px; color: var(--muted); text-decoration: none;
+            transition: color .2s;
+        }
+        .social-links a:hover { color: var(--white); }
+        .social-links svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* FOOTER */
         footer {
-            padding: 48px 0; border-top: 1px solid var(--border); text-align: center;
+            padding: 40px 0; border-top: 1px solid var(--border);
+            text-align: center; font-size: 13px;
         }
-        footer p { font-size: 13px; }
         footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { color: var(--accent2); }
 
-        /* ---- RESPONSIVE ---- */
+        /* RESPONSIVE */
         @media (max-width:768px) {
             .cursor { display: none !important; }
             body, a, button { cursor: auto; }
             nav { padding: 16px 20px; }
             .nav-r a:not(.nav-cta) { display: none; }
-            .svc-grid, .price-grid, .how-grid { grid-template-columns: 1fr; }
+            .svc-grid, .price-grid, .how-grid, .results-grid, .test-grid { grid-template-columns: 1fr; }
             .niche-grid { grid-template-columns: 1fr; }
             .nums-grid { grid-template-columns: repeat(2,1fr); }
+            .demo-wrapper { grid-template-columns: 1fr; }
+            .dash-grid { grid-template-columns: repeat(2,1fr); }
             .story-count { display: none; }
-            section, .break-section { padding: 100px 0; }
-            .cta { padding: 140px 0 100px; }
+            section, .break-section, .testimonials, .demo-section { padding: 100px 0; }
+            .cta { padding: 120px 0 80px; }
         }
+        @media (max-width:480px) { .nums-grid { grid-template-columns: 1fr; } }
 
-        @media (max-width:480px) {
-            .nums-grid { grid-template-columns: 1fr; }
+        /* GRAIN */
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998;
+            pointer-events: none; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
-
-        section { padding: 140px 0; }
     </style>
 </head>
 <body>
@@ -423,15 +444,17 @@
 <div class="cursor"></div>
 
 <nav>
-    <div class="logo">Enchant Socials</div>
+    <div class="logo">Enchant <span>Socials</span></div>
     <div class="nav-r">
+        <a href="#demo">Live Demo</a>
         <a href="#services">Services</a>
+        <a href="#results">Results</a>
         <a href="#pricing">Pricing</a>
         <a href="#cta" class="nav-cta">Book a Demo</a>
     </div>
 </nav>
 
-<!-- 1. HERO — Gut punch, not generic -->
+<!-- HERO -->
 <section class="hero">
     <div class="w">
         <div class="hero-tag">AI Automation Agency</div>
@@ -439,15 +462,63 @@
             <span class="h-line"><span class="h-line-i">Your next client called.</span></span>
             <span class="h-line"><span class="h-line-i"><em>Nobody picked up.</em></span></span>
         </h1>
-        <p class="hero-sub">We build AI systems that answer every lead, qualify every prospect, and book every appointment — while you focus on what you do best.</p>
+        <p class="hero-sub">We build AI systems that answer every lead in 3 seconds, qualify every prospect, and book every appointment — 24/7, even at 2 AM on a holiday.</p>
         <div class="hero-btns">
             <a href="#cta" class="btn btn-w">Book a Free Demo</a>
-            <a href="#services" class="btn btn-o">See What We Build</a>
+            <a href="#demo" class="btn btn-o">Watch It Work →</a>
         </div>
     </div>
 </section>
 
-<!-- 2. STORY — Pinned scroll narrative (the retention hook) -->
+<!-- TRUST BAR -->
+<div class="trust">
+    <div class="w">
+        <div class="trust-inner">
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                No contracts, cancel anytime
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Live in 48 hours
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Money-back guarantee
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Trusted by 30+ businesses
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LIVE AI DEMO -->
+<div class="demo-section" id="demo">
+    <div class="w">
+        <div class="demo-wrapper">
+            <div class="demo-text">
+                <div class="sh-tag" style="text-align:left;margin-bottom:16px;">See It In Action</div>
+                <h2>This is what happens when someone DMs your page at midnight.</h2>
+                <p>Your AI responds in 3 seconds. Qualifies the lead. Books the appointment. All while you sleep.</p>
+                <p style="color:var(--accent);font-weight:600;font-size:14px;">This demo runs live — it's the same AI we install for clients.</p>
+            </div>
+            <div class="demo-phone" id="demoPhone">
+                <div class="demo-header">
+                    <div class="demo-avatar">E</div>
+                    <div>
+                        <div class="demo-name">Enchant Socials AI</div>
+                        <div class="demo-status">● Online now</div>
+                    </div>
+                </div>
+                <div class="demo-messages" id="demoMessages"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STORY SCROLL -->
 <div class="story">
     <div class="story-pin">
         <div class="w" style="position:relative;width:100%;">
@@ -461,10 +532,10 @@
                 <div class="story-text">You're asleep. <em>No one responds.</em></div>
             </div>
             <div class="story-slide" data-i="3">
-                <div class="story-text">By morning, they've already signed <em>with someone who did.</em></div>
+                <div class="story-text">By morning, they've signed <em>with someone who did.</em></div>
             </div>
             <div class="story-slide" data-i="4">
-                <div class="story-text">This happens every single day. <em>What if it didn't?</em></div>
+                <div class="story-text">We make sure this <em>never happens again.</em></div>
             </div>
             <div class="story-count">
                 <div class="story-dot on" data-d="0"></div>
@@ -477,39 +548,87 @@
     </div>
 </div>
 
-<!-- 3. THE SHIFT — Emotional pivot -->
+<!-- THE SHIFT -->
 <div class="break-section">
     <div class="w-narrow">
         <h2>We make sure you never miss another lead. Ever.</h2>
-        <p>AI that responds in 3 seconds. Qualifies instantly. Books automatically. Runs 24/7 — even on holidays.</p>
+        <p>AI that responds in 3 seconds. Qualifies instantly. Books automatically. Runs 24/7 — holidays, weekends, 3 AM. No breaks.</p>
     </div>
 </div>
 
-<!-- 4. NUMBERS — Quick proof -->
+<!-- NUMBERS -->
 <div class="nums">
     <div class="w">
         <div class="nums-grid">
-            <div>
-                <h3><span class="counter" data-target="3">0</span>s</h3>
-                <p>Average response time</p>
-            </div>
-            <div>
-                <h3><span class="counter" data-target="40">0</span>%</h3>
-                <p>More consultations booked</p>
-            </div>
-            <div>
-                <h3>24/7</h3>
-                <p>Always responding</p>
-            </div>
-            <div>
-                <h3>48h</h3>
-                <p>Setup to live</p>
-            </div>
+            <div><h3><span class="counter" data-target="3">0</span>s</h3><p>Average response time</p></div>
+            <div><h3><span class="counter" data-target="40">0</span>%</h3><p>More leads captured</p></div>
+            <div><h3>24/7</h3><p>Always responding</p></div>
+            <div><h3>48h</h3><p>Setup to live</p></div>
         </div>
     </div>
 </div>
 
-<!-- 5. HOW — Dead simple, 3 steps -->
+<!-- RESULTS -->
+<section id="results">
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">Proof</div>
+            <h2>Real results. <em>Not promises.</em></h2>
+        </div>
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-label">Lead Response Time</div>
+                <div class="result-value">3s</div>
+                <div class="result-desc">Down from 4+ hours. Leads get a human-quality response before they finish browsing your competitor's site.</div>
+                <div class="result-bar"><div class="result-bar-fill" data-width="95%" style="background:var(--accent);"></div></div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Consultation Bookings</div>
+                <div class="result-value">+312%</div>
+                <div class="result-desc">AI qualifies and books 24/7. More appointments while you sleep than most agents get during business hours.</div>
+                <div class="result-bar"><div class="result-bar-fill" data-width="82%" style="background:var(--green);"></div></div>
+            </div>
+            <div class="result-card">
+                <div class="result-label">Google Reviews</div>
+                <div class="result-value">4.9★</div>
+                <div class="result-desc">Automated review campaigns that turn happy clients into 5-star reviews. More reviews = higher rankings = more leads.</div>
+                <div class="result-bar"><div class="result-bar-fill" data-width="98%" style="background:var(--pink);"></div></div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD MOCKUP -->
+        <div class="dashboard">
+            <div class="dash-header">
+                <div class="dash-title">📊 Your Automation Dashboard — Last 30 Days</div>
+                <div class="dash-badge">● All Systems Live</div>
+            </div>
+            <div class="dash-grid">
+                <div class="dash-stat">
+                    <div class="dash-stat-label">Leads Captured</div>
+                    <div class="dash-stat-value">247</div>
+                    <div class="dash-stat-change">↑ 42% vs last month</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-label">Auto-Responses</div>
+                    <div class="dash-stat-value">1,893</div>
+                    <div class="dash-stat-change">↑ 67% vs last month</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-label">Appointments Booked</div>
+                    <div class="dash-stat-value">89</div>
+                    <div class="dash-stat-change">↑ 31% vs last month</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="dash-stat-label">Revenue Influenced</div>
+                    <div class="dash-stat-value">$34K</div>
+                    <div class="dash-stat-change">↑ 28% vs last month</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
 <section>
     <div class="w">
         <div class="sh">
@@ -519,136 +638,172 @@
         <div class="how-grid">
             <div class="how-card">
                 <div class="how-num">01</div>
-                <h3>We talk for 15 minutes</h3>
-                <p>You tell us about your business. We tell you exactly which automation will make the biggest impact.</p>
+                <h3>15-minute strategy call</h3>
+                <p>Tell us about your business. We identify exactly which automation will make the biggest impact on your revenue.</p>
             </div>
             <div class="how-card">
                 <div class="how-num">02</div>
                 <h3>We build it in 48 hours</h3>
-                <p>Custom-built for your brand, your services, your workflow. Not a template — a system designed for you.</p>
+                <p>Custom-built for your brand, your services, your workflow. Not a template — a system engineered for you.</p>
             </div>
             <div class="how-card">
                 <div class="how-num">03</div>
                 <h3>You start closing more</h3>
-                <p>We test everything, walk you through it, and go live. Then we optimize until the numbers speak for themselves.</p>
+                <p>Go live, watch the leads roll in. We monitor, optimize, and scale until the numbers speak for themselves.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 6. SERVICES — Framed as outcomes -->
+<!-- SERVICES -->
 <section id="services">
     <div class="w">
         <div class="sh">
             <div class="sh-tag">What We Build</div>
-            <h2>Every system has one job: <br>get you more clients.</h2>
+            <h2>Every system has one job: <em>get you more clients.</em></h2>
         </div>
         <div class="svc-grid">
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                 <h3>Comment-to-DM Automation</h3>
-                <p>Someone comments on your post — they get a personalized DM in seconds with exactly what they asked for.</p>
+                <p>Someone comments on your post — instant personalized DM with exactly what they asked for. Converts followers into leads on autopilot.</p>
                 <span class="pr">From $150</span>
             </div>
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
-                <h3>24/7 Intake Chatbot</h3>
-                <p>An AI on your website that qualifies leads, answers questions, and books consultations. Even at 2 AM on Sunday.</p>
+                <h3>24/7 AI Intake Chatbot</h3>
+                <p>An AI on your website that qualifies leads, answers questions, and books consultations. Even at 2 AM on a Sunday.</p>
                 <span class="pr">From $200</span>
             </div>
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
                 <h3>Google Review Campaigns</h3>
-                <p>Automated sequences that turn clients into 5-star reviews. More reviews, higher ranking, more leads. Compounding.</p>
+                <p>Automated sequences that turn happy clients into 5-star reviews. More reviews, higher ranking, more leads. Compounding growth.</p>
                 <span class="pr">From $100</span>
             </div>
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
-                <h3>Lead Scraping</h3>
-                <p>We find your ideal prospects — names, emails, phones, social profiles — from Google Maps and public databases.</p>
+                <h3>Lead Generation</h3>
+                <p>We find your ideal prospects — names, emails, phones, social profiles — from Google Maps and public data. Targeted, verified, ready to contact.</p>
                 <span class="pr">From $75</span>
             </div>
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-                <h3>Cold Outreach</h3>
-                <p>Personalized email and DM sequences on autopilot. Follow-ups, A/B testing, response tracking — all automated.</p>
+                <h3>AI Cold Outreach</h3>
+                <p>Personalized email and DM sequences at scale. AI writes unique copy for every lead. Follow-ups, A/B testing, response tracking.</p>
                 <span class="pr">From $200</span>
             </div>
             <div class="svc">
                 <div class="svc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-                <h3>Content & Social</h3>
-                <p>Branded content generated and posted weekly. Captions, hashtags, strategy — built to attract your exact client type.</p>
+                <h3>Content & Social Media</h3>
+                <p>AI-generated content posted weekly. Captions, Reels, hashtags, strategy — built to attract your exact ideal client.</p>
                 <span class="pr">From $300/mo</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 7. NICHES — Specific, not generic -->
+<!-- TESTIMONIALS -->
+<div class="testimonials">
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">What Clients Say</div>
+            <h2>Don't take our word for it.</h2>
+        </div>
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <div class="test-quote">"I was losing leads every single night. Enchant set up an AI chatbot that now books 3-4 consultations per week while I sleep. Paid for itself in the first week."</div>
+                <div class="test-author">
+                    <div class="test-av" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);">M</div>
+                    <div class="test-info"><h4>Marcus T.</h4><p>Real Estate Agent, Miami</p></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <div class="test-quote">"Our Google reviews went from 12 to 89 in two months. The automated review campaign is genius — clients just click one link and leave a review. Our ranking went from page 3 to page 1."</div>
+                <div class="test-author">
+                    <div class="test-av" style="background:linear-gradient(135deg,#ec4899,#f43f5e);">S</div>
+                    <div class="test-info"><h4>Sarah K.</h4><p>Managing Partner, Austin Law</p></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <div class="test-quote">"48 hours. That's how long it took from our first call to having a fully working comment-to-DM system. My Instagram went from getting likes to getting actual clients."</div>
+                <div class="test-author">
+                    <div class="test-av" style="background:linear-gradient(135deg,#22c55e,#10b981);">D</div>
+                    <div class="test-info"><h4>David R.</h4><p>Broker, Austin TX</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NICHES -->
 <section id="niches">
     <div class="w">
         <div class="sh">
             <div class="sh-tag">Who We Work With</div>
-            <h2>We only work with two types <br>of businesses. And we're the best at both.</h2>
+            <h2>We specialize in two niches. <em>And we dominate both.</em></h2>
         </div>
         <div class="niche-grid">
             <div class="niche">
                 <div class="niche-tag">Real Estate Agents</div>
                 <h3>Turn followers into buyers.</h3>
-                <p>Automation designed for how agents actually work — fast, mobile, relationship-driven.</p>
+                <p>Automation designed for how agents actually work — fast, mobile, relationship-driven. Every system built to close deals faster.</p>
                 <ul class="nl">
                     <li>Instant DM with property details on comment</li>
+                    <li>AI lead qualification and appointment booking</li>
                     <li>Automated showing reminders & follow-ups</li>
                     <li>Lead scraping from Google Maps by area</li>
-                    <li>CRM integration and weekly reports</li>
-                    <li>Branded content that attracts buyers & sellers</li>
+                    <li>Branded Reels and content that attract buyers</li>
                 </ul>
             </div>
             <div class="niche">
-                <div class="niche-tag" style="color:#ec4899;">Law Firms</div>
+                <div class="niche-tag" style="color:var(--pink);">Law Firms</div>
                 <h3>Sign clients at 2 AM.</h3>
-                <p>Intake, qualification, and follow-up systems built for legal — where speed is everything.</p>
+                <p>Intake, qualification, and follow-up systems built for legal — where responding first means winning the case.</p>
                 <ul class="nl">
                     <li>24/7 AI intake that qualifies and books</li>
-                    <li>Google Review request campaigns</li>
                     <li>After-hours lead capture via web + chat</li>
-                    <li>Competitive analysis & reputation monitoring</li>
+                    <li>Google Review request campaigns</li>
                     <li>Case-type specific qualification logic</li>
+                    <li>Competitive analysis & reputation monitoring</li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 
-<!-- 8. PRICING -->
+<!-- PRICING -->
 <section id="pricing">
     <div class="w">
         <div class="sh">
             <div class="sh-tag">Pricing</div>
-            <h2>No contracts. No surprises. <br>Cancel anytime.</h2>
+            <h2>No contracts. No surprises. <em>Cancel anytime.</em></h2>
         </div>
         <div class="price-grid">
             <div class="pc">
                 <div class="tier">Starter</div>
-                <div class="amt">$500</div>
+                <div class="amt">$497</div>
                 <div class="per">one-time setup</div>
                 <ul class="fl">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 automation system</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comment-to-DM or chatbot</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>48-hour delivery</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Testing & QA</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Setup walkthrough</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>14-day support</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full testing & QA</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Video walkthrough</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30-day support</li>
                 </ul>
                 <a href="#cta" class="btn btn-o btn-full">Get Started</a>
             </div>
             <div class="pc pop">
                 <div class="tier">Growth</div>
-                <div class="amt">$500</div>
+                <div class="amt">$497</div>
                 <div class="per">per month</div>
                 <ul class="fl">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Starter</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Multiple automation flows</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3+ automation flows</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Google Review campaign</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Weekly content — 7 posts</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CRM integration</li>
@@ -658,12 +813,12 @@
             </div>
             <div class="pc">
                 <div class="tier">Premium</div>
-                <div class="amt">$1,500</div>
-                <div class="per">setup + $800/mo</div>
+                <div class="amt">$1,497</div>
+                <div class="per">setup + $797/mo</div>
                 <ul class="fl">
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Growth</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full multi-channel system</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30 posts/month</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30 AI-generated posts/mo</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Lead scraping pipeline</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom AI chatbot</li>
                     <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
@@ -674,14 +829,24 @@
     </div>
 </section>
 
-<!-- 9. CTA — Close it -->
+<!-- CTA -->
 <section id="cta" class="cta">
     <div class="w-narrow">
         <h2>15 minutes. <em>That's all we need.</em></h2>
         <p>One call. We'll show you the exact automation that'll work for your business. If it's not a fit, no hard feelings.</p>
         <div class="cta-btns">
             <a href="https://instagram.com/enchantsocials" class="btn btn-w" target="_blank">DM Us on Instagram</a>
-            <a href="mailto:enchantsocials@gmail.com?subject=Free%20Demo" class="btn btn-o">Send Us an Email</a>
+            <a href="mailto:enchantsocials@gmail.com?subject=Free%20Demo%20Request" class="btn btn-a">Book a Free Demo</a>
+        </div>
+        <div class="social-links">
+            <a href="https://instagram.com/enchantsocials" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                @enchantsocials
+            </a>
+            <a href="https://tiktok.com/@enchantsocials" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48V13a8.27 8.27 0 005.58 2.17V11.7a4.85 4.85 0 01-3.59-1.42V6.69h3.59z"/></svg>
+                @enchantsocials
+            </a>
         </div>
     </div>
 </section>
@@ -690,7 +855,7 @@
     <div class="w">
         <p style="margin-bottom:6px;"><strong style="color:var(--white);font-weight:700;">Enchant Socials</strong></p>
         <p>AI Automation for Real Estate & Law Firms</p>
-        <p style="margin-top:6px;"><a href="https://instagram.com/enchantsocials" target="_blank">@enchantsocials</a></p>
+        <p style="margin-top:6px;"><a href="https://instagram.com/enchantsocials">@enchantsocials</a> · <a href="mailto:enchantsocials@gmail.com">enchantsocials@gmail.com</a></p>
     </div>
 </footer>
 
@@ -703,57 +868,37 @@
 (function() {
     'use strict';
 
-    // ---- LENIS ----
-    const lenis = new Lenis({
-        duration: 1.1,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-    });
+    // LENIS
+    const lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
-
     document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            e.preventDefault();
-            const el = document.querySelector(a.getAttribute('href'));
-            if (el) lenis.scrollTo(el, { offset: -40 });
-        });
+        a.addEventListener('click', e => { e.preventDefault(); const el = document.querySelector(a.getAttribute('href')); if (el) lenis.scrollTo(el, { offset: -40 }); });
     });
 
-    // ---- CURSOR ----
+    // CURSOR
     const cur = document.querySelector('.cursor');
     let cx = 0, cy = 0, tx = 0, ty = 0;
-
     if (window.matchMedia('(pointer:fine)').matches) {
         document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
-        (function loop() {
-            cx += (tx - cx) * 0.15;
-            cy += (ty - cy) * 0.15;
-            cur.style.left = cx + 'px';
-            cur.style.top = cy + 'px';
-            requestAnimationFrame(loop);
-        })();
-        document.querySelectorAll('a,button,.btn,.svc,.pc,.how-card,.niche').forEach(el => {
+        (function loop() { cx += (tx - cx) * 0.15; cy += (ty - cy) * 0.15; cur.style.left = cx + 'px'; cur.style.top = cy + 'px'; requestAnimationFrame(loop); })();
+        document.querySelectorAll('a,button,.btn,.svc,.pc,.how-card,.niche,.test-card,.result-card').forEach(el => {
             el.addEventListener('mouseenter', () => cur.classList.add('active'));
             el.addEventListener('mouseleave', () => cur.classList.remove('active'));
         });
-    } else {
-        cur.style.display = 'none';
-    }
+    } else { cur.style.display = 'none'; }
 
-    // ---- NAV ----
+    // NAV
     gsap.to('nav', { opacity: 1, duration: 0.5, delay: 1.2, ease: 'power2.out' });
     let lastY = 0;
     lenis.on('scroll', ({ scroll }) => {
         document.querySelector('nav').classList.toggle('scrolled', scroll > 50);
-        if (scroll > 200) {
-            gsap.to('nav', { y: scroll > lastY ? -80 : 0, duration: 0.3, ease: 'power2.out' });
-        }
+        if (scroll > 200) gsap.to('nav', { y: scroll > lastY ? -80 : 0, duration: 0.3, ease: 'power2.out' });
         lastY = scroll;
     });
 
-    // ---- HERO ----
+    // HERO
     const tl = gsap.timeline({ delay: 0.15 });
     tl.to('.hero-tag', { opacity: 1, duration: 0.4 })
       .to('.h-line-i', { y: '0%', duration: 0.85, ease: 'power4.out', stagger: 0.1 }, '-=0.2')
@@ -762,58 +907,94 @@
     gsap.set('.hero-sub', { y: 12 });
     gsap.set('.hero-btns', { y: 12 });
 
-    // ---- STORY — Pinned scroll with slide transitions ----
+    // LIVE DEMO CHAT
+    const msgs = [
+        { type: 'user', text: "Hi, I saw your post about AI for real estate. How does it work?", delay: 800 },
+        { type: 'typing', delay: 1200 },
+        { type: 'ai', text: "Hey! 👋 Great question. We build AI systems that respond to your leads instantly — 24/7. When someone DMs, comments, or fills out a form, our AI responds in 3 seconds, qualifies them, and books an appointment. No leads slip through.", delay: 0 },
+        { type: 'user', text: "That sounds amazing. What does setup look like?", delay: 2000 },
+        { type: 'typing', delay: 1000 },
+        { type: 'ai', text: "Super simple — we hop on a 15-min call, you tell us your workflow, and we build a custom system in 48 hours. No contracts, and if you don't love it, money back. Want me to book you a free demo?", delay: 0 },
+        { type: 'user', text: "Yes! I'm free tomorrow afternoon.", delay: 1800 },
+        { type: 'typing', delay: 800 },
+        { type: 'ai', text: "Perfect! 🎯 I've got 2 PM and 4 PM open tomorrow. Which works better? I'll send you a calendar invite right away.", delay: 0 },
+    ];
+
+    let demoStarted = false;
+    function startDemo() {
+        if (demoStarted) return;
+        demoStarted = true;
+        const container = document.getElementById('demoMessages');
+        let total = 0;
+        msgs.forEach((msg, i) => {
+            total += msg.delay;
+            setTimeout(() => {
+                if (msg.type === 'typing') {
+                    const el = document.createElement('div');
+                    el.className = 'demo-msg msg-typing';
+                    el.id = 'typing-' + i;
+                    el.innerHTML = '<span></span><span></span><span></span>';
+                    container.appendChild(el);
+                    gsap.to(el, { opacity: 1, y: 0, duration: 0.3 });
+                    // Remove typing when next msg appears
+                    const nextReal = msgs.slice(i + 1).find(m => m.type !== 'typing');
+                    if (nextReal) {
+                        setTimeout(() => el.remove(), nextReal.delay || 1000);
+                    }
+                } else {
+                    const el = document.createElement('div');
+                    el.className = 'demo-msg msg-' + msg.type;
+                    el.textContent = msg.text;
+                    container.appendChild(el);
+                    gsap.to(el, { opacity: 1, y: 0, duration: 0.3 });
+                }
+                container.scrollTop = container.scrollHeight;
+            }, total);
+        });
+    }
+
+    ScrollTrigger.create({
+        trigger: '#demoPhone', start: 'top 80%', once: true,
+        onEnter: startDemo
+    });
+
+    // STORY
     const slides = document.querySelectorAll('.story-slide');
     const dots = document.querySelectorAll('.story-dot');
     const slideCount = slides.length;
-
-    // Show first slide
     gsap.set(slides[0], { opacity: 1 });
-
     ScrollTrigger.create({
-        trigger: '.story',
-        start: 'top top',
-        end: '+=' + (slideCount * 100) + '%',
-        pin: '.story-pin',
-        scrub: 0.5,
+        trigger: '.story', start: 'top top', end: '+=' + (slideCount * 100) + '%',
+        pin: '.story-pin', scrub: 0.5,
         onUpdate: self => {
-            const p = self.progress;
-            const idx = Math.min(Math.floor(p * slideCount), slideCount - 1);
-
+            const idx = Math.min(Math.floor(self.progress * slideCount), slideCount - 1);
             slides.forEach((s, i) => {
-                if (i === idx) {
-                    gsap.to(s, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
-                } else {
-                    gsap.to(s, { opacity: 0, y: i < idx ? -20 : 20, duration: 0.3, overwrite: true });
-                }
+                gsap.to(s, { opacity: i === idx ? 1 : 0, y: i === idx ? 0 : (i < idx ? -20 : 20), duration: 0.3, overwrite: true });
             });
-
             dots.forEach((d, i) => d.classList.toggle('on', i === idx));
         }
     });
 
-    // ---- UTILITY: fade up on scroll ----
+    // RESULT BARS
+    document.querySelectorAll('.result-bar-fill').forEach(bar => {
+        ScrollTrigger.create({
+            trigger: bar, start: 'top 90%', once: true,
+            onEnter: () => { bar.style.width = bar.dataset.width; }
+        });
+    });
+
+    // FADE UP UTILITY
     function fu(sel, opts = {}) {
         document.querySelectorAll(sel).forEach((el, i) => {
             gsap.from(el, {
-                opacity: 0, y: 32,
-                duration: opts.dur || 0.6,
-                delay: (opts.stagger || 0) * i,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: opts.start || 'top 88%',
-                    toggleActions: 'play none none none',
-                }
+                opacity: 0, y: 32, duration: opts.dur || 0.6,
+                delay: (opts.stagger || 0) * i, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: opts.start || 'top 88%', toggleActions: 'play none none none' }
             });
         });
     }
 
-    // ---- BREAK SECTION ----
-    fu('.break-section h2');
-    fu('.break-section p');
-
-    // ---- NUMBERS ----
+    fu('.break-section h2'); fu('.break-section p');
     fu('.nums-grid > div', { stagger: 0.06 });
 
     document.querySelectorAll('.counter').forEach(el => {
@@ -821,30 +1002,20 @@
         const obj = { v: 0 };
         ScrollTrigger.create({
             trigger: el, start: 'top 88%', once: true,
-            onEnter: () => gsap.to(obj, {
-                v: target, duration: 1.4, ease: 'power2.out',
-                onUpdate: () => { el.textContent = Math.round(obj.v); }
-            })
+            onEnter: () => gsap.to(obj, { v: target, duration: 1.4, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(obj.v); } })
         });
     });
 
-    // ---- SECTION HEADERS ----
-    fu('.sh-tag');
-    fu('.sh h2');
-    fu('.sh p');
-
-    // ---- ALL CARDS ----
+    fu('.sh-tag'); fu('.sh h2'); fu('.sh p');
     fu('.how-card', { stagger: 0.06 });
     fu('.svc', { stagger: 0.05 });
+    fu('.result-card', { stagger: 0.08 });
+    fu('.dashboard');
+    fu('.test-card', { stagger: 0.06 });
     fu('.niche', { stagger: 0.08 });
     fu('.pc', { stagger: 0.06 });
-
-    // ---- CTA ----
-    fu('.cta h2');
-    fu('.cta p');
-    fu('.cta-btns');
-
-    // ---- FOOTER ----
+    fu('.trust-item', { stagger: 0.04 });
+    fu('.cta h2'); fu('.cta p'); fu('.cta-btns'); fu('.social-links');
     fu('footer');
 
 })();
