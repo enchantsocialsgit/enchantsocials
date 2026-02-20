@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchant Socials — AI That Closes While You Sleep</title>
+    <meta name="description" content="AI automation for real estate agents and law firms. Respond to every lead instantly, 24/7. Setup in 48 hours.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060606;
+            --card: rgba(255,255,255,0.025);
+            --border: rgba(255,255,255,0.06);
+            --border-h: rgba(255,255,255,0.12);
+            --dim: #555;
+            --muted: #888;
+            --light: #ccc;
+            --white: #f0f0f0;
+            --accent: #8b5cf6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: auto; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: #fff; }
+
+        @media (pointer:fine) {
+            body, a, button { cursor: none; }
+        }
+
+        .cursor {
+            position: fixed;
+            width: 16px; height: 16px;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%,-50%);
+            transition: width .2s, height .2s, border-color .2s, background .2s;
+        }
+
+        .cursor.active {
+            width: 48px; height: 48px;
+            border-color: var(--accent);
+            background: rgba(139,92,246,0.06);
+        }
+
+        /* ---- LAYOUT ---- */
+        .w { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+        .w-narrow { max-width: 680px; margin: 0 auto; padding: 0 28px; }
+
+        /* ---- NAV ---- */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 20px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(6,6,6,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s;
+            opacity: 0;
+        }
+
+        nav.scrolled { border-bottom-color: var(--border); }
+
+        .logo { font-size: 15px; font-weight: 700; color: var(--white); letter-spacing: -.3px; }
+
+        .nav-r { display: flex; align-items: center; gap: 28px; }
+        .nav-r a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+        .nav-r a:hover { color: var(--white); }
+
+        .nav-cta {
+            font-size: 13px; font-weight: 600; color: #fff !important;
+            background: var(--accent); padding: 8px 20px; border-radius: 8px;
+        }
+
+        .nav-cta:hover { opacity: .85; }
+
+        /* ---- HERO ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 120px 0 80px;
+        }
+
+        .hero-tag {
+            font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 24px;
+            opacity: 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 68px);
+            font-weight: 800; line-height: 1.08; letter-spacing: -2px;
+            color: var(--white); margin-bottom: 24px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--dim);
+        }
+
+        .h-line { display: block; overflow: hidden; }
+        .h-line-i { display: block; transform: translateY(110%); }
+
+        .hero-sub {
+            font-size: 17px; line-height: 1.7; color: var(--muted);
+            max-width: 480px; margin-bottom: 44px; opacity: 0;
+        }
+
+        .hero-btns { display: flex; gap: 12px; opacity: 0; }
+
+        /* ---- BUTTONS ---- */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; font-size: 14px; font-weight: 600;
+            text-decoration: none; border-radius: 10px; border: none;
+            transition: transform .15s, opacity .15s;
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-w { background: #fff; color: #000; }
+        .btn-o { background: transparent; color: var(--light); border: 1px solid var(--border); }
+        .btn-o:hover { border-color: var(--border-h); }
+        .btn-a { background: var(--accent); color: #fff; }
+        .btn-full { width: 100%; justify-content: center; }
+
+        /* ---- STORY SECTION (pinned scroll) ---- */
+        .story {
+            position: relative;
+        }
+
+        .story-pin {
+            height: 100vh;
+            display: flex; align-items: center;
+            position: relative;
+        }
+
+        .story-slide {
+            position: absolute;
+            top: 50%; left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            opacity: 0;
+        }
+
+        .story-slide.is-active { opacity: 1; }
+
+        .story-text {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -1px;
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .story-text em {
+            font-style: normal;
+            color: var(--dim);
+        }
+
+        .story-count {
+            position: absolute;
+            top: 50%; right: 28px;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .story-dot {
+            width: 4px; height: 20px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.08);
+            transition: background .3s, height .3s;
+        }
+
+        .story-dot.on {
+            background: var(--accent);
+            height: 32px;
+        }
+
+        /* ---- SHIFT / BREAK ---- */
+        .break-section {
+            padding: 200px 0;
+            text-align: center;
+        }
+
+        .break-section h2 {
+            font-size: clamp(32px, 4.5vw, 52px);
+            font-weight: 800; letter-spacing: -1.5px;
+            color: var(--white); line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .break-section p {
+            font-size: 17px; color: var(--muted);
+            max-width: 440px; margin: 0 auto; line-height: 1.7;
+        }
+
+        /* ---- NUMBERS ---- */
+        .nums {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nums-grid {
+            display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
+            text-align: center;
+        }
+
+        .nums-grid h3 {
+            font-size: 44px; font-weight: 800; color: var(--white);
+            letter-spacing: -2px; margin-bottom: 4px;
+        }
+
+        .nums-grid p { font-size: 13px; }
+
+        /* ---- HOW ---- */
+        .how-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+            margin-top: 56px;
+        }
+
+        .how-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 36px;
+            transition: border-color .3s;
+        }
+
+        .how-card:hover { border-color: var(--border-h); }
+
+        .how-num {
+            font-size: 48px; font-weight: 900; color: rgba(255,255,255,0.04);
+            line-height: 1; margin-bottom: 24px;
+        }
+
+        .how-card h3 {
+            font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px;
+        }
+
+        .how-card p { font-size: 14px; line-height: 1.6; }
+
+        /* ---- SERVICES ---- */
+        .svc-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+            margin-top: 56px;
+        }
+
+        .svc {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 36px;
+            transition: border-color .3s;
+        }
+
+        .svc:hover { border-color: var(--border-h); }
+
+        .svc-ic {
+            width: 36px; height: 36px; margin-bottom: 24px; color: var(--accent);
+        }
+
+        .svc-ic svg { width: 36px; height: 36px; stroke: var(--accent); stroke-width: 1.5; fill: none; }
+
+        .svc h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+        .svc p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+        .svc .pr { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+        /* ---- NICHES ---- */
+        .niche-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            margin-top: 56px;
+        }
+
+        .niche {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 44px;
+            transition: border-color .3s;
+        }
+
+        .niche:hover { border-color: var(--border-h); }
+
+        .niche-tag {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 20px;
+        }
+
+        .niche h3 {
+            font-size: 22px; font-weight: 800; color: var(--white);
+            letter-spacing: -.5px; margin-bottom: 12px;
+        }
+
+        .niche p { font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+
+        .nl { list-style: none; }
+
+        .nl li {
+            padding: 7px 0; font-size: 14px; display: flex;
+            align-items: flex-start; gap: 12px; line-height: 1.5;
+        }
+
+        .nl li::before {
+            content: ''; width: 4px; height: 4px;
+            background: var(--accent); border-radius: 50%;
+            margin-top: 8px; flex-shrink: 0;
+        }
+
+        /* ---- PRICING ---- */
+        .price-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+            margin-top: 56px;
+        }
+
+        .pc {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 40px;
+            transition: border-color .3s;
+        }
+
+        .pc:hover { border-color: var(--border-h); }
+
+        .pc.pop {
+            border-color: rgba(139,92,246,.2);
+            background: linear-gradient(180deg, rgba(139,92,246,.04), transparent);
+        }
+
+        .pc .tier {
+            font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 16px;
+        }
+
+        .pc .amt {
+            font-size: 48px; font-weight: 900; color: var(--white);
+            letter-spacing: -2px; margin-bottom: 4px;
+        }
+
+        .pc .per { font-size: 14px; margin-bottom: 28px; }
+
+        .fl { list-style: none; margin-bottom: 28px; }
+
+        .fl li {
+            padding: 9px 0; font-size: 14px;
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .fl li svg {
+            width: 15px; height: 15px; stroke: var(--accent);
+            stroke-width: 2; fill: none; flex-shrink: 0;
+        }
+
+        /* ---- CTA ---- */
+        .cta {
+            text-align: center; padding: 200px 0 160px;
+        }
+
+        .cta h2 {
+            font-size: clamp(32px, 4.5vw, 52px);
+            font-weight: 800; letter-spacing: -1.5px;
+            color: var(--white); margin-bottom: 16px; line-height: 1.1;
+        }
+
+        .cta h2 em { font-style: normal; color: var(--dim); }
+
+        .cta p {
+            font-size: 17px; max-width: 420px; margin: 0 auto 44px; line-height: 1.7;
+        }
+
+        .cta-btns { display: flex; gap: 12px; justify-content: center; }
+
+        /* ---- SECTION HEADERS ---- */
+        .sh-tag {
+            font-size: 12px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+        }
+
+        .sh h2 {
+            font-size: clamp(28px, 3.5vw, 42px);
+            font-weight: 800; letter-spacing: -1px;
+            color: var(--white); line-height: 1.15; margin-bottom: 12px;
+        }
+
+        .sh p { font-size: 16px; max-width: 440px; line-height: 1.7; }
+
+        /* ---- FOOTER ---- */
+        footer {
+            padding: 48px 0; border-top: 1px solid var(--border); text-align: center;
+        }
+        footer p { font-size: 13px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width:768px) {
+            .cursor { display: none !important; }
+            body, a, button { cursor: auto; }
+            nav { padding: 16px 20px; }
+            .nav-r a:not(.nav-cta) { display: none; }
+            .svc-grid, .price-grid, .how-grid { grid-template-columns: 1fr; }
+            .niche-grid { grid-template-columns: 1fr; }
+            .nums-grid { grid-template-columns: repeat(2,1fr); }
+            .story-count { display: none; }
+            section, .break-section { padding: 100px 0; }
+            .cta { padding: 140px 0 100px; }
+        }
+
+        @media (max-width:480px) {
+            .nums-grid { grid-template-columns: 1fr; }
+        }
+
+        section { padding: 140px 0; }
+    </style>
+</head>
+<body>
+
+<div class="cursor"></div>
+
+<nav>
+    <div class="logo">Enchant Socials</div>
+    <div class="nav-r">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#cta" class="nav-cta">Book a Demo</a>
+    </div>
+</nav>
+
+<!-- 1. HERO — Gut punch, not generic -->
+<section class="hero">
+    <div class="w">
+        <div class="hero-tag">AI Automation Agency</div>
+        <h1>
+            <span class="h-line"><span class="h-line-i">Your next client called.</span></span>
+            <span class="h-line"><span class="h-line-i"><em>Nobody picked up.</em></span></span>
+        </h1>
+        <p class="hero-sub">We build AI systems that answer every lead, qualify every prospect, and book every appointment — while you focus on what you do best.</p>
+        <div class="hero-btns">
+            <a href="#cta" class="btn btn-w">Book a Free Demo</a>
+            <a href="#services" class="btn btn-o">See What We Build</a>
+        </div>
+    </div>
+</section>
+
+<!-- 2. STORY — Pinned scroll narrative (the retention hook) -->
+<div class="story">
+    <div class="story-pin">
+        <div class="w" style="position:relative;width:100%;">
+            <div class="story-slide" data-i="0">
+                <div class="story-text">It's 11 PM. A potential client finds your website.</div>
+            </div>
+            <div class="story-slide" data-i="1">
+                <div class="story-text">They have a question. <em>They fill out your form.</em></div>
+            </div>
+            <div class="story-slide" data-i="2">
+                <div class="story-text">You're asleep. <em>No one responds.</em></div>
+            </div>
+            <div class="story-slide" data-i="3">
+                <div class="story-text">By morning, they've already signed <em>with someone who did.</em></div>
+            </div>
+            <div class="story-slide" data-i="4">
+                <div class="story-text">This happens every single day. <em>What if it didn't?</em></div>
+            </div>
+            <div class="story-count">
+                <div class="story-dot on" data-d="0"></div>
+                <div class="story-dot" data-d="1"></div>
+                <div class="story-dot" data-d="2"></div>
+                <div class="story-dot" data-d="3"></div>
+                <div class="story-dot" data-d="4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. THE SHIFT — Emotional pivot -->
+<div class="break-section">
+    <div class="w-narrow">
+        <h2>We make sure you never miss another lead. Ever.</h2>
+        <p>AI that responds in 3 seconds. Qualifies instantly. Books automatically. Runs 24/7 — even on holidays.</p>
+    </div>
+</div>
+
+<!-- 4. NUMBERS — Quick proof -->
+<div class="nums">
+    <div class="w">
+        <div class="nums-grid">
+            <div>
+                <h3><span class="counter" data-target="3">0</span>s</h3>
+                <p>Average response time</p>
+            </div>
+            <div>
+                <h3><span class="counter" data-target="40">0</span>%</h3>
+                <p>More consultations booked</p>
+            </div>
+            <div>
+                <h3>24/7</h3>
+                <p>Always responding</p>
+            </div>
+            <div>
+                <h3>48h</h3>
+                <p>Setup to live</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 5. HOW — Dead simple, 3 steps -->
+<section>
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">How It Works</div>
+            <h2>Three steps. Then it runs itself.</h2>
+        </div>
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-num">01</div>
+                <h3>We talk for 15 minutes</h3>
+                <p>You tell us about your business. We tell you exactly which automation will make the biggest impact.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">02</div>
+                <h3>We build it in 48 hours</h3>
+                <p>Custom-built for your brand, your services, your workflow. Not a template — a system designed for you.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-num">03</div>
+                <h3>You start closing more</h3>
+                <p>We test everything, walk you through it, and go live. Then we optimize until the numbers speak for themselves.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. SERVICES — Framed as outcomes -->
+<section id="services">
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">What We Build</div>
+            <h2>Every system has one job: <br>get you more clients.</h2>
+        </div>
+        <div class="svc-grid">
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                <h3>Comment-to-DM Automation</h3>
+                <p>Someone comments on your post — they get a personalized DM in seconds with exactly what they asked for.</p>
+                <span class="pr">From $150</span>
+            </div>
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
+                <h3>24/7 Intake Chatbot</h3>
+                <p>An AI on your website that qualifies leads, answers questions, and books consultations. Even at 2 AM on Sunday.</p>
+                <span class="pr">From $200</span>
+            </div>
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <h3>Google Review Campaigns</h3>
+                <p>Automated sequences that turn clients into 5-star reviews. More reviews, higher ranking, more leads. Compounding.</p>
+                <span class="pr">From $100</span>
+            </div>
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+                <h3>Lead Scraping</h3>
+                <p>We find your ideal prospects — names, emails, phones, social profiles — from Google Maps and public databases.</p>
+                <span class="pr">From $75</span>
+            </div>
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <h3>Cold Outreach</h3>
+                <p>Personalized email and DM sequences on autopilot. Follow-ups, A/B testing, response tracking — all automated.</p>
+                <span class="pr">From $200</span>
+            </div>
+            <div class="svc">
+                <div class="svc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+                <h3>Content & Social</h3>
+                <p>Branded content generated and posted weekly. Captions, hashtags, strategy — built to attract your exact client type.</p>
+                <span class="pr">From $300/mo</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 7. NICHES — Specific, not generic -->
+<section id="niches">
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">Who We Work With</div>
+            <h2>We only work with two types <br>of businesses. And we're the best at both.</h2>
+        </div>
+        <div class="niche-grid">
+            <div class="niche">
+                <div class="niche-tag">Real Estate Agents</div>
+                <h3>Turn followers into buyers.</h3>
+                <p>Automation designed for how agents actually work — fast, mobile, relationship-driven.</p>
+                <ul class="nl">
+                    <li>Instant DM with property details on comment</li>
+                    <li>Automated showing reminders & follow-ups</li>
+                    <li>Lead scraping from Google Maps by area</li>
+                    <li>CRM integration and weekly reports</li>
+                    <li>Branded content that attracts buyers & sellers</li>
+                </ul>
+            </div>
+            <div class="niche">
+                <div class="niche-tag" style="color:#ec4899;">Law Firms</div>
+                <h3>Sign clients at 2 AM.</h3>
+                <p>Intake, qualification, and follow-up systems built for legal — where speed is everything.</p>
+                <ul class="nl">
+                    <li>24/7 AI intake that qualifies and books</li>
+                    <li>Google Review request campaigns</li>
+                    <li>After-hours lead capture via web + chat</li>
+                    <li>Competitive analysis & reputation monitoring</li>
+                    <li>Case-type specific qualification logic</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 8. PRICING -->
+<section id="pricing">
+    <div class="w">
+        <div class="sh">
+            <div class="sh-tag">Pricing</div>
+            <h2>No contracts. No surprises. <br>Cancel anytime.</h2>
+        </div>
+        <div class="price-grid">
+            <div class="pc">
+                <div class="tier">Starter</div>
+                <div class="amt">$500</div>
+                <div class="per">one-time setup</div>
+                <ul class="fl">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 automation system</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comment-to-DM or chatbot</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>48-hour delivery</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Testing & QA</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Setup walkthrough</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>14-day support</li>
+                </ul>
+                <a href="#cta" class="btn btn-o btn-full">Get Started</a>
+            </div>
+            <div class="pc pop">
+                <div class="tier">Growth</div>
+                <div class="amt">$500</div>
+                <div class="per">per month</div>
+                <ul class="fl">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Starter</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Multiple automation flows</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Google Review campaign</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Weekly content — 7 posts</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CRM integration</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Monthly strategy call</li>
+                </ul>
+                <a href="#cta" class="btn btn-a btn-full">Get Started</a>
+            </div>
+            <div class="pc">
+                <div class="tier">Premium</div>
+                <div class="amt">$1,500</div>
+                <div class="per">setup + $800/mo</div>
+                <ul class="fl">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Growth</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full multi-channel system</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>30 posts/month</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Lead scraping pipeline</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom AI chatbot</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
+                </ul>
+                <a href="#cta" class="btn btn-o btn-full">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 9. CTA — Close it -->
+<section id="cta" class="cta">
+    <div class="w-narrow">
+        <h2>15 minutes. <em>That's all we need.</em></h2>
+        <p>One call. We'll show you the exact automation that'll work for your business. If it's not a fit, no hard feelings.</p>
+        <div class="cta-btns">
+            <a href="https://instagram.com/enchantsocials" class="btn btn-w" target="_blank">DM Us on Instagram</a>
+            <a href="mailto:enchantsocials@gmail.com?subject=Free%20Demo" class="btn btn-o">Send Us an Email</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="w">
+        <p style="margin-bottom:6px;"><strong style="color:var(--white);font-weight:700;">Enchant Socials</strong></p>
+        <p>AI Automation for Real Estate & Law Firms</p>
+        <p style="margin-top:6px;"><a href="https://instagram.com/enchantsocials" target="_blank">@enchantsocials</a></p>
+    </div>
+</footer>
+
+<!-- GSAP + ScrollTrigger + Lenis -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<script>
+(function() {
+    'use strict';
+
+    // ---- LENIS ----
+    const lenis = new Lenis({
+        duration: 1.1,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const el = document.querySelector(a.getAttribute('href'));
+            if (el) lenis.scrollTo(el, { offset: -40 });
+        });
+    });
+
+    // ---- CURSOR ----
+    const cur = document.querySelector('.cursor');
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+
+    if (window.matchMedia('(pointer:fine)').matches) {
+        document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+        (function loop() {
+            cx += (tx - cx) * 0.15;
+            cy += (ty - cy) * 0.15;
+            cur.style.left = cx + 'px';
+            cur.style.top = cy + 'px';
+            requestAnimationFrame(loop);
+        })();
+        document.querySelectorAll('a,button,.btn,.svc,.pc,.how-card,.niche').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('active'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('active'));
+        });
+    } else {
+        cur.style.display = 'none';
+    }
+
+    // ---- NAV ----
+    gsap.to('nav', { opacity: 1, duration: 0.5, delay: 1.2, ease: 'power2.out' });
+    let lastY = 0;
+    lenis.on('scroll', ({ scroll }) => {
+        document.querySelector('nav').classList.toggle('scrolled', scroll > 50);
+        if (scroll > 200) {
+            gsap.to('nav', { y: scroll > lastY ? -80 : 0, duration: 0.3, ease: 'power2.out' });
+        }
+        lastY = scroll;
+    });
+
+    // ---- HERO ----
+    const tl = gsap.timeline({ delay: 0.15 });
+    tl.to('.hero-tag', { opacity: 1, duration: 0.4 })
+      .to('.h-line-i', { y: '0%', duration: 0.85, ease: 'power4.out', stagger: 0.1 }, '-=0.2')
+      .to('.hero-sub', { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+      .to('.hero-btns', { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2');
+    gsap.set('.hero-sub', { y: 12 });
+    gsap.set('.hero-btns', { y: 12 });
+
+    // ---- STORY — Pinned scroll with slide transitions ----
+    const slides = document.querySelectorAll('.story-slide');
+    const dots = document.querySelectorAll('.story-dot');
+    const slideCount = slides.length;
+
+    // Show first slide
+    gsap.set(slides[0], { opacity: 1 });
+
+    ScrollTrigger.create({
+        trigger: '.story',
+        start: 'top top',
+        end: '+=' + (slideCount * 100) + '%',
+        pin: '.story-pin',
+        scrub: 0.5,
+        onUpdate: self => {
+            const p = self.progress;
+            const idx = Math.min(Math.floor(p * slideCount), slideCount - 1);
+
+            slides.forEach((s, i) => {
+                if (i === idx) {
+                    gsap.to(s, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
+                } else {
+                    gsap.to(s, { opacity: 0, y: i < idx ? -20 : 20, duration: 0.3, overwrite: true });
+                }
+            });
+
+            dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+        }
+    });
+
+    // ---- UTILITY: fade up on scroll ----
+    function fu(sel, opts = {}) {
+        document.querySelectorAll(sel).forEach((el, i) => {
+            gsap.from(el, {
+                opacity: 0, y: 32,
+                duration: opts.dur || 0.6,
+                delay: (opts.stagger || 0) * i,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: opts.start || 'top 88%',
+                    toggleActions: 'play none none none',
+                }
+            });
+        });
+    }
+
+    // ---- BREAK SECTION ----
+    fu('.break-section h2');
+    fu('.break-section p');
+
+    // ---- NUMBERS ----
+    fu('.nums-grid > div', { stagger: 0.06 });
+
+    document.querySelectorAll('.counter').forEach(el => {
+        const target = +el.dataset.target;
+        const obj = { v: 0 };
+        ScrollTrigger.create({
+            trigger: el, start: 'top 88%', once: true,
+            onEnter: () => gsap.to(obj, {
+                v: target, duration: 1.4, ease: 'power2.out',
+                onUpdate: () => { el.textContent = Math.round(obj.v); }
+            })
+        });
+    });
+
+    // ---- SECTION HEADERS ----
+    fu('.sh-tag');
+    fu('.sh h2');
+    fu('.sh p');
+
+    // ---- ALL CARDS ----
+    fu('.how-card', { stagger: 0.06 });
+    fu('.svc', { stagger: 0.05 });
+    fu('.niche', { stagger: 0.08 });
+    fu('.pc', { stagger: 0.06 });
+
+    // ---- CTA ----
+    fu('.cta h2');
+    fu('.cta p');
+    fu('.cta-btns');
+
+    // ---- FOOTER ----
+    fu('footer');
+
+})();
+</script>
+
+</body>
+</html>
