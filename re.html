@@ -630,6 +630,26 @@
             margin-top: 16px;
         }
 
+        /* FAQ */
+        .faq-section { padding: 120px 0; }
+        .faq-grid { max-width: 720px; margin: 0 auto; }
+        .faq-item {
+            border-bottom: 1px solid var(--border); padding: 28px 0;
+            cursor: pointer;
+        }
+        .faq-q {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 17px; font-weight: 600; color: var(--white);
+            line-height: 1.4;
+        }
+        .faq-q svg { width: 20px; height: 20px; stroke: var(--dim); fill: none; stroke-width: 2; flex-shrink: 0; transition: transform .3s; }
+        .faq-item.open .faq-q svg { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s;
+            font-size: 15px; color: var(--muted); line-height: 1.7;
+        }
+        .faq-item.open .faq-a { max-height: 200px; padding-top: 16px; }
+
         /* FOOTER */
         footer {
             padding: 60px 0 40px;
@@ -1055,6 +1075,51 @@
             </div>
         </div>
     </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <div class="w">
+            <div class="section-label">Common Questions</div>
+            <div class="section-title">Everything You Need <em>to Know</em></div>
+            <div class="faq-grid">
+                <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+                    <div class="faq-q">How does comment-to-DM automation work?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <div class="faq-a">When someone comments on your listing post, the AI instantly sends them a DM with property details -- price, photos, neighborhood info, and a link to book a showing. Zero delay, zero manual work.</div>
+                </div>
+                <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+                    <div class="faq-q">Will it work with my existing CRM?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <div class="faq-a">Yes. We integrate with Follow Up Boss, KvCORE, Sierra Interactive, Chime, and most major real estate CRMs. Every lead auto-populates with full context.</div>
+                </div>
+                <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+                    <div class="faq-q">How fast are the automated responses?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <div class="faq-a">Under 3 seconds. Industry average response time is 4+ hours. By then, the buyer has already contacted another agent. Speed wins in real estate.</div>
+                </div>
+                <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+                    <div class="faq-q">Do I need to be tech-savvy to use this?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <div class="faq-a">Not at all. We handle 100% of the setup, integration, and ongoing optimization. You just post content and watch the leads flow in. We even create content for you.</div>
+                </div>
+                <div class="faq-item fade-up" onclick="this.classList.toggle('open')">
+                    <div class="faq-q">Can it handle multiple listings at once?<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                    <div class="faq-a">Yes -- unlimited listings. The AI knows which property each comment is about and sends the right details automatically. Works across Instagram, your website, and phone inquiries.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "How does comment-to-DM automation work?", "acceptedAnswer": {"@type": "Answer", "text": "When someone comments on your listing post, the AI instantly sends them a DM with property details -- price, photos, neighborhood info, and a link to book a showing. Zero delay, zero manual work."}},
+            {"@type": "Question", "name": "Will it work with my existing CRM?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We integrate with Follow Up Boss, KvCORE, Sierra Interactive, Chime, and most major real estate CRMs. Every lead auto-populates with full context."}},
+            {"@type": "Question", "name": "How fast are the automated responses?", "acceptedAnswer": {"@type": "Answer", "text": "Under 3 seconds. Industry average response time is 4+ hours. Speed wins in real estate."}},
+            {"@type": "Question", "name": "Do I need to be tech-savvy to use this?", "acceptedAnswer": {"@type": "Answer", "text": "Not at all. We handle 100% of the setup, integration, and ongoing optimization. You just post content and watch the leads flow in."}},
+            {"@type": "Question", "name": "Can it handle multiple listings at once?", "acceptedAnswer": {"@type": "Answer", "text": "Yes -- unlimited listings. The AI knows which property each comment is about and sends the right details automatically."}}
+        ]
+    }
+    </script>
 
     <!-- CTA -->
     <section class="cta-section">
