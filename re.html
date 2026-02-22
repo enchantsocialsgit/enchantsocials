@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI for Real Estate Agents — Ascend Agency</title>
+    <meta name="description" content="Never miss another lead from Instagram. Comment-to-DM automation, instant property details, lead nurture sequences. 3x listing appointments, $340K additional commission, 15-20 hours saved/week.">
+    <meta name="keywords" content="real estate AI, Instagram automation, real estate lead generation, comment to DM, listing appointments, real estate CRM">
+    <meta name="author" content="Ascend Agency">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ascendagency.site/re">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ascendagency.site/re">
+    <meta property="og:title" content="Never Miss Another Lead From Instagram Again — Ascend Agency">
+    <meta property="og:description" content="3x listing appointments. $340K additional commission. 15-20 hours saved/week. The Instagram automation built for agents who want to dominate.">
+    <meta property="og:image" content="https://ascendagency.site/og-re.png">
+    <meta property="og:site_name" content="Ascend Agency">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Never Miss Another Lead From Instagram Again — Ascend Agency">
+    <meta name="twitter:description" content="3x listing appointments. $340K additional commission. 15-20 hours saved/week. Built for real estate agents.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Ascend Agency — AI for Real Estate Agents",
+        "description": "Instagram comment-to-DM automation and lead nurture system for real estate agents. Instant property details, CRM integration, and intelligent follow-up.",
+        "url": "https://ascendagency.site/re",
+        "email": "hello@ascendagency.site",
+        "sameAs": ["https://instagram.com/ascendagencyy"],
+        "serviceType": ["AI Automation", "Instagram Automation", "Real Estate Lead Generation"],
+        "areaServed": "US",
+        "priceRange": "$$$"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --bg2: #0a0a0a;
+            --bg3: #0f0f0f;
+            --card: rgba(255,255,255,0.025);
+            --card-h: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.06);
+            --border-h: rgba(255,255,255,0.12);
+            --dim: #444;
+            --muted: #777;
+            --light: #bbb;
+            --white: #f0f0f0;
+            --accent: #8b5cf6;
+            --accent2: #a78bfa;
+            --accent-glow: rgba(139,92,246,0.15);
+            --green: #22c55e;
+            --pink: #ec4899;
+            --blue: #3b82f6;
+            --gold: #f59e0b;
+            --red: #ef4444;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: #fff; }
+
+        /* LAYOUT */
+        .w { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+        .w-narrow { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 24px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background .4s, border-color .4s, padding .3s;
+        }
+        nav.scrolled {
+            background: rgba(5,5,5,0.92);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
+        }
+        .nav-logo {
+            font-size: 18px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .nav-link {
+            font-size: 13px; font-weight: 500; color: var(--muted);
+            text-decoration: none; transition: color .2s;
+        }
+        .nav-link:hover { color: var(--white); }
+        .nav-cta {
+            background: var(--accent); color: #fff; font-size: 12px; font-weight: 600;
+            letter-spacing: 0.5px; padding: 10px 22px; border-radius: 100px;
+            text-decoration: none; border: none; font-family: inherit;
+            transition: transform .2s, box-shadow .3s;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(139,92,246,0.3); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 160px 0 120px; position: relative; overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            filter: blur(120px); opacity: 0.5;
+        }
+        .hero-glow-1 {
+            width: 700px; height: 700px; top: -20%; right: -12%;
+            background: radial-gradient(circle, rgba(236,72,153,0.10), transparent 70%);
+            animation: glow-float 14s ease-in-out infinite;
+        }
+        .hero-glow-2 {
+            width: 500px; height: 500px; bottom: -25%; left: 3%;
+            background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 70%);
+            animation: glow-float 18s ease-in-out infinite reverse;
+        }
+        @keyframes glow-float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -20px); }
+            66% { transform: translate(-20px, 15px); }
+        }
+        .hero-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--pink); margin-bottom: 36px;
+            background: rgba(236,72,153,0.06);
+            border: 1px solid rgba(236,72,153,0.12);
+            padding: 8px 18px; border-radius: 100px;
+            opacity: 0;
+        }
+        .hero-tag-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--pink);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 76px); font-weight: 900;
+            line-height: 1.06; letter-spacing: -3px;
+            color: var(--white); margin-bottom: 32px;
+            opacity: 0; transform: translateY(30px);
+        }
+        .hero h1 em { font-style: normal; color: var(--pink); }
+        .hero-sub {
+            font-size: 18px; line-height: 1.8; color: var(--muted);
+            max-width: 580px; margin-bottom: 48px; opacity: 0;
+        }
+        .hero-sub strong { color: var(--light); font-weight: 500; }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 32px; font-size: 14px; font-weight: 600;
+            text-decoration: none; border-radius: 100px; border: none;
+            transition: transform .2s, box-shadow .3s;
+            font-family: inherit; cursor: pointer;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-w { background: #fff; color: #000; }
+        .btn-w:hover { box-shadow: 0 12px 40px rgba(255,255,255,0.12); }
+        .btn-o { background: transparent; color: var(--light); border: 1px solid var(--border); }
+        .btn-o:hover { border-color: var(--border-h); }
+        .btn-a { background: var(--accent); color: #fff; }
+        .btn-a:hover { box-shadow: 0 12px 40px rgba(139,92,246,0.35); }
+        .btn-pink { background: var(--pink); color: #fff; }
+        .btn-pink:hover { box-shadow: 0 12px 40px rgba(236,72,153,0.35); }
+        .btn-arrow { transition: transform .2s; }
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* PAIN POINTS */
+        .pain-section {
+            padding: 140px 0; position: relative;
+            border-top: 1px solid var(--border);
+        }
+        .pain-section::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,68,68,0.03), transparent 60%);
+            pointer-events: none;
+        }
+        .pain-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+            align-items: center;
+        }
+        .pain-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--red); margin-bottom: 20px;
+        }
+        .pain-content h2 {
+            font-size: clamp(28px, 3.5vw, 42px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            margin-bottom: 24px;
+        }
+        .pain-content p {
+            font-size: 16px; line-height: 1.8; margin-bottom: 16px;
+        }
+        .pain-stat-box {
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .pain-stat {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px;
+            position: relative; overflow: hidden;
+        }
+        .pain-stat::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--red), transparent);
+        }
+        .pain-stat-number {
+            font-size: 36px; font-weight: 900; color: var(--red);
+            letter-spacing: -2px; margin-bottom: 4px;
+        }
+        .pain-stat-text {
+            font-size: 14px; color: var(--light); line-height: 1.5;
+        }
+        .pain-quote {
+            background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1);
+            border-radius: var(--radius); padding: 28px;
+            font-size: 16px; font-style: italic; color: var(--light);
+            line-height: 1.7; margin-top: 12px;
+        }
+        .pain-quote span { color: var(--red); font-weight: 600; font-style: normal; }
+
+        /* SECTION STYLES */
+        .section-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 20px; text-align: center;
+        }
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px); font-weight: 800;
+            color: var(--white); letter-spacing: -2px; line-height: 1.15;
+            text-align: center; margin-bottom: 20px;
+        }
+        .section-title em { font-style: normal; color: var(--dim); }
+        .section-subtitle {
+            font-size: 17px; color: var(--muted); text-align: center;
+            max-width: 560px; margin: 0 auto 64px; line-height: 1.7;
+        }
+
+        /* METRICS */
+        .metrics { padding: 120px 0; position: relative; }
+        .metrics::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(236,72,153,0.04), transparent 60%);
+            pointer-events: none;
+        }
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .metric-card {
+            background: var(--bg2); padding: 48px 32px; text-align: center;
+        }
+        .metric-number {
+            font-size: clamp(36px, 4.5vw, 52px); font-weight: 900;
+            letter-spacing: -2px; margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--white), var(--pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .metric-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        /* SOLUTIONS */
+        .solutions { padding: 160px 0; }
+        .solutions-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .solution-card {
+            background: var(--bg2); padding: 48px 40px;
+            position: relative; transition: background .3s;
+        }
+        .solution-card:hover { background: var(--bg3); }
+        .solution-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(236,72,153,0.08); border: 1px solid rgba(236,72,153,0.12);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+        }
+        .solution-icon svg { width: 22px; height: 22px; stroke: var(--pink); fill: none; stroke-width: 1.5; }
+        .solution-card h3 {
+            font-size: 20px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .solution-card p { font-size: 15px; line-height: 1.7; }
+
+        /* IG AUTOMATION FLOW */
+        .flow-section { padding: 160px 0; }
+        .flow-container {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 64px;
+            position: relative; overflow: hidden;
+        }
+        .flow-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--pink), var(--accent));
+        }
+        .flow-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--pink); margin-bottom: 20px;
+            text-align: center;
+        }
+        .flow-title {
+            font-size: clamp(26px, 3.5vw, 38px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            text-align: center; margin-bottom: 12px;
+        }
+        .flow-subtitle {
+            font-size: 16px; color: var(--muted); text-align: center;
+            max-width: 500px; margin: 0 auto 56px; line-height: 1.7;
+        }
+        .flow-steps {
+            display: flex; align-items: flex-start; justify-content: center;
+            gap: 0; flex-wrap: wrap;
+        }
+        .flow-step {
+            text-align: center; flex: 0 0 180px; position: relative;
+            padding: 0 12px;
+        }
+        .flow-step-icon {
+            width: 64px; height: 64px; border-radius: 16px;
+            margin: 0 auto 16px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .flow-step:nth-child(1) .flow-step-icon { background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2); }
+        .flow-step:nth-child(2) .flow-step-icon { background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); }
+        .flow-step:nth-child(3) .flow-step-icon { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
+        .flow-step:nth-child(4) .flow-step-icon { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); }
+        .flow-step:nth-child(5) .flow-step-icon { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
+        .flow-step-icon svg { width: 28px; height: 28px; fill: none; stroke-width: 1.5; }
+        .flow-step:nth-child(1) .flow-step-icon svg { stroke: var(--pink); }
+        .flow-step:nth-child(2) .flow-step-icon svg { stroke: var(--accent); }
+        .flow-step:nth-child(3) .flow-step-icon svg { stroke: var(--blue); }
+        .flow-step:nth-child(4) .flow-step-icon svg { stroke: var(--green); }
+        .flow-step:nth-child(5) .flow-step-icon svg { stroke: var(--gold); }
+        .flow-step-title {
+            font-size: 14px; font-weight: 700; color: var(--white);
+            margin-bottom: 6px;
+        }
+        .flow-step-desc {
+            font-size: 12px; color: var(--muted); line-height: 1.5;
+        }
+        .flow-arrow {
+            display: flex; align-items: center; padding-top: 20px;
+            color: var(--dim); flex: 0 0 40px;
+        }
+        .flow-arrow svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+        /* DM PREVIEW */
+        .dm-preview { padding: 160px 0; }
+        .dm-layout {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .dm-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--pink); margin-bottom: 20px;
+        }
+        .dm-preview h2 {
+            font-size: clamp(28px, 3.5vw, 42px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .dm-preview p { font-size: 16px; line-height: 1.8; margin-bottom: 12px; }
+        .dm-features { list-style: none; margin: 24px 0; }
+        .dm-features li {
+            padding: 8px 0; font-size: 14px; color: var(--light);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .dm-features li svg {
+            width: 16px; height: 16px; stroke: var(--green);
+            fill: none; stroke-width: 2.5; stroke-linecap: round; flex-shrink: 0;
+        }
+
+        /* IG PHONE MOCKUP */
+        .ig-phone {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 24px; padding: 20px; max-width: 380px;
+            margin: 0 auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+        }
+        .ig-header {
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 14px;
+        }
+        .ig-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; color: white;
+        }
+        .ig-username { font-size: 13px; font-weight: 600; color: var(--white); }
+        .ig-badge { font-size: 10px; color: var(--blue); }
+
+        .ig-post {
+            background: rgba(255,255,255,0.03); border-radius: 12px;
+            padding: 16px; margin-bottom: 14px;
+        }
+        .ig-post-image {
+            background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.1));
+            border-radius: 8px; height: 140px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 12px; position: relative;
+        }
+        .ig-post-overlay {
+            font-size: 11px; font-weight: 600; color: var(--white);
+            background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 6px;
+        }
+        .ig-post-caption {
+            font-size: 12px; color: var(--light); line-height: 1.5;
+        }
+        .ig-comment {
+            display: flex; gap: 10px; padding: 10px 0;
+            border-top: 1px solid var(--border);
+        }
+        .ig-comment-avatar {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: var(--accent); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: white;
+        }
+        .ig-comment-text {
+            font-size: 12px; color: var(--light); line-height: 1.4;
+        }
+        .ig-comment-user { font-weight: 700; color: var(--white); }
+
+        .ig-dm-section {
+            border-top: 1px solid var(--border); padding-top: 14px;
+        }
+        .ig-dm-label {
+            font-size: 10px; font-weight: 600; color: var(--pink);
+            letter-spacing: 1.5px; text-transform: uppercase;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+        }
+        .ig-dm-label svg { width: 12px; height: 12px; stroke: var(--pink); fill: none; stroke-width: 2; }
+        .ig-dm-bubble {
+            padding: 10px 14px; border-radius: 14px; font-size: 12px;
+            line-height: 1.5; margin-bottom: 8px; max-width: 90%;
+        }
+        .ig-dm-ai {
+            background: rgba(255,255,255,0.06); color: var(--light);
+            border-bottom-left-radius: 4px;
+        }
+        .ig-dm-cta {
+            background: linear-gradient(135deg, var(--pink), var(--accent));
+            color: white; font-weight: 600; text-align: center;
+            padding: 10px; border-radius: 10px; font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* CASE STUDY */
+        .case-study { padding: 160px 0; }
+        .case-container {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 64px;
+            position: relative; overflow: hidden;
+        }
+        .case-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--pink), var(--green));
+        }
+        .case-layout {
+            display: grid; grid-template-columns: 1.2fr 1fr;
+            gap: 64px; align-items: center;
+        }
+        .case-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--pink); margin-bottom: 20px;
+        }
+        .case-content h3 {
+            font-size: 28px; font-weight: 800; color: var(--white);
+            letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px;
+        }
+        .case-content p {
+            font-size: 16px; line-height: 1.8; margin-bottom: 20px;
+        }
+        .case-results {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .case-result {
+            background: rgba(255,255,255,0.03); border-radius: 12px; padding: 24px;
+        }
+        .case-result-number {
+            font-size: 36px; font-weight: 900; letter-spacing: -2px;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, var(--white), var(--pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .case-result-label { font-size: 13px; color: var(--muted); }
+
+        /* HOW IT WORKS */
+        .how-it-works { padding: 160px 0; }
+        .hiw-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .hiw-card {
+            background: var(--bg2); padding: 56px 40px;
+            position: relative;
+        }
+        .hiw-num {
+            font-size: 72px; font-weight: 900; letter-spacing: -4px;
+            color: rgba(236,72,153,0.08); line-height: 1;
+            margin-bottom: 24px;
+        }
+        .hiw-card h3 {
+            font-size: 22px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .hiw-card p { font-size: 15px; line-height: 1.7; }
+        .hiw-arrow {
+            position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--bg); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2; color: var(--pink);
+        }
+        .hiw-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* CTA */
+        .cta-section {
+            padding: 200px 0 80px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; bottom: -30%; left: 50%;
+            transform: translateX(-50%); width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(236,72,153,0.06), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-big {
+            font-size: clamp(40px, 6vw, 80px); font-weight: 900;
+            color: var(--white); letter-spacing: -4px; margin-bottom: 20px;
+        }
+        .cta-big em { font-style: normal; color: var(--dim); }
+        .cta-sub {
+            font-size: 18px; color: var(--muted); max-width: 520px;
+            margin: 0 auto 44px; line-height: 1.7;
+        }
+        .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* LEAD FORM */
+        .lead-capture {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--bg) 0%, rgba(236,72,153,0.02) 50%, var(--bg) 100%);
+        }
+        .lead-form-container {
+            max-width: 600px; margin: 0 auto;
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 56px 48px;
+            position: relative; overflow: hidden;
+        }
+        .lead-form-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--pink), var(--accent));
+        }
+        .lead-form-container h3 {
+            font-size: 28px; font-weight: 800; color: var(--white);
+            letter-spacing: -1px; margin-bottom: 8px; text-align: center;
+        }
+        .lead-form-container > p {
+            font-size: 15px; color: var(--muted); text-align: center;
+            margin-bottom: 36px; line-height: 1.6;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--dim); letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 14px 18px; font-size: 15px;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: var(--white);
+            font-family: inherit; transition: border-color .3s;
+            -webkit-appearance: none; appearance: none;
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--dim); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--pink);
+        }
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: var(--bg2); color: var(--white); }
+        .form-submit {
+            width: 100%; padding: 16px 32px; font-size: 15px; font-weight: 700;
+            background: var(--pink); color: #fff; border: none;
+            border-radius: 100px; font-family: inherit; cursor: pointer;
+            margin-top: 8px; transition: transform .2s, box-shadow .3s;
+        }
+        .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(236,72,153,0.35); }
+        .form-note {
+            font-size: 12px; color: var(--dim); text-align: center;
+            margin-top: 16px;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-inner {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .footer-brand {
+            font-size: 16px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; text-decoration: none;
+        }
+        .footer-brand span { color: var(--accent); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            font-size: 13px; color: var(--muted); text-decoration: none;
+            transition: color .2s;
+        }
+        .footer-links a:hover { color: var(--pink); }
+        .footer-copy { font-size: 12px; color: var(--dim); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .pain-grid { grid-template-columns: 1fr; gap: 48px; }
+            .dm-layout { grid-template-columns: 1fr; gap: 48px; }
+            .case-layout { grid-template-columns: 1fr; gap: 40px; }
+            .hiw-grid { grid-template-columns: 1fr; }
+            .hiw-arrow { display: none; }
+            .flow-steps { flex-wrap: wrap; gap: 20px; }
+            .flow-arrow { display: none; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            nav.scrolled { padding: 14px 20px; }
+            .nav-cta { display: none; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .solutions-grid { grid-template-columns: 1fr; }
+            .case-container { padding: 40px 28px; }
+            .case-results { grid-template-columns: 1fr; }
+            .flow-container { padding: 40px 24px; }
+            section, .solutions, .dm-preview, .case-study, .metrics, .how-it-works, .flow-section {
+                padding: 100px 0;
+            }
+            .cta-section { padding: 140px 0 60px; }
+            .lead-form-container { padding: 40px 24px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            .hero { padding: 140px 0 80px; }
+        }
+
+        /* GRAIN */
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998;
+            pointer-events: none; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ANIMATIONS */
+        .fade-up {
+            opacity: 0; transform: translateY(40px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">Ascend<span>.</span></a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="book.html" class="nav-cta">BOOK A CALL</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="w">
+            <div class="hero-tag">
+                <div class="hero-tag-dot"></div>
+                AI FOR REAL ESTATE
+            </div>
+            <h1>Never Miss Another<br>Lead From <em>Instagram</em><br>Again</h1>
+            <p class="hero-sub">
+                Someone comments on your listing at 10 PM -- what happens?
+                Our automation sends property details via DM <strong>in seconds</strong>,
+                nurtures the lead, and books the showing. While you sleep.
+            </p>
+            <div class="hero-btns">
+                <a href="book.html" class="btn btn-w">
+                    Book a Free Strategy Call
+                    <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+                <a href="#flow" class="btn btn-o">See How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS -->
+    <section class="metrics">
+        <div class="w">
+            <div class="metrics-grid">
+                <div class="metric-card fade-up">
+                    <div class="metric-number">3x</div>
+                    <div class="metric-label">More listing appointments<br>within 60 days</div>
+                </div>
+                <div class="metric-card fade-up">
+                    <div class="metric-number">$340K</div>
+                    <div class="metric-label">Additional commission<br>per year, on average</div>
+                </div>
+                <div class="metric-card fade-up">
+                    <div class="metric-number">15-20</div>
+                    <div class="metric-label">Hours saved per week<br>on manual follow-ups</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIN POINTS -->
+    <section class="pain-section">
+        <div class="w">
+            <div class="pain-grid">
+                <div class="pain-content fade-up">
+                    <div class="pain-label">The Problem</div>
+                    <h2>Your Instagram Is a Lead Machine With No One at the Controls</h2>
+                    <p>You post a listing. Comments roll in. DMs pile up. But you're at a showing, on a call, or asleep. By the time you respond, they've already DMed 3 other agents.</p>
+                    <p>Every hour of delay cuts your conversion rate in half.</p>
+                    <div class="pain-quote">
+                        <span>"Someone comments on your listing at 10 PM."</span> What happens next? For most agents: nothing. For your competitors with automation: a DM, a property link, and a booked showing -- all in under 3 seconds.
+                    </div>
+                </div>
+                <div class="pain-stat-box fade-up">
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">78%</div>
+                        <div class="pain-stat-text">of real estate leads go to the agent who responds first. Speed is everything.</div>
+                    </div>
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">3 hrs</div>
+                        <div class="pain-stat-text">Your leads go cold in 3 hours. After that, the chance of conversion drops by 80%.</div>
+                    </div>
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">$4,200</div>
+                        <div class="pain-stat-text">Average cost per client via paid ads -- wasted when leads get ignored after hours.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section class="solutions">
+        <div class="w">
+            <div class="section-label">What We Build</div>
+            <div class="section-title">Your 24/7 <em>Lead Machine</em></div>
+            <div class="section-subtitle">Turn every Instagram comment, DM, and inquiry into a pipeline opportunity -- automatically.</div>
+
+            <div class="solutions-grid">
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    </div>
+                    <h3>Comment-to-DM Automation</h3>
+                    <p>Someone comments on your listing? They instantly get a DM with the property link, photos, price, and a question to qualify interest. Zero delay.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <h3>Instant Property Details</h3>
+                    <p>AI pulls listing data and sends a beautiful, personalized property summary. Price, beds, baths, neighborhood info -- all delivered in seconds.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Lead Nurture Sequences</h3>
+                    <p>Not ready to book yet? Automated follow-up DMs and texts keep you top of mind. Market updates, new listings, neighborhood insights -- dripped over time.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>CRM Integration</h3>
+                    <p>Every lead auto-populates in your CRM with full context -- source, interest level, property preferences, contact info. No copy-pasting. No lost leads.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTAGRAM AUTOMATION FLOW -->
+    <section class="flow-section" id="flow">
+        <div class="w">
+            <div class="flow-container fade-up">
+                <div class="flow-label">Instagram DM Automation Flow</div>
+                <div class="flow-title">From Comment to Client in Seconds</div>
+                <div class="flow-subtitle">Here's exactly what happens when someone engages with your content.</div>
+
+                <div class="flow-steps">
+                    <div class="flow-step fade-up">
+                        <div class="flow-step-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <div class="flow-step-title">Comment</div>
+                        <div class="flow-step-desc">Lead comments on your listing post</div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+
+                    <div class="flow-step fade-up">
+                        <div class="flow-step-icon">
+                            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <div class="flow-step-title">Instant DM</div>
+                        <div class="flow-step-desc">AI sends property details in under 3 seconds</div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+
+                    <div class="flow-step fade-up">
+                        <div class="flow-step-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="flow-step-title">Qualify</div>
+                        <div class="flow-step-desc">AI asks budget, timeline, preferences</div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+
+                    <div class="flow-step fade-up">
+                        <div class="flow-step-icon">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <div class="flow-step-title">Book</div>
+                        <div class="flow-step-desc">Showing or call booked on your calendar</div>
+                    </div>
+
+                    <div class="flow-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+
+                    <div class="flow-step fade-up">
+                        <div class="flow-step-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="flow-step-title">CRM</div>
+                        <div class="flow-step-desc">Lead auto-added with full context</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DM PREVIEW -->
+    <section class="dm-preview">
+        <div class="w">
+            <div class="dm-layout">
+                <div class="fade-up">
+                    <div class="dm-label">See It In Action</div>
+                    <h2>What Your Leads Experience at 10 PM on a Tuesday</h2>
+                    <p>While you're watching Netflix, the AI is qualifying leads, sending property details, and booking showings. Here's exactly what a lead sees.</p>
+                    <ul class="dm-features">
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Responds in under 3 seconds, every time
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Personalized with listing details and photos
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Qualifies budget, timeline, and preferences
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Books showings directly on your calendar
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Follows up automatically if they go quiet
+                        </li>
+                    </ul>
+                </div>
+                <div class="fade-up">
+                    <div class="ig-phone" id="igDemo">
+                        <div class="ig-header">
+                            <div class="ig-avatar">JR</div>
+                            <div>
+                                <div class="ig-username">@jrealty_atx</div>
+                                <div class="ig-badge">Verified Agent</div>
+                            </div>
+                        </div>
+
+                        <div class="ig-post">
+                            <div class="ig-post-image">
+                                <div class="ig-post-overlay">New Listing | $485K | 3bd/2ba</div>
+                            </div>
+                            <div class="ig-post-caption">
+                                <strong style="color:var(--white)">jrealty_atx</strong> Just listed in East Austin! Stunning 3/2 with a chef's kitchen and backyard oasis. Comment "INFO" for details.
+                            </div>
+                        </div>
+
+                        <div class="ig-comment">
+                            <div class="ig-comment-avatar">S</div>
+                            <div class="ig-comment-text">
+                                <span class="ig-comment-user">sarah_m</span> INFO! This looks amazing
+                            </div>
+                        </div>
+
+                        <div class="ig-dm-section" id="dmSection">
+                            <div class="ig-dm-label">
+                                <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="m22 2-11 11"/></svg>
+                                INSTANT DM SENT
+                            </div>
+                            <div class="ig-dm-bubble ig-dm-ai" id="dm1" style="opacity:0; transform:translateY(10px)">
+                                Hey Sarah! Thanks for your interest in our East Austin listing. Here are the details:
+                            </div>
+                            <div class="ig-dm-bubble ig-dm-ai" id="dm2" style="opacity:0; transform:translateY(10px)">
+                                1234 Oak St, Austin TX<br>
+                                3 bed / 2 bath / 1,850 sqft<br>
+                                $485,000 | Built 2019<br>
+                                Chef's kitchen, backyard oasis, walk to restaurants
+                            </div>
+                            <div class="ig-dm-bubble ig-dm-ai" id="dm3" style="opacity:0; transform:translateY(10px)">
+                                Would you like to schedule a private showing? I have availability this Thursday and Saturday.
+                            </div>
+                            <div class="ig-dm-cta" id="dm4" style="opacity:0; transform:translateY(10px)">
+                                Book a Showing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="case-study">
+        <div class="w">
+            <div class="case-container fade-up">
+                <div class="case-layout">
+                    <div class="case-content">
+                        <div class="case-label">Case Study</div>
+                        <h3>Austin RE Team Goes From 8 to 24 Listing Appointments Per Month</h3>
+                        <p>A 4-person real estate team in Austin was posting consistently on Instagram but losing most of their engagement to slow response times. Comments went unanswered for hours. DMs piled up.</p>
+                        <p>We deployed the full automation suite -- comment-to-DM, lead qualification, nurture sequences, and CRM integration. Within 60 days, they tripled their listing appointments and added an estimated $340K in annual commission.</p>
+                    </div>
+                    <div class="case-results">
+                        <div class="case-result">
+                            <div class="case-result-number">8 to 24</div>
+                            <div class="case-result-label">Listing appointments/month</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">3x</div>
+                            <div class="case-result-label">Increase in booked showings</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">$340K</div>
+                            <div class="case-result-label">Additional annual commission</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">48 hrs</div>
+                            <div class="case-result-label">From kickoff to live</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="w">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Live in <em>48 Hours</em></div>
+            <div class="section-subtitle">We handle everything. No tech skills required. No weeks of setup.</div>
+
+            <div class="hiw-grid">
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">01</div>
+                    <h3>Strategy Call</h3>
+                    <p>We learn your market, your listings, and your workflow. 15 minutes. We map out your automation playbook.</p>
+                    <div class="hiw-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </div>
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">02</div>
+                    <h3>Build & Connect</h3>
+                    <p>We build your comment-to-DM flows, connect your CRM, and set up lead nurture sequences. 48 hours, done.</p>
+                    <div class="hiw-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </div>
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">03</div>
+                    <h3>Close & Scale</h3>
+                    <p>Watch showings fill your calendar. We optimize weekly based on engagement data. You focus on closing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="w">
+            <div class="cta-big fade-up">Turn Comments<br><em>Into Closings</em></div>
+            <p class="cta-sub fade-up">Your competitors are automating their Instagram. Every comment you miss is a showing someone else books. Let us show you what's possible in 15 minutes.</p>
+            <div class="cta-btns fade-up">
+                <a href="book.html" class="btn btn-pink btn-lg">
+                    Book Your Free Strategy Call
+                    <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEAD FORM -->
+    <section class="lead-capture">
+        <div class="w">
+            <div class="lead-form-container fade-up">
+                <h3>Get Your Free Automation Audit</h3>
+                <p>See exactly how many leads you're losing on Instagram -- and how to capture every single one. Takes 30 seconds.</p>
+                <form action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="RE Agent Lead - Ascend Agency">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://ascendagency.site/book.html">
+                    <input type="hidden" name="_template" value="box">
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Sarah Johnson" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="sarah@jrealtyatx.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Brokerage / Team</label>
+                        <input type="text" name="brokerage" placeholder="Johnson Realty Group">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram Handle</label>
+                        <input type="text" name="instagram" placeholder="@jrealty_atx">
+                    </div>
+                    <div class="form-group">
+                        <label>Monthly Listing Volume</label>
+                        <select name="volume">
+                            <option value="" disabled selected>How many listings per month?</option>
+                            <option value="1-3">1-3 listings</option>
+                            <option value="4-8">4-8 listings</option>
+                            <option value="9-15">9-15 listings</option>
+                            <option value="15+">15+ listings</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Biggest Challenge</label>
+                        <select name="challenge">
+                            <option value="" disabled selected>What's your #1 problem?</option>
+                            <option value="slow_response">Slow response to comments/DMs</option>
+                            <option value="lead_followup">No lead follow-up system</option>
+                            <option value="crm">Leads not making it to CRM</option>
+                            <option value="time">Not enough hours in the day</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="form-submit">Get My Free Audit</button>
+                    <p class="form-note">No spam. No obligation. Just a clear picture of what automation can do for your business.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="w">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-brand">Ascend<span>.</span></a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="book.html">Book a Call</a>
+                    <a href="https://instagram.com/ascendagencyy" target="_blank">Instagram</a>
+                </div>
+                <div class="footer-copy">&copy; 2025 Ascend Agency. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <script>
+        // NAV SCROLL
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // GSAP ANIMATIONS
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero entrance
+        gsap.to('.hero-tag', { opacity: 1, duration: 0.8, delay: 0.3 });
+        gsap.to('.hero h1', { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: 'power3.out' });
+        gsap.to('.hero-sub', { opacity: 1, duration: 0.8, delay: 0.8 });
+        gsap.to('.hero-btns', { opacity: 1, duration: 0.8, delay: 1.0 });
+
+        // Fade up on scroll
+        document.querySelectorAll('.fade-up').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    once: true
+                }
+            });
+        });
+
+        // Metric number count-up
+        document.querySelectorAll('.metric-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d,.]+/);
+            if (!match) return;
+            const numStr = match[0].replace(/,/g, '');
+            const num = parseFloat(numStr);
+            const prefix = text.substring(0, text.indexOf(match[0]));
+            const suffix = text.substring(text.indexOf(match[0]) + match[0].length);
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.8,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            const current = this.targets()[0].val;
+                            if (num >= 1000) {
+                                el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
+                            } else {
+                                el.textContent = prefix + Math.round(current) + suffix;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // Case study result count-up
+        document.querySelectorAll('.case-result-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d,.]+/);
+            if (!match) return;
+            const numStr = match[0].replace(/,/g, '');
+            const num = parseFloat(numStr);
+            const prefix = text.substring(0, text.indexOf(match[0]));
+            const suffix = text.substring(text.indexOf(match[0]) + match[0].length);
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.8,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            const current = this.targets()[0].val;
+                            if (num >= 1000) {
+                                el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
+                            } else {
+                                el.textContent = prefix + Math.round(current) + suffix;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // IG DM Animation
+        ScrollTrigger.create({
+            trigger: '#igDemo',
+            start: 'top 75%',
+            once: true,
+            onEnter: () => {
+                const dms = ['#dm1', '#dm2', '#dm3', '#dm4'];
+                dms.forEach((id, i) => {
+                    gsap.to(id, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        delay: 0.8 + (i * 0.6),
+                        ease: 'power2.out'
+                    });
+                });
+            }
+        });
+
+        // Pain stat number count-up
+        document.querySelectorAll('.pain-stat-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d,]+/);
+            if (!match) return;
+            const numStr = match[0].replace(/,/g, '');
+            const num = parseFloat(numStr);
+            const prefix = text.substring(0, text.indexOf(match[0]));
+            const suffix = text.substring(text.indexOf(match[0]) + match[0].length);
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.5,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            const current = Math.round(this.targets()[0].val);
+                            el.textContent = prefix + current.toLocaleString() + suffix;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

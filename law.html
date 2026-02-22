@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI for Law Firms — Ascend Agency</title>
+    <meta name="description" content="AI-powered intake chatbot that books consultations 24/7. 89% fewer missed calls, 47 new inquiries/month, 3-second response time. Built for law firms that refuse to lose leads.">
+    <meta name="keywords" content="AI law firm, legal intake chatbot, law firm automation, after hours lead capture, attorney client acquisition, legal AI">
+    <meta name="author" content="Ascend Agency">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ascendagency.site/law">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ascendagency.site/law">
+    <meta property="og:title" content="AI That Books Consultations While You Sleep — Ascend Agency">
+    <meta property="og:description" content="89% fewer missed calls. 47 new inquiries/month. 3-second response time. The AI intake system built for law firms that refuse to lose after-hours leads.">
+    <meta property="og:image" content="https://ascendagency.site/og-law.png">
+    <meta property="og:site_name" content="Ascend Agency">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI That Books Consultations While You Sleep — Ascend Agency">
+    <meta name="twitter:description" content="89% fewer missed calls. 47 new inquiries/month. 3-second response time. Built for law firms.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Ascend Agency — AI for Law Firms",
+        "description": "AI-powered intake chatbot and automation infrastructure for law firms. 24/7 lead capture, review generation, and case qualification.",
+        "url": "https://ascendagency.site/law",
+        "email": "hello@ascendagency.site",
+        "sameAs": ["https://instagram.com/ascendagencyy"],
+        "serviceType": ["AI Automation", "Legal Intake Automation", "Law Firm Lead Generation"],
+        "areaServed": "US",
+        "priceRange": "$$$"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050505;
+            --bg2: #0a0a0a;
+            --bg3: #0f0f0f;
+            --card: rgba(255,255,255,0.025);
+            --card-h: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.06);
+            --border-h: rgba(255,255,255,0.12);
+            --dim: #444;
+            --muted: #777;
+            --light: #bbb;
+            --white: #f0f0f0;
+            --accent: #8b5cf6;
+            --accent2: #a78bfa;
+            --accent-glow: rgba(139,92,246,0.15);
+            --green: #22c55e;
+            --pink: #ec4899;
+            --blue: #3b82f6;
+            --gold: #f59e0b;
+            --red: #ef4444;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: #fff; }
+
+        /* LAYOUT */
+        .w { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+        .w-narrow { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 24px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background .4s, border-color .4s, padding .3s;
+        }
+        nav.scrolled {
+            background: rgba(5,5,5,0.92);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
+        }
+        .nav-logo {
+            font-size: 18px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-right { display: flex; align-items: center; gap: 16px; }
+        .nav-link {
+            font-size: 13px; font-weight: 500; color: var(--muted);
+            text-decoration: none; transition: color .2s;
+        }
+        .nav-link:hover { color: var(--white); }
+        .nav-cta {
+            background: var(--accent); color: #fff; font-size: 12px; font-weight: 600;
+            letter-spacing: 0.5px; padding: 10px 22px; border-radius: 100px;
+            text-decoration: none; border: none; font-family: inherit;
+            transition: transform .2s, box-shadow .3s;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(139,92,246,0.3); }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 160px 0 120px; position: relative; overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            filter: blur(120px); opacity: 0.5;
+        }
+        .hero-glow-1 {
+            width: 700px; height: 700px; top: -20%; right: -12%;
+            background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+            animation: glow-float 14s ease-in-out infinite;
+        }
+        .hero-glow-2 {
+            width: 500px; height: 500px; bottom: -25%; left: 3%;
+            background: radial-gradient(circle, rgba(59,130,246,0.06), transparent 70%);
+            animation: glow-float 18s ease-in-out infinite reverse;
+        }
+        @keyframes glow-float {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -20px); }
+            66% { transform: translate(-20px, 15px); }
+        }
+        .hero-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 36px;
+            background: rgba(139,92,246,0.06);
+            border: 1px solid rgba(139,92,246,0.12);
+            padding: 8px 18px; border-radius: 100px;
+            opacity: 0;
+        }
+        .hero-tag-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 76px); font-weight: 900;
+            line-height: 1.06; letter-spacing: -3px;
+            color: var(--white); margin-bottom: 32px;
+            opacity: 0; transform: translateY(30px);
+        }
+        .hero h1 em { font-style: normal; color: var(--accent); }
+        .hero-sub {
+            font-size: 18px; line-height: 1.8; color: var(--muted);
+            max-width: 560px; margin-bottom: 48px; opacity: 0;
+        }
+        .hero-sub strong { color: var(--light); font-weight: 500; }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 32px; font-size: 14px; font-weight: 600;
+            text-decoration: none; border-radius: 100px; border: none;
+            transition: transform .2s, box-shadow .3s;
+            font-family: inherit; cursor: pointer;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-w { background: #fff; color: #000; }
+        .btn-w:hover { box-shadow: 0 12px 40px rgba(255,255,255,0.12); }
+        .btn-o { background: transparent; color: var(--light); border: 1px solid var(--border); }
+        .btn-o:hover { border-color: var(--border-h); }
+        .btn-a { background: var(--accent); color: #fff; }
+        .btn-a:hover { box-shadow: 0 12px 40px rgba(139,92,246,0.35); }
+        .btn-arrow { transition: transform .2s; }
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+
+        /* PAIN POINTS */
+        .pain-section {
+            padding: 140px 0; position: relative;
+            border-top: 1px solid var(--border);
+        }
+        .pain-section::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,68,68,0.03), transparent 60%);
+            pointer-events: none;
+        }
+        .pain-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+            align-items: center;
+        }
+        .pain-content { }
+        .pain-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--red); margin-bottom: 20px;
+        }
+        .pain-content h2 {
+            font-size: clamp(28px, 3.5vw, 42px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            margin-bottom: 24px;
+        }
+        .pain-content p {
+            font-size: 16px; line-height: 1.8; margin-bottom: 16px;
+        }
+        .pain-stat-box {
+            display: flex; flex-direction: column; gap: 20px;
+        }
+        .pain-stat {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px;
+            position: relative; overflow: hidden;
+        }
+        .pain-stat::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--red), transparent);
+        }
+        .pain-stat-number {
+            font-size: 36px; font-weight: 900; color: var(--red);
+            letter-spacing: -2px; margin-bottom: 4px;
+        }
+        .pain-stat-text {
+            font-size: 14px; color: var(--light); line-height: 1.5;
+        }
+        .pain-quote {
+            background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1);
+            border-radius: var(--radius); padding: 28px;
+            font-size: 16px; font-style: italic; color: var(--light);
+            line-height: 1.7; margin-top: 12px;
+        }
+        .pain-quote span { color: var(--red); font-weight: 600; font-style: normal; }
+
+        /* SECTION STYLES */
+        .section-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 20px; text-align: center;
+        }
+        .section-title {
+            font-size: clamp(30px, 4vw, 48px); font-weight: 800;
+            color: var(--white); letter-spacing: -2px; line-height: 1.15;
+            text-align: center; margin-bottom: 20px;
+        }
+        .section-title em { font-style: normal; color: var(--dim); }
+        .section-subtitle {
+            font-size: 17px; color: var(--muted); text-align: center;
+            max-width: 560px; margin: 0 auto 64px; line-height: 1.7;
+        }
+
+        /* METRICS */
+        .metrics { padding: 120px 0; position: relative; }
+        .metrics::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 800px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.04), transparent 60%);
+            pointer-events: none;
+        }
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .metric-card {
+            background: var(--bg2); padding: 48px 32px; text-align: center;
+        }
+        .metric-number {
+            font-size: clamp(36px, 4.5vw, 52px); font-weight: 900;
+            letter-spacing: -2px; margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--white), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .metric-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        /* SOLUTIONS */
+        .solutions { padding: 160px 0; }
+        .solutions-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .solution-card {
+            background: var(--bg2); padding: 48px 40px;
+            position: relative; transition: background .3s;
+        }
+        .solution-card:hover { background: var(--bg3); }
+        .solution-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.12);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px;
+        }
+        .solution-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+        .solution-card h3 {
+            font-size: 20px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .solution-card p { font-size: 15px; line-height: 1.7; }
+
+        /* CHAT DEMO */
+        .demo { padding: 160px 0; }
+        .demo-layout {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .demo-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+        }
+        .demo h2 {
+            font-size: clamp(28px, 3.5vw, 42px); font-weight: 800;
+            color: var(--white); letter-spacing: -1.5px; line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .demo p { font-size: 16px; line-height: 1.8; margin-bottom: 12px; }
+        .demo-features { list-style: none; margin: 24px 0; }
+        .demo-features li {
+            padding: 8px 0; font-size: 14px; color: var(--light);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .demo-features li svg {
+            width: 16px; height: 16px; stroke: var(--green);
+            fill: none; stroke-width: 2.5; stroke-linecap: round; flex-shrink: 0;
+        }
+        .demo-phone {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 24px; padding: 24px; max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
+        }
+        .demo-header {
+            display: flex; align-items: center; gap: 12px;
+            padding-bottom: 18px; border-bottom: 1px solid var(--border); margin-bottom: 18px;
+        }
+        .demo-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 700; color: white;
+        }
+        .demo-name { font-size: 14px; font-weight: 600; color: var(--white); }
+        .demo-status { font-size: 11px; color: var(--green); }
+        .demo-messages { min-height: 340px; }
+        .demo-msg {
+            padding: 11px 15px; border-radius: 16px; font-size: 13px;
+            line-height: 1.6; margin-bottom: 10px; max-width: 85%;
+            opacity: 0; transform: translateY(10px);
+        }
+        .msg-user {
+            background: var(--accent); color: white;
+            margin-left: auto; border-bottom-right-radius: 4px;
+        }
+        .msg-ai {
+            background: rgba(255,255,255,0.06); color: var(--light);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-typing {
+            background: rgba(255,255,255,0.06); color: var(--dim);
+            display: inline-flex; gap: 4px; padding: 14px 18px;
+            border-radius: 16px; margin-bottom: 10px;
+            opacity: 0;
+        }
+        .msg-typing span {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--dim); animation: bounce 1.4s infinite;
+        }
+        .msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+        /* CASE STUDY */
+        .case-study { padding: 160px 0; }
+        .case-container {
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 64px;
+            position: relative; overflow: hidden;
+        }
+        .case-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--accent), var(--green));
+        }
+        .case-layout {
+            display: grid; grid-template-columns: 1.2fr 1fr;
+            gap: 64px; align-items: center;
+        }
+        .case-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+        }
+        .case-content h3 {
+            font-size: 28px; font-weight: 800; color: var(--white);
+            letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px;
+        }
+        .case-content p {
+            font-size: 16px; line-height: 1.8; margin-bottom: 20px;
+        }
+        .case-results {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .case-result {
+            background: rgba(255,255,255,0.03); border-radius: 12px; padding: 24px;
+        }
+        .case-result-number {
+            font-size: 36px; font-weight: 900; letter-spacing: -2px;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, var(--white), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .case-result-label { font-size: 13px; color: var(--muted); }
+
+        /* HOW IT WORKS */
+        .how-it-works { padding: 160px 0; }
+        .hiw-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .hiw-card {
+            background: var(--bg2); padding: 56px 40px;
+            position: relative;
+        }
+        .hiw-num {
+            font-size: 72px; font-weight: 900; letter-spacing: -4px;
+            color: rgba(139,92,246,0.08); line-height: 1;
+            margin-bottom: 24px;
+        }
+        .hiw-card h3 {
+            font-size: 22px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .hiw-card p { font-size: 15px; line-height: 1.7; }
+        .hiw-arrow {
+            position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--bg); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2; color: var(--accent);
+        }
+        .hiw-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        /* CTA */
+        .cta-section {
+            padding: 200px 0 80px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; bottom: -30%; left: 50%;
+            transform: translateX(-50%); width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.08), transparent 60%);
+            pointer-events: none;
+        }
+        .cta-big {
+            font-size: clamp(40px, 6vw, 80px); font-weight: 900;
+            color: var(--white); letter-spacing: -4px; margin-bottom: 20px;
+        }
+        .cta-big em { font-style: normal; color: var(--dim); }
+        .cta-sub {
+            font-size: 18px; color: var(--muted); max-width: 500px;
+            margin: 0 auto 44px; line-height: 1.7;
+        }
+        .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* LEAD FORM */
+        .lead-capture {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--bg) 0%, rgba(139,92,246,0.02) 50%, var(--bg) 100%);
+        }
+        .lead-form-container {
+            max-width: 600px; margin: 0 auto;
+            background: var(--bg2); border: 1px solid var(--border);
+            border-radius: 20px; padding: 56px 48px;
+            position: relative; overflow: hidden;
+        }
+        .lead-form-container::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+        }
+        .lead-form-container h3 {
+            font-size: 28px; font-weight: 800; color: var(--white);
+            letter-spacing: -1px; margin-bottom: 8px; text-align: center;
+        }
+        .lead-form-container > p {
+            font-size: 15px; color: var(--muted); text-align: center;
+            margin-bottom: 36px; line-height: 1.6;
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--dim); letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 14px 18px; font-size: 15px;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); color: var(--white);
+            font-family: inherit; transition: border-color .3s;
+            -webkit-appearance: none; appearance: none;
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--dim); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--accent);
+        }
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: var(--bg2); color: var(--white); }
+        .form-submit {
+            width: 100%; padding: 16px 32px; font-size: 15px; font-weight: 700;
+            background: var(--accent); color: #fff; border: none;
+            border-radius: 100px; font-family: inherit; cursor: pointer;
+            margin-top: 8px; transition: transform .2s, box-shadow .3s;
+        }
+        .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(139,92,246,0.35); }
+        .form-note {
+            font-size: 12px; color: var(--dim); text-align: center;
+            margin-top: 16px;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-inner {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 20px;
+        }
+        .footer-brand {
+            font-size: 16px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; text-decoration: none;
+        }
+        .footer-brand span { color: var(--accent); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            font-size: 13px; color: var(--muted); text-decoration: none;
+            transition: color .2s;
+        }
+        .footer-links a:hover { color: var(--accent); }
+        .footer-copy { font-size: 12px; color: var(--dim); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .pain-grid { grid-template-columns: 1fr; gap: 48px; }
+            .demo-layout { grid-template-columns: 1fr; gap: 48px; }
+            .case-layout { grid-template-columns: 1fr; gap: 40px; }
+            .hiw-grid { grid-template-columns: 1fr; }
+            .hiw-arrow { display: none; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            nav.scrolled { padding: 14px 20px; }
+            .nav-cta { display: none; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .solutions-grid { grid-template-columns: 1fr; }
+            .case-container { padding: 40px 28px; }
+            .case-results { grid-template-columns: 1fr; }
+            section, .solutions, .demo, .case-study, .metrics, .how-it-works {
+                padding: 100px 0;
+            }
+            .cta-section { padding: 140px 0 60px; }
+            .lead-form-container { padding: 40px 24px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            .hero { padding: 140px 0 80px; }
+        }
+
+        /* GRAIN */
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998;
+            pointer-events: none; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ANIMATIONS */
+        .fade-up {
+            opacity: 0; transform: translateY(40px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">Ascend<span>.</span></a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="book.html" class="nav-cta">BOOK A CALL</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="w">
+            <div class="hero-tag">
+                <div class="hero-tag-dot"></div>
+                AI FOR LAW FIRMS
+            </div>
+            <h1>AI That Books<br>Consultations<br><em>While You Sleep</em></h1>
+            <p class="hero-sub">
+                Your competitors answer at 9 PM. Your website doesn't.
+                Our AI intake system captures, qualifies, and books
+                <strong>every lead</strong> -- 24 hours a day, 7 days a week.
+            </p>
+            <div class="hero-btns">
+                <a href="book.html" class="btn btn-w">
+                    Book a Free Strategy Call
+                    <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+                <a href="#demo" class="btn btn-o">See It In Action</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS -->
+    <section class="metrics">
+        <div class="w">
+            <div class="metrics-grid">
+                <div class="metric-card fade-up">
+                    <div class="metric-number">89%</div>
+                    <div class="metric-label">Fewer missed calls<br>with AI intake</div>
+                </div>
+                <div class="metric-card fade-up">
+                    <div class="metric-number">47</div>
+                    <div class="metric-label">New inquiries per month<br>average across clients</div>
+                </div>
+                <div class="metric-card fade-up">
+                    <div class="metric-number">3s</div>
+                    <div class="metric-label">Response time to<br>new website visitors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIN POINTS -->
+    <section class="pain-section">
+        <div class="w">
+            <div class="pain-grid">
+                <div class="pain-content fade-up">
+                    <div class="pain-label">The Problem</div>
+                    <h2>Your Firm is Bleeding Leads After Hours</h2>
+                    <p>People don't get injured on a schedule. They don't face eviction between 9 and 5. When they search for a lawyer at 11 PM, they need help <strong style="color:var(--light)">now</strong>.</p>
+                    <p>If your website can't answer, they move on. By morning, they've already hired someone else.</p>
+                    <div class="pain-quote">
+                        <span>"Your competitors answer at 9 PM.</span> They have AI working their intake 24/7. Every hour you wait is a consultation booked by someone else."
+                    </div>
+                </div>
+                <div class="pain-stat-box fade-up">
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">60%</div>
+                        <div class="pain-stat-text">of after-hours leads are permanently lost. They never call back the next morning.</div>
+                    </div>
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">79%</div>
+                        <div class="pain-stat-text">of legal consumers expect a response within one hour of reaching out.</div>
+                    </div>
+                    <div class="pain-stat">
+                        <div class="pain-stat-number">$1,500+</div>
+                        <div class="pain-stat-text">Average cost per case acquisition via paid ads -- wasted when leads go unanswered.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section class="solutions">
+        <div class="w">
+            <div class="section-label">What We Build</div>
+            <div class="section-title">Your 24/7 Digital <em>Intake Team</em></div>
+            <div class="section-subtitle">Everything a full-time intake coordinator does -- but at 3 AM on a Sunday, without overtime pay.</div>
+
+            <div class="solutions-grid">
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3>24/7 AI Intake Chatbot</h3>
+                    <p>Engages every website visitor instantly. Answers FAQs about your practice areas, qualifies the case, and books consultations directly on your calendar.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h3>Missed Call Recovery</h3>
+                    <p>Every missed call triggers an instant text and email follow-up. The AI re-engages the prospect and books them before they call the next firm on the list.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <h3>Review Generation</h3>
+                    <p>After case resolution, automated review requests go to satisfied clients. Build your Google reputation on autopilot -- more reviews means more inbound.</p>
+                </div>
+                <div class="solution-card fade-up">
+                    <div class="solution-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </div>
+                    <h3>Smart Case Qualification</h3>
+                    <p>The AI asks the right screening questions for your practice areas. PI, immigration, family law -- it knows what qualifies. You only talk to real prospects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAT DEMO -->
+    <section class="demo" id="demo">
+        <div class="w">
+            <div class="demo-layout">
+                <div class="fade-up">
+                    <div class="demo-label">Live Demo</div>
+                    <h2>Watch AI Qualify a Personal Injury Case in Real Time</h2>
+                    <p>This is what your website visitors experience. Instant engagement, intelligent follow-up questions, and a booked consultation -- all in under 60 seconds.</p>
+                    <ul class="demo-features">
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Qualifies case type and severity
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Captures contact information naturally
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Books consultation on your calendar
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Sends instant notification to your team
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            Works 24/7 -- weekends, holidays, 3 AM
+                        </li>
+                    </ul>
+                </div>
+                <div class="fade-up">
+                    <div class="demo-phone" id="chatDemo">
+                        <div class="demo-header">
+                            <div class="demo-avatar">AI</div>
+                            <div>
+                                <div class="demo-name">Intake Assistant</div>
+                                <div class="demo-status">Online now</div>
+                            </div>
+                        </div>
+                        <div class="demo-messages" id="chatMessages">
+                            <!-- Messages injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="case-study">
+        <div class="w">
+            <div class="case-container fade-up">
+                <div class="case-layout">
+                    <div class="case-content">
+                        <div class="case-label">Case Study</div>
+                        <h3>Immigration Law Firm in Miami Sees 161% Increase in Qualified Inbound</h3>
+                        <p>A mid-size immigration practice was losing 40+ leads per month to after-hours silence. Their website had a contact form and a phone number -- but no one was answering at 9 PM.</p>
+                        <p>We deployed our AI intake system in 48 hours. Within 30 days, their qualified inbound leads increased 161%. The AI handled case screening in English and Spanish, booking consultations directly on the attorneys' calendars.</p>
+                    </div>
+                    <div class="case-results">
+                        <div class="case-result">
+                            <div class="case-result-number">161%</div>
+                            <div class="case-result-label">Increase in qualified leads</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">47</div>
+                            <div class="case-result-label">New inquiries per month</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">3s</div>
+                            <div class="case-result-label">Average response time</div>
+                        </div>
+                        <div class="case-result">
+                            <div class="case-result-number">24/7</div>
+                            <div class="case-result-label">Coverage, zero overtime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="w">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Live in <em>48 Hours</em></div>
+            <div class="section-subtitle">We handle everything. No IT team required. No months-long implementation.</div>
+
+            <div class="hiw-grid">
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">01</div>
+                    <h3>Strategy Call</h3>
+                    <p>We learn your practice areas, intake process, and qualification criteria. 15 minutes. No fluff.</p>
+                    <div class="hiw-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </div>
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">02</div>
+                    <h3>Build & Deploy</h3>
+                    <p>We build your AI intake system, train it on your practice areas, and install it on your website. 48 hours.</p>
+                    <div class="hiw-arrow">
+                        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </div>
+                <div class="hiw-card fade-up">
+                    <div class="hiw-num">03</div>
+                    <h3>Capture & Scale</h3>
+                    <p>Watch consultations fill your calendar. We optimize weekly based on real data. You focus on cases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="w">
+            <div class="cta-big fade-up">Stop Losing<br><em>After-Hours Leads</em></div>
+            <p class="cta-sub fade-up">The average firm loses 60% of after-hours leads. Yours doesn't have to. Let us show you exactly what's possible in 15 minutes.</p>
+            <div class="cta-btns fade-up">
+                <a href="book.html" class="btn btn-a btn-lg">
+                    Book Your Free Strategy Call
+                    <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEAD FORM -->
+    <section class="lead-capture">
+        <div class="w">
+            <div class="lead-form-container fade-up">
+                <h3>Get Your Free AI Audit</h3>
+                <p>See exactly how many leads your firm is losing -- and how to capture them. Takes 30 seconds.</p>
+                <form action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="Law Firm Lead - Ascend Agency">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://ascendagency.site/book.html">
+                    <input type="hidden" name="_template" value="box">
+
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="John Smith" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="john@smithlaw.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Firm Name</label>
+                        <input type="text" name="firm" placeholder="Smith & Associates">
+                    </div>
+                    <div class="form-group">
+                        <label>Practice Area</label>
+                        <select name="practice_area">
+                            <option value="" disabled selected>Select your practice area</option>
+                            <option value="personal_injury">Personal Injury</option>
+                            <option value="immigration">Immigration</option>
+                            <option value="family_law">Family Law</option>
+                            <option value="criminal_defense">Criminal Defense</option>
+                            <option value="estate_planning">Estate Planning</option>
+                            <option value="business_law">Business / Corporate</option>
+                            <option value="real_estate_law">Real Estate Law</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Biggest Challenge</label>
+                        <select name="challenge">
+                            <option value="" disabled selected>What's your #1 intake problem?</option>
+                            <option value="after_hours">Losing leads after hours</option>
+                            <option value="slow_response">Slow response time</option>
+                            <option value="reviews">Need more Google reviews</option>
+                            <option value="follow_up">No follow-up system</option>
+                            <option value="cost">High acquisition costs</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="form-submit">Get My Free AI Audit</button>
+                    <p class="form-note">No spam. No obligation. Just a clear picture of what AI can do for your firm.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="w">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-brand">Ascend<span>.</span></a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="book.html">Book a Call</a>
+                    <a href="https://instagram.com/ascendagencyy" target="_blank">Instagram</a>
+                </div>
+                <div class="footer-copy">&copy; 2025 Ascend Agency. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <script>
+        // NAV SCROLL
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // GSAP ANIMATIONS
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero entrance
+        gsap.to('.hero-tag', { opacity: 1, duration: 0.8, delay: 0.3 });
+        gsap.to('.hero h1', { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: 'power3.out' });
+        gsap.to('.hero-sub', { opacity: 1, duration: 0.8, delay: 0.8 });
+        gsap.to('.hero-btns', { opacity: 1, duration: 0.8, delay: 1.0 });
+
+        // Fade up on scroll
+        document.querySelectorAll('.fade-up').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    once: true
+                }
+            });
+        });
+
+        // Metric number count-up
+        document.querySelectorAll('.metric-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d.]+/);
+            if (!match) return;
+            const num = parseFloat(match[0]);
+            const suffix = text.replace(match[0], '');
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.8,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            const current = this.targets()[0].val;
+                            if (num % 1 === 0) {
+                                el.textContent = Math.round(current) + suffix;
+                            } else {
+                                el.textContent = current.toFixed(0) + suffix;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // Case study result count-up
+        document.querySelectorAll('.case-result-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d.]+/);
+            if (!match) return;
+            const num = parseFloat(match[0]);
+            const suffix = text.replace(match[0], '');
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.8,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            el.textContent = Math.round(this.targets()[0].val) + suffix;
+                        }
+                    });
+                }
+            });
+        });
+
+        // CHAT DEMO SIMULATION
+        const chatMessages = document.getElementById('chatMessages');
+        const conversation = [
+            { type: 'ai', text: "Hi there! I'm the intake assistant for Smith & Associates. How can I help you today?" },
+            { type: 'user', text: "I was in a car accident last week. The other driver ran a red light." },
+            { type: 'ai', text: "I'm sorry to hear that. I can help connect you with our personal injury team. A few quick questions:" },
+            { type: 'ai', text: "Were you injured in the accident? And have you received any medical treatment?" },
+            { type: 'user', text: "Yes, I went to the ER. I have whiplash and my back is really hurting." },
+            { type: 'ai', text: "That's important to document. Do you have the other driver's insurance information, or was a police report filed?" },
+            { type: 'user', text: "Yes, there's a police report. The other driver was cited." },
+            { type: 'ai', text: "This sounds like a strong case. Our PI team handles exactly this. I'd like to book you a free consultation -- would tomorrow at 2 PM work?" },
+            { type: 'user', text: "That works perfectly." },
+            { type: 'ai', text: "You're booked for tomorrow at 2 PM with Attorney Rodriguez. I'll send a confirmation to your email along with a checklist of documents to bring. Is there anything else I can help with?" },
+        ];
+
+        let chatStarted = false;
+
+        function addMessage(msg, index) {
+            return new Promise(resolve => {
+                // Show typing indicator for AI messages
+                if (msg.type === 'ai') {
+                    const typing = document.createElement('div');
+                    typing.className = 'msg-typing';
+                    typing.innerHTML = '<span></span><span></span><span></span>';
+                    chatMessages.appendChild(typing);
+                    gsap.to(typing, { opacity: 1, duration: 0.3 });
+
+                    setTimeout(() => {
+                        typing.remove();
+                        const el = document.createElement('div');
+                        el.className = 'demo-msg msg-ai';
+                        el.textContent = msg.text;
+                        chatMessages.appendChild(el);
+                        gsap.to(el, { opacity: 1, y: 0, duration: 0.4 });
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        resolve();
+                    }, 1200);
+                } else {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = 'demo-msg msg-user';
+                        el.textContent = msg.text;
+                        chatMessages.appendChild(el);
+                        gsap.to(el, { opacity: 1, y: 0, duration: 0.4 });
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        resolve();
+                    }, 600);
+                }
+            });
+        }
+
+        async function runChat() {
+            if (chatStarted) return;
+            chatStarted = true;
+            for (let i = 0; i < conversation.length; i++) {
+                await addMessage(conversation[i], i);
+                await new Promise(r => setTimeout(r, 800));
+            }
+        }
+
+        // Start chat when demo section is in view
+        ScrollTrigger.create({
+            trigger: '#chatDemo',
+            start: 'top 75%',
+            once: true,
+            onEnter: () => {
+                setTimeout(runChat, 500);
+            }
+        });
+
+        // Pain stat number count-up
+        document.querySelectorAll('.pain-stat-number').forEach(el => {
+            const text = el.textContent;
+            const match = text.match(/[\d,]+/);
+            if (!match) return;
+            const numStr = match[0].replace(/,/g, '');
+            const num = parseFloat(numStr);
+            const prefix = text.substring(0, text.indexOf(match[0]));
+            const suffix = text.substring(text.indexOf(match[0]) + match[0].length);
+
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+                onEnter: () => {
+                    gsap.from({ val: 0 }, {
+                        val: num,
+                        duration: 1.5,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            const current = Math.round(this.targets()[0].val);
+                            el.textContent = prefix + current.toLocaleString() + suffix;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
