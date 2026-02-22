@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Savings Calculator — Ascend Agency</title>
+    <meta name="description" content="Calculate how much your firm is spending on tasks AI can automate. See your potential savings in 60 seconds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --card: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.06);
+            --dim: #444;
+            --muted: #777;
+            --light: #bbb;
+            --white: #f0f0f0;
+            --accent: #8b5cf6;
+            --accent2: #a78bfa;
+            --green: #22c55e;
+            --red: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav a { text-decoration: none; }
+        .nav-brand { font-weight: 800; font-size: 18px; color: var(--white); }
+        .nav-brand span { color: var(--accent); }
+        .nav-links { display: flex; gap: 18px; align-items: center; }
+        .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color .2s; }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links .cta { background: var(--accent); color: #fff; padding: 8px 18px; border-radius: 8px; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+
+        .hero { text-align: center; padding: 60px 20px 40px; max-width: 640px; margin: 0 auto; }
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.25);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 36px; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+        h1 em { font-style: normal; color: var(--green); }
+        .hero p { font-size: 16px; color: var(--light); line-height: 1.6; }
+
+        .calc { max-width: 640px; margin: 0 auto; padding: 0 20px 60px; }
+
+        .section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .field { margin-bottom: 20px; }
+        .field:last-child { margin-bottom: 0; }
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--light);
+            margin-bottom: 8px;
+        }
+        .field .hint {
+            font-size: 11px;
+            color: var(--dim);
+            margin-top: 4px;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+        }
+        .slider-row input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: 2px solid var(--bg);
+            box-shadow: 0 2px 8px rgba(139,92,246,0.4);
+        }
+        .slider-val {
+            min-width: 60px;
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            font-variant-numeric: tabular-nums;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            cursor: pointer;
+        }
+        select option { background: #111; }
+        select:focus { border-color: var(--accent); }
+
+        .results {
+            background: linear-gradient(135deg, rgba(34,197,94,0.05), rgba(139,92,246,0.05));
+            border: 1px solid rgba(34,197,94,0.15);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 8px;
+        }
+        .results-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .results-num {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+        .results-sub {
+            font-size: 14px;
+            color: var(--light);
+            margin-bottom: 24px;
+        }
+
+        .breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .breakdown-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .breakdown-item .label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+        .breakdown-item .val { font-size: 20px; font-weight: 700; color: var(--white); }
+        .breakdown-item .val.red { color: var(--red); }
+        .breakdown-item .val.green { color: var(--green); }
+
+        .results-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all .2s;
+            margin-bottom: 12px;
+        }
+        .results-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(139,92,246,0.35); }
+        .results-cta svg { transition: transform .2s; }
+        .results-cta:hover svg { transform: translateX(4px); }
+        .results-alt { display: block; }
+        .results-alt a { color: var(--accent2); text-decoration: none; font-size: 13px; font-weight: 500; }
+        .results-alt a:hover { text-decoration: underline; }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: var(--dim);
+            border-top: 1px solid var(--border);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .nav { padding: 16px 20px; }
+            h1 { font-size: 28px; }
+            .results-num { font-size: 40px; }
+            .breakdown { grid-template-columns: 1fr; }
+            .hero { padding: 40px 20px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html" class="nav-brand">Ascend<span>.</span></a>
+        <div class="nav-links">
+            <a href="assess.html">AI Assessment</a>
+            <a href="results.html">Results</a>
+            <a href="book.html" class="cta">Book a Call</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <div class="badge">Free Calculator</div>
+        <h1>How Much Is Manual Work <em>Costing</em> Your Firm?</h1>
+        <p>Adjust the sliders to match your practice. See your potential savings in real-time.</p>
+    </div>
+
+    <div class="calc">
+        <div class="section">
+            <div class="section-title"><div class="dot"></div> Your Practice</div>
+            <div class="field">
+                <label>Industry</label>
+                <select id="industry" onchange="recalc()">
+                    <option value="law">Law Firm</option>
+                    <option value="re">Real Estate</option>
+                    <option value="medical">Medical Practice</option>
+                    <option value="insurance">Insurance Agency</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title"><div class="dot"></div> Lead Volume & Response</div>
+            <div class="field">
+                <label>Inbound leads per month</label>
+                <div class="slider-row">
+                    <input type="range" id="leads" min="10" max="500" value="80" step="5" oninput="recalc()">
+                    <div class="slider-val" id="leadsVal">80</div>
+                </div>
+                <div class="hint">Calls, form fills, emails, walk-ins, DMs</div>
+            </div>
+            <div class="field">
+                <label>Average response time (hours)</label>
+                <div class="slider-row">
+                    <input type="range" id="responseTime" min="0" max="48" value="4" step="1" oninput="recalc()">
+                    <div class="slider-val" id="responseTimeVal">4h</div>
+                </div>
+                <div class="hint">How long before someone follows up with a new lead?</div>
+            </div>
+            <div class="field">
+                <label>Leads lost to slow response (%)</label>
+                <div class="slider-row">
+                    <input type="range" id="lostPct" min="5" max="60" value="30" step="5" oninput="recalc()">
+                    <div class="slider-val" id="lostPctVal">30%</div>
+                </div>
+                <div class="hint">Industry avg: 30-50% of leads go cold within 5 minutes</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title"><div class="dot"></div> Revenue & Costs</div>
+            <div class="field">
+                <label>Average client/deal value ($)</label>
+                <div class="slider-row">
+                    <input type="range" id="dealValue" min="500" max="50000" value="5000" step="500" oninput="recalc()">
+                    <div class="slider-val" id="dealValueVal">$5,000</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Hours per week on admin/follow-up</label>
+                <div class="slider-row">
+                    <input type="range" id="adminHours" min="2" max="40" value="15" step="1" oninput="recalc()">
+                    <div class="slider-val" id="adminHoursVal">15h</div>
+                </div>
+                <div class="hint">Responding to inquiries, data entry, scheduling, follow-ups</div>
+            </div>
+            <div class="field">
+                <label>Hourly value of your time ($)</label>
+                <div class="slider-row">
+                    <input type="range" id="hourlyRate" min="25" max="500" value="150" step="25" oninput="recalc()">
+                    <div class="slider-val" id="hourlyRateVal">$150</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="results-label">Your Estimated Monthly Savings</div>
+            <div class="results-num" id="totalSavings">$14,700</div>
+            <div class="results-sub" id="annualNote">That's <strong>$176,400/year</strong> in recovered revenue and saved time</div>
+
+            <div class="breakdown">
+                <div class="breakdown-item">
+                    <div class="label">Revenue Lost to Slow Response</div>
+                    <div class="val red" id="revLost">$12,000</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="label">Time Savings (Admin Hours)</div>
+                    <div class="val green" id="timeSaved">$2,700</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="label">Leads You're Losing/Month</div>
+                    <div class="val red" id="leadsLost">24</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="label">AI Automation Cost</div>
+                    <div class="val green" id="aiCost">$997/mo</div>
+                </div>
+            </div>
+
+            <a href="book.html" class="results-cta">
+                Stop Leaving Money on the Table
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+            <div class="results-alt">
+                <a href="assess.html">Or take the free AI readiness assessment</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">&copy; 2026 Ascend Agency. All rights reserved.</div>
+
+    <script>
+    function fmt(n) {
+        return '$' + Math.round(n).toLocaleString();
+    }
+
+    function recalc() {
+        const industry = document.getElementById('industry').value;
+        const leads = +document.getElementById('leads').value;
+        const responseTime = +document.getElementById('responseTime').value;
+        const lostPct = +document.getElementById('lostPct').value;
+        const dealValue = +document.getElementById('dealValue').value;
+        const adminHours = +document.getElementById('adminHours').value;
+        const hourlyRate = +document.getElementById('hourlyRate').value;
+
+        // Update display values
+        document.getElementById('leadsVal').textContent = leads;
+        document.getElementById('responseTimeVal').textContent = responseTime + 'h';
+        document.getElementById('lostPctVal').textContent = lostPct + '%';
+        document.getElementById('dealValueVal').textContent = fmt(dealValue);
+        document.getElementById('adminHoursVal').textContent = adminHours + 'h';
+        document.getElementById('hourlyRateVal').textContent = fmt(hourlyRate);
+
+        // Calculate conversion rates
+        const conversionRates = { law: 0.10, re: 0.08, medical: 0.15, insurance: 0.12 };
+        const baseConversion = conversionRates[industry] || 0.10;
+
+        // Leads lost per month
+        const leadsLostPerMonth = Math.round(leads * (lostPct / 100));
+        // Revenue lost from slow response
+        const revLost = leadsLostPerMonth * baseConversion * dealValue;
+        // Time savings (automate ~70% of admin)
+        const hoursAutoSaved = adminHours * 0.70;
+        const timeSaved = hoursAutoSaved * hourlyRate * 4.33; // monthly
+
+        // AI recovers ~60% of lost leads
+        const recoveryRate = 0.60;
+        const additionalLeads = leadsLostPerMonth * recoveryRate;
+        const additionalRevenue = additionalLeads * baseConversion * dealValue;
+
+        // Total monthly savings
+        const totalMonthly = additionalRevenue + timeSaved;
+        const annual = totalMonthly * 12;
+
+        // Update results
+        document.getElementById('totalSavings').textContent = fmt(totalMonthly);
+        document.getElementById('annualNote').innerHTML = "That's <strong>" + fmt(annual) + "/year</strong> in recovered revenue and saved time";
+        document.getElementById('revLost').textContent = fmt(revLost) + '/mo';
+        document.getElementById('timeSaved').textContent = fmt(timeSaved) + '/mo';
+        document.getElementById('leadsLost').textContent = leadsLostPerMonth;
+        document.getElementById('aiCost').textContent = '$997/mo';
+    }
+
+    // Set industry-appropriate defaults
+    document.getElementById('industry').addEventListener('change', function() {
+        const v = this.value;
+        if (v === 'law') {
+            document.getElementById('dealValue').value = 5000;
+            document.getElementById('hourlyRate').value = 200;
+            document.getElementById('leads').value = 60;
+        } else if (v === 're') {
+            document.getElementById('dealValue').value = 8000;
+            document.getElementById('hourlyRate').value = 100;
+            document.getElementById('leads').value = 100;
+        } else if (v === 'medical') {
+            document.getElementById('dealValue').value = 2000;
+            document.getElementById('hourlyRate').value = 150;
+            document.getElementById('leads').value = 120;
+        } else if (v === 'insurance') {
+            document.getElementById('dealValue').value = 3000;
+            document.getElementById('hourlyRate').value = 80;
+            document.getElementById('leads').value = 80;
+        }
+        recalc();
+    });
+
+    recalc();
+    </script>
+</body>
+</html>
