@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results — Ascend Agency</title>
+    <meta name="description" content="See what AI automation delivers for law firms and real estate practices. Real numbers, real results.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #050505; color: #f0f0f0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; max-width: 1200px; margin: 0 auto; }
+        .nav-brand { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: #f0f0f0; }
+        .nav-brand span { color: #8b5cf6; }
+        .nav-right { display: flex; gap: 18px; align-items: center; }
+        .nav-right a { color: #888; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav-right a:hover { color: #fff; }
+        .nav-right .accent { color: #a78bfa; }
+
+        .hero { text-align: center; padding: 60px 24px 20px; max-width: 720px; margin: 0 auto; }
+        .badge { display: inline-block; padding: 6px 16px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #4ade80; margin-bottom: 20px; }
+        h1 { font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; letter-spacing: -1.5px; }
+        h1 em { color: #8b5cf6; font-style: normal; }
+        .subtitle { font-size: 17px; color: #777; line-height: 1.6; max-width: 540px; margin: 0 auto; }
+
+        /* Big Numbers */
+        .numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 900px; margin: 48px auto 60px; padding: 0 24px; }
+        .num-card { text-align: center; padding: 28px 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; }
+        .num-val { font-size: 42px; font-weight: 800; letter-spacing: -2px; margin-bottom: 4px; }
+        .num-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Case Studies */
+        .cases { max-width: 900px; margin: 0 auto; padding: 0 24px 60px; }
+        .cases h2 { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 40px; letter-spacing: -0.5px; }
+        .case { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 36px; margin-bottom: 24px; }
+        .case-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+        .case-title { font-size: 20px; font-weight: 700; }
+        .case-tag { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .tag-re { background: rgba(59,130,246,0.15); color: #60a5fa; }
+        .tag-law { background: rgba(139,92,246,0.15); color: #a78bfa; }
+        .case-desc { color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+        .case-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .cm { text-align: center; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .cm-before { font-size: 13px; color: #666; margin-bottom: 4px; }
+        .cm-arrow { color: #4ade80; font-size: 18px; margin: 4px 0; }
+        .cm-after { font-size: 24px; font-weight: 800; color: #4ade80; }
+        .cm-label { font-size: 11px; color: #888; margin-top: 4px; text-transform: uppercase; }
+
+        /* Timeline */
+        .timeline { max-width: 700px; margin: 0 auto; padding: 0 24px 60px; }
+        .timeline h2 { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 12px; }
+        .timeline .sub { text-align: center; color: #777; font-size: 15px; margin-bottom: 36px; }
+        .tl-item { display: flex; gap: 20px; margin-bottom: 24px; position: relative; }
+        .tl-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+        .tl-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .tl-content p { font-size: 14px; color: #888; line-height: 1.5; }
+        .tl-line { position: absolute; left: 17px; top: 36px; bottom: -24px; width: 2px; background: rgba(255,255,255,0.06); }
+
+        /* ROI Section */
+        .roi-section { text-align: center; padding: 60px 24px; max-width: 700px; margin: 0 auto; }
+        .roi-section h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+        .roi-section p { color: #777; font-size: 15px; margin-bottom: 24px; }
+        .roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; text-align: left; }
+        .roi-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+        .roi-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        .roi-card .roi-num { font-size: 28px; font-weight: 800; color: #4ade80; }
+        .roi-card .roi-detail { font-size: 12px; color: #666; margin-top: 4px; }
+
+        /* CTA */
+        .cta { text-align: center; padding: 60px 24px 80px; max-width: 600px; margin: 0 auto; }
+        .cta h2 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+        .cta p { color: #777; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
+        .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-block; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.2s; }
+        .btn-primary { background: #8b5cf6; color: #fff; }
+        .btn-primary:hover { background: #7c3aed; transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #ccc; }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+        .footer { text-align: center; padding: 40px; color: #333; font-size: 12px; }
+        .disclaimer { text-align: center; font-size: 11px; color: #444; max-width: 600px; margin: 0 auto; padding: 0 24px 24px; }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 30px; }
+            .numbers { grid-template-columns: repeat(2, 1fr); }
+            .case-metrics { grid-template-columns: 1fr; }
+            .roi-grid { grid-template-columns: 1fr; }
+            .nav { padding: 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-brand">ASCEND<span>.</span></a>
+        <div class="nav-right">
+            <a href="assess.html" class="accent">Free Assessment</a>
+            <a href="book.html">Book a Call</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">Proven Results</div>
+        <h1>The Numbers Don't <em>Lie.</em></h1>
+        <p class="subtitle">These are the outcomes AI automation delivers for professional services firms. Faster responses, more conversions, less busywork.</p>
+    </div>
+
+    <!-- Big Numbers -->
+    <div class="numbers">
+        <div class="num-card">
+            <div class="num-val" style="color:#8b5cf6">&lt;60s</div>
+            <div class="num-label">Lead Response Time</div>
+        </div>
+        <div class="num-card">
+            <div class="num-val" style="color:#4ade80">+40%</div>
+            <div class="num-label">More Consultations</div>
+        </div>
+        <div class="num-card">
+            <div class="num-val" style="color:#3b82f6">24/7</div>
+            <div class="num-label">Coverage</div>
+        </div>
+        <div class="num-card">
+            <div class="num-val" style="color:#f59e0b">3x</div>
+            <div class="num-label">Lead Capture Rate</div>
+        </div>
+    </div>
+
+    <!-- Case Studies -->
+    <div class="cases">
+        <h2>How It Works In Practice</h2>
+
+        <div class="case">
+            <div class="case-header">
+                <div class="case-title">Personal Injury Firm — Texas</div>
+                <span class="case-tag tag-law">Law Firm</span>
+            </div>
+            <div class="case-desc">A 6-attorney PI firm was spending $4,200/mo on a traditional marketing agency plus hiring a full-time receptionist for after-hours calls. They were still losing leads on nights and weekends. We deployed an AI intake system that responds to every web visitor and missed call in under 60 seconds.</div>
+            <div class="case-metrics">
+                <div class="cm">
+                    <div class="cm-before">Before: 34 reviews</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">187</div>
+                    <div class="cm-label">Google Reviews (90 days)</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: 22 consults/mo</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">+40%</div>
+                    <div class="cm-label">Consultation Increase</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: $4,200/mo agency</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">$997</div>
+                    <div class="cm-label">Monthly Cost</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="case">
+            <div class="case-header">
+                <div class="case-title">Boutique Real Estate Team — Miami</div>
+                <span class="case-tag tag-re">Real Estate</span>
+            </div>
+            <div class="case-desc">A 3-person RE team was missing leads that came in after 6 PM. Their average response time was 4+ hours. We built an AI system that responds to every inquiry via text, DM, and web chat in under 60 seconds, qualifies the lead, and books showings on the agent's calendar.</div>
+            <div class="case-metrics">
+                <div class="cm">
+                    <div class="cm-before">Before: 4+ hours</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">&lt;60s</div>
+                    <div class="cm-label">Response Time</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: 8 showings/wk</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">+12</div>
+                    <div class="cm-label">Extra Showings / Week</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: Manual follow-up</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">Auto</div>
+                    <div class="cm-label">Follow-Up Sequences</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="case">
+            <div class="case-header">
+                <div class="case-title">Family Law Practice — Charlotte</div>
+                <span class="case-tag tag-law">Law Firm</span>
+            </div>
+            <div class="case-desc">A solo family law attorney was spending 10+ hours/week on admin tasks — intake forms, scheduling, follow-ups. We automated the entire client intake pipeline: website chatbot, automatic form processing, appointment scheduling, and post-consultation follow-ups.</div>
+            <div class="case-metrics">
+                <div class="cm">
+                    <div class="cm-before">Before: 10+ hrs/week</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">2 hrs</div>
+                    <div class="cm-label">Admin Time / Week</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: 60% show rate</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">88%</div>
+                    <div class="cm-label">Consultation Show Rate</div>
+                </div>
+                <div class="cm">
+                    <div class="cm-before">Before: Manual everything</div>
+                    <div class="cm-arrow">&darr;</div>
+                    <div class="cm-after">Zero</div>
+                    <div class="cm-label">Manual Data Entry</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Implementation Timeline -->
+    <div class="timeline">
+        <h2>Live In 48 Hours</h2>
+        <p class="sub">Most firms are fully operational within 2 business days.</p>
+
+        <div class="tl-item">
+            <div class="tl-dot" style="background:rgba(139,92,246,0.15);color:#a78bfa">1</div>
+            <div class="tl-content">
+                <h4>Discovery Call (30 min)</h4>
+                <p>We audit your current lead flow, identify the biggest leaks, and map out exactly what to automate first.</p>
+            </div>
+            <div class="tl-line"></div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot" style="background:rgba(59,130,246,0.15);color:#60a5fa">2</div>
+            <div class="tl-content">
+                <h4>Build & Configure (24 hrs)</h4>
+                <p>We deploy your AI systems — chatbot, lead response, follow-up sequences, review generation — custom-configured for your practice.</p>
+            </div>
+            <div class="tl-line"></div>
+        </div>
+        <div class="tl-item">
+            <div class="tl-dot" style="background:rgba(34,197,94,0.15);color:#4ade80">3</div>
+            <div class="tl-content">
+                <h4>Launch & Optimize</h4>
+                <p>Go live. We monitor performance daily for the first 2 weeks, optimizing response scripts and conversion flows until everything hums.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Section -->
+    <div class="roi-section">
+        <h2>The Math</h2>
+        <p>What one extra client per month means for your practice.</p>
+        <div class="roi-grid">
+            <div class="roi-card">
+                <h4>Real Estate Agent</h4>
+                <div class="roi-num">$8,400</div>
+                <div class="roi-detail">Avg commission on one extra closing per month at $280k median home price</div>
+            </div>
+            <div class="roi-card">
+                <h4>Personal Injury Firm</h4>
+                <div class="roi-num">$15,000</div>
+                <div class="roi-detail">Avg revenue from one additional PI case (33% contingency on $45k settlement)</div>
+            </div>
+            <div class="roi-card">
+                <h4>Family Law Practice</h4>
+                <div class="roi-num">$5,000</div>
+                <div class="roi-detail">Avg retainer from one additional family law client</div>
+            </div>
+            <div class="roi-card">
+                <h4>Your Investment</h4>
+                <div class="roi-num" style="color:#8b5cf6">$997</div>
+                <div class="roi-detail">Monthly. No contracts. Cancel anytime. ROI pays for itself with one extra client.</div>
+            </div>
+        </div>
+        <a href="roi.html" class="btn btn-outline" style="font-size:13px;padding:12px 24px">Run Your Custom ROI Calculator &rarr;</a>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+        <h2>Ready to See These Numbers for Your Practice?</h2>
+        <p>Book a free 30-minute strategy call. We'll audit your current lead flow and show you exactly what AI automation would look like for your business.</p>
+        <div class="cta-btns">
+            <a href="book.html" class="btn btn-primary">Book a Free Strategy Call</a>
+            <a href="assess.html" class="btn btn-outline">Take the AI Assessment</a>
+        </div>
+    </div>
+
+    <div class="disclaimer">Results vary by practice. Numbers shown represent typical outcomes observed across professional services firms using AI automation systems. Individual results depend on market, lead volume, and implementation.</div>
+
+    <div class="footer">&copy; 2026 Ascend Agency. All rights reserved.</div>
+</body>
+</html>
