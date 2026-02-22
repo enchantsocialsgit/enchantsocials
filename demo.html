@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live AI Demo — Ascend Agency</title>
+    <meta name="description" content="See our AI intake chatbot in action. This is exactly what your website visitors experience when they land on your site after hours.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #050505; color: #f0f0f0; min-height: 100vh; }
+        .nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; max-width: 1200px; margin: 0 auto; }
+        .nav-brand { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: #f0f0f0; }
+        .nav-brand span { color: #8b5cf6; }
+        .nav-right { display: flex; gap: 18px; align-items: center; }
+        .nav-right a { color: #888; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav-right a:hover { color: #fff; }
+
+        .hero { text-align: center; padding: 40px 24px 20px; max-width: 700px; margin: 0 auto; }
+        .badge { display: inline-block; padding: 6px 16px; background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.25); border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #a78bfa; margin-bottom: 16px; }
+        h1 { font-size: 36px; font-weight: 800; line-height: 1.15; margin-bottom: 12px; letter-spacing: -1.5px; }
+        h1 em { color: #8b5cf6; font-style: normal; }
+        .subtitle { font-size: 15px; color: #777; line-height: 1.6; max-width: 500px; margin: 0 auto 8px; }
+
+        /* Scenario Selector */
+        .scenarios { display: flex; gap: 12px; justify-content: center; padding: 20px 24px 12px; flex-wrap: wrap; }
+        .scenario-btn { padding: 10px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #aaa; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .scenario-btn:hover { border-color: rgba(139,92,246,0.4); color: #fff; }
+        .scenario-btn.active { background: rgba(139,92,246,0.15); border-color: #8b5cf6; color: #a78bfa; }
+
+        /* Chat Container */
+        .demo-container { max-width: 480px; margin: 20px auto 40px; padding: 0 24px; }
+        .chat-window { background: #111; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .chat-header { padding: 16px 20px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); display: flex; align-items: center; gap: 12px; }
+        .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .chat-header-info h3 { font-size: 14px; font-weight: 700; }
+        .chat-header-info p { font-size: 11px; opacity: 0.8; }
+        .online-dot { display: inline-block; width: 8px; height: 8px; background: #4ade80; border-radius: 50%; margin-right: 4px; animation: pulse 2s infinite; }
+
+        .chat-body { height: 420px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; }
+        .chat-body::-webkit-scrollbar { width: 4px; }
+        .chat-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+        .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; animation: fadeIn 0.3s ease; }
+        .msg-bot { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.15); color: #e0d4ff; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .msg-user { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.2); color: #bfdbfe; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .msg-typing { align-self: flex-start; }
+        .typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+        .typing-dots span { width: 7px; height: 7px; background: #8b5cf6; border-radius: 50%; animation: typeBounce 1.4s infinite; }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        .quick-replies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .quick-reply { padding: 7px 14px; border-radius: 20px; border: 1px solid rgba(139,92,246,0.3); background: transparent; color: #a78bfa; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .quick-reply:hover { background: rgba(139,92,246,0.15); border-color: #8b5cf6; }
+
+        .chat-footer { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; gap: 8px; }
+        .chat-input { flex: 1; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #f0f0f0; font-size: 13px; outline: none; }
+        .chat-input:focus { border-color: rgba(139,92,246,0.4); }
+        .chat-send { padding: 10px 16px; border-radius: 12px; border: none; background: #8b5cf6; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .chat-send:hover { background: #7c3aed; }
+
+        /* Timer */
+        .timer { text-align: center; margin-top: 12px; }
+        .timer-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .timer-val { font-size: 32px; font-weight: 800; color: #4ade80; letter-spacing: -1px; }
+        .timer-compare { font-size: 12px; color: #666; margin-top: 4px; }
+        .timer-compare strong { color: #ef4444; }
+
+        /* Stats Bar */
+        .stats-bar { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 480px; margin: 0 auto 40px; padding: 0 24px; }
+        .stat-item { text-align: center; padding: 16px 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; }
+        .stat-val { font-size: 22px; font-weight: 800; color: #8b5cf6; }
+        .stat-label { font-size: 11px; color: #666; margin-top: 2px; }
+
+        /* CTA */
+        .cta-section { text-align: center; padding: 40px 24px 60px; max-width: 600px; margin: 0 auto; }
+        .cta-section h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .cta-section p { font-size: 14px; color: #777; margin-bottom: 24px; line-height: 1.6; }
+        .btn { display: inline-block; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 15px; transition: all 0.2s; }
+        .btn-primary { background: #8b5cf6; color: #fff; }
+        .btn-primary:hover { background: #7c3aed; transform: translateY(-1px); }
+        .btn-secondary { background: transparent; color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); margin-left: 12px; }
+        .btn-secondary:hover { background: rgba(139,92,246,0.1); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes typeBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 28px; }
+            .nav { padding: 16px 20px; }
+            .chat-body { height: 350px; }
+            .stats-bar { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-brand">ascend<span>.</span></a>
+        <div class="nav-right">
+            <a href="results.html">Results</a>
+            <a href="assess.html">Assessment</a>
+            <a href="book.html">Book a Call</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">Live Demo</div>
+        <h1>This is what your leads see <em>at 2 AM</em></h1>
+        <p class="subtitle">Watch our AI intake system qualify a lead, answer questions, and book a consultation — in under 60 seconds.</p>
+    </div>
+
+    <div class="scenarios">
+        <button class="scenario-btn active" onclick="startScenario('law')">Law Firm Visitor</button>
+        <button class="scenario-btn" onclick="startScenario('re')">Real Estate Lead</button>
+        <button class="scenario-btn" onclick="startScenario('medical')">Medical Patient</button>
+    </div>
+
+    <div class="demo-container">
+        <div class="chat-window">
+            <div class="chat-header">
+                <div class="chat-avatar">A</div>
+                <div class="chat-header-info">
+                    <h3>AI Assistant</h3>
+                    <p><span class="online-dot"></span>Online now</p>
+                </div>
+            </div>
+            <div class="chat-body" id="chatBody"></div>
+            <div class="chat-footer">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendUserMsg()">
+                <button class="chat-send" onclick="sendUserMsg()">Send</button>
+            </div>
+        </div>
+        <div class="timer">
+            <div class="timer-label">Response Time</div>
+            <div class="timer-val" id="timerVal">0.0s</div>
+            <div class="timer-compare">Industry average: <strong>4+ hours</strong></div>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-item"><div class="stat-val">&lt;3s</div><div class="stat-label">Avg Response</div></div>
+        <div class="stat-item"><div class="stat-val">24/7</div><div class="stat-label">Always Online</div></div>
+        <div class="stat-item"><div class="stat-val">40%</div><div class="stat-label">More Bookings</div></div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Want this on your website?</h2>
+        <p>We deploy a custom AI intake system for your business in 48 hours. No coding required. Month-to-month.</p>
+        <a href="book.html" class="btn btn-primary">Book a Demo</a>
+        <a href="assess.html" class="btn btn-secondary">Free Assessment</a>
+    </div>
+
+<script>
+const SCENARIOS = {
+    law: {
+        header: "Smith & Associates",
+        messages: [
+            { type: "bot", text: "Hi there! Welcome to Smith & Associates. I'm the firm's AI assistant. How can I help you today?", delay: 800 },
+            { type: "bot", text: "Are you looking for help with a legal matter?", delay: 1200, quickReplies: ["Yes, I need a lawyer", "Just browsing", "I have a question"] },
+            { type: "user", text: "Yes, I was in a car accident last week", delay: 2000 },
+            { type: "bot", text: "I'm sorry to hear that. Let me help connect you with the right attorney. A few quick questions:", delay: 1500 },
+            { type: "bot", text: "Were you injured in the accident?", delay: 800, quickReplies: ["Yes", "No, just vehicle damage", "Not sure yet"] },
+            { type: "user", text: "Yes, I have back pain and went to the ER", delay: 2500 },
+            { type: "bot", text: "That's important information. Our personal injury team handles cases like this regularly. One more question:", delay: 1200 },
+            { type: "bot", text: "Do you have the other driver's insurance information?", delay: 800, quickReplies: ["Yes", "No", "It was a hit and run"] },
+            { type: "user", text: "Yes I got their insurance info at the scene", delay: 2000 },
+            { type: "bot", text: "Great, you're in a strong position. Based on what you've told me, this sounds like a case our PI team would want to review right away.", delay: 1500 },
+            { type: "bot", text: "I can book you a free consultation with Attorney Johnson — she specializes in auto accident cases and has recovered over $12M for clients this year.", delay: 1800 },
+            { type: "bot", text: "I have openings tomorrow at 10 AM or 2 PM. Which works better?", delay: 1000, quickReplies: ["10 AM works", "2 PM works", "Another time"] },
+            { type: "user", text: "10 AM works", delay: 1500 },
+            { type: "bot", text: "Done! You're booked for tomorrow at 10 AM with Attorney Sarah Johnson. I'll send a confirmation to your email with everything you need to bring. Is there anything else I can help with?", delay: 2000 },
+        ]
+    },
+    re: {
+        header: "Luxury Realty Group",
+        messages: [
+            { type: "bot", text: "Hey! Welcome to Luxury Realty Group. I'm the team's AI assistant. Looking for a property in the area?", delay: 800 },
+            { type: "bot", text: "What can I help you with today?", delay: 1000, quickReplies: ["Looking to buy", "Looking to sell", "Just exploring"] },
+            { type: "user", text: "I'm looking to buy a 3 bedroom in the downtown area", delay: 2000 },
+            { type: "bot", text: "Great choice! Downtown has been hot lately. Let me narrow things down:", delay: 1200 },
+            { type: "bot", text: "What's your approximate budget range?", delay: 800, quickReplies: ["Under $400K", "$400K - $600K", "$600K - $800K", "$800K+"] },
+            { type: "user", text: "Around $500-600K", delay: 2000 },
+            { type: "bot", text: "Perfect. I found 12 active listings matching your criteria. Here are the top 3:", delay: 1500 },
+            { type: "bot", text: "1. 415 Main St — 3bd/2ba, 1,800 sqft, $549K (open house Saturday)\n2. 220 Park Ave — 3bd/2.5ba, 2,100 sqft, $589K (price reduced)\n3. 88 River Walk — 3bd/2ba, 1,650 sqft, $525K (new listing)", delay: 2000 },
+            { type: "bot", text: "Would you like to schedule a showing for any of these? I can book you in with Agent Martinez — she's our downtown specialist.", delay: 1200, quickReplies: ["Show me 415 Main", "Show me all three", "Send me details first"] },
+            { type: "user", text: "Can I see all three this weekend?", delay: 2000 },
+            { type: "bot", text: "Absolutely! I've set up a showing tour for Saturday starting at 10 AM with Agent Martinez. She'll drive you to all three properties.", delay: 1500 },
+            { type: "bot", text: "I'll text you the addresses and a quick market summary for each property. What's the best number to reach you?", delay: 1200, quickReplies: ["I'll type it in", "Just email me"] },
+        ]
+    },
+    medical: {
+        header: "Wellness Medical Center",
+        messages: [
+            { type: "bot", text: "Hello! Welcome to Wellness Medical Center. I'm the AI scheduling assistant. How can I help you today?", delay: 800 },
+            { type: "bot", text: "", delay: 1000, quickReplies: ["Book an appointment", "Prescription refill", "I have a question"] },
+            { type: "user", text: "I need to book an appointment, I've been having headaches", delay: 2000 },
+            { type: "bot", text: "I'm sorry to hear about the headaches. Let me get you scheduled with the right provider.", delay: 1200 },
+            { type: "bot", text: "Are you a current patient with us, or would this be your first visit?", delay: 800, quickReplies: ["Current patient", "New patient"] },
+            { type: "user", text: "New patient", delay: 1500 },
+            { type: "bot", text: "Welcome! For new patients, Dr. Patel has availability this week. She specializes in primary care and is highly rated.", delay: 1500 },
+            { type: "bot", text: "I have openings:\n- Wednesday 2:30 PM\n- Thursday 9:00 AM\n- Friday 11:00 AM\n\nWhich works best for you?", delay: 1500, quickReplies: ["Thursday 9 AM", "Friday 11 AM", "None of these"] },
+            { type: "user", text: "Thursday 9 AM please", delay: 1500 },
+            { type: "bot", text: "You're all set! Thursday at 9:00 AM with Dr. Patel. I'll send new patient forms to your email — filling them out ahead of time will save you 15 minutes at check-in.", delay: 2000 },
+            { type: "bot", text: "One more thing — please bring your insurance card and a list of any medications you're currently taking. Is there anything else I can help with?", delay: 1500 },
+        ]
+    }
+};
+
+let currentScenario = null;
+let messageIndex = 0;
+let isPlaying = false;
+let timerStart = null;
+let timerInterval = null;
+
+function startScenario(type) {
+    document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    currentScenario = SCENARIOS[type];
+    messageIndex = 0;
+    isPlaying = true;
+
+    const body = document.getElementById('chatBody');
+    body.innerHTML = '';
+
+    // Reset timer
+    clearInterval(timerInterval);
+    document.getElementById('timerVal').textContent = '0.0s';
+    timerStart = null;
+
+    playNextMessage();
+}
+
+function playNextMessage() {
+    if (!isPlaying || messageIndex >= currentScenario.messages.length) {
+        isPlaying = false;
+        return;
+    }
+
+    const msg = currentScenario.messages[messageIndex];
+    const body = document.getElementById('chatBody');
+
+    if (msg.type === 'bot') {
+        // Show typing indicator
+        const typing = document.createElement('div');
+        typing.className = 'msg msg-bot msg-typing';
+        typing.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        body.appendChild(typing);
+        body.scrollTop = body.scrollHeight;
+
+        // Start response timer on first bot message after user message
+        if (messageIndex > 0 && currentScenario.messages[messageIndex - 1].type === 'user') {
+            timerStart = performance.now();
+            timerInterval = setInterval(updateTimer, 50);
+        }
+
+        setTimeout(() => {
+            typing.remove();
+
+            if (msg.text) {
+                const el = document.createElement('div');
+                el.className = 'msg msg-bot';
+                el.textContent = msg.text;
+                body.appendChild(el);
+            }
+
+            if (msg.quickReplies) {
+                const qr = document.createElement('div');
+                qr.className = 'quick-replies';
+                msg.quickReplies.forEach(r => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quick-reply';
+                    btn.textContent = r;
+                    btn.onclick = () => {
+                        document.getElementById('chatInput').value = r;
+                        sendUserMsg();
+                    };
+                    qr.appendChild(btn);
+                });
+                body.appendChild(qr);
+            }
+
+            // Stop timer
+            if (timerStart) {
+                clearInterval(timerInterval);
+                updateTimer();
+                timerStart = null;
+            }
+
+            body.scrollTop = body.scrollHeight;
+            messageIndex++;
+
+            if (messageIndex < currentScenario.messages.length && currentScenario.messages[messageIndex].type === 'bot') {
+                setTimeout(() => playNextMessage(), 600);
+            }
+        }, msg.delay || 1000);
+    } else {
+        setTimeout(() => {
+            // Remove any quick reply buttons
+            body.querySelectorAll('.quick-replies').forEach(qr => qr.remove());
+
+            const el = document.createElement('div');
+            el.className = 'msg msg-user';
+            el.textContent = msg.text;
+            body.appendChild(el);
+            body.scrollTop = body.scrollHeight;
+
+            messageIndex++;
+            setTimeout(() => playNextMessage(), 500);
+        }, msg.delay || 1500);
+    }
+}
+
+function sendUserMsg() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const body = document.getElementById('chatBody');
+
+    // Remove quick replies
+    body.querySelectorAll('.quick-replies').forEach(qr => qr.remove());
+
+    const el = document.createElement('div');
+    el.className = 'msg msg-user';
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    input.value = '';
+
+    // If scenario is playing, advance to next message
+    if (isPlaying && messageIndex < currentScenario.messages.length) {
+        // Skip to next bot message
+        while (messageIndex < currentScenario.messages.length && currentScenario.messages[messageIndex].type === 'user') {
+            messageIndex++;
+        }
+        setTimeout(() => playNextMessage(), 500);
+    }
+}
+
+function updateTimer() {
+    if (!timerStart) return;
+    const elapsed = ((performance.now() - timerStart) / 1000).toFixed(1);
+    document.getElementById('timerVal').textContent = elapsed + 's';
+}
+
+// Auto-start law scenario on load
+window.addEventListener('load', () => {
+    setTimeout(() => startScenario('law'), 500);
+});
+</script>
+</body>
+</html>
