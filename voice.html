@@ -19,10 +19,31 @@
     {
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "AI Voice Agent by Ascend Agency",
-        "description": "24/7 AI phone receptionist that qualifies leads, books appointments, and captures caller details for law firms and real estate agents.",
+        "name": "AI Voice Agent",
+        "provider": {
+            "@type": "Organization",
+            "name": "Ascend Agency",
+            "url": "https://ascendagency.site"
+        },
+        "description": "24/7 AI-powered phone receptionist that answers calls, qualifies leads, captures details, and books appointments on your calendar.",
+        "serviceType": "AI Voice Agent",
+        "areaServed": "US",
         "url": "https://ascendagency.site/voice",
-        "provider": {"@type": "Organization", "name": "Ascend Agency", "url": "https://ascendagency.site"}
+        "offers": {
+            "@type": "Offer",
+            "price": "297",
+            "priceCurrency": "USD",
+            "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "297",
+                "priceCurrency": "USD",
+                "referenceQuantity": {
+                    "@type": "QuantitativeValue",
+                    "value": "1",
+                    "unitCode": "MON"
+                }
+            }
+        }
     }
     </script>
 
@@ -339,5 +360,6 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
     </script>
+<script src="chat-widget.js" defer></script>
 </body>
 </html>
