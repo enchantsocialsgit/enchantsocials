@@ -202,22 +202,27 @@
         <div class="form-card" id="formCard">
             <h2>Book Your Free Call</h2>
             <p class="form-sub">We'll get back to you within 2 hours.</p>
-            <form id="bookingForm" action="https://docs.google.com/forms/d/e/PLACEHOLDER/formResponse" method="POST" target="hidden_iframe">
+            <form id="bookingForm" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Booking Request - Ascend Agency">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_next" value="https://ascendagency.site/book.html?success=1">
+                <input type="text" name="_honey" style="display:none">
                 <div class="field">
                     <label>Your Name *</label>
-                    <input type="text" name="entry.name" id="fname" required placeholder="John Smith">
+                    <input type="text" name="Name" id="fname" required placeholder="John Smith">
                 </div>
                 <div class="field">
                     <label>Email *</label>
-                    <input type="email" name="entry.email" id="femail" required placeholder="john@company.com">
+                    <input type="email" name="Email" id="femail" required placeholder="john@company.com">
                 </div>
                 <div class="field">
                     <label>Phone</label>
-                    <input type="tel" name="entry.phone" id="fphone" placeholder="(555) 123-4567">
+                    <input type="tel" name="Phone" id="fphone" placeholder="(555) 123-4567">
                 </div>
                 <div class="field">
                     <label>Business Type *</label>
-                    <select name="entry.type" id="ftype" required>
+                    <select name="Business Type" id="ftype" required>
                         <option value="">Select your industry...</option>
                         <option value="Real Estate">Real Estate</option>
                         <option value="Law Firm">Law Firm</option>
@@ -228,7 +233,7 @@
                 </div>
                 <div class="field">
                     <label>What's your biggest challenge right now?</label>
-                    <textarea name="entry.challenge" id="fchallenge" placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
+                    <textarea name="Challenge" id="fchallenge" placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
                 </div>
                 <button type="submit" class="submit-btn">Book My Free Strategy Call</button>
             </form>
@@ -246,39 +251,12 @@
         <p>&copy; 2026 Ascend Agency &mdash; <a href="/">ascendagency.site</a> &mdash; <a href="https://instagram.com/ascendagencyy">@ascendagencyy</a></p>
     </footer>
 
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
     <script>
-        // Handle form submission — works with or without Google Forms backend
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            // Store lead locally via beacon
-            const data = {
-                name: document.getElementById('fname').value,
-                email: document.getElementById('femail').value,
-                phone: document.getElementById('fphone').value,
-                type: document.getElementById('ftype').value,
-                challenge: document.getElementById('fchallenge').value,
-                submitted: new Date().toISOString(),
-                source: 'booking_page'
-            };
-
-            // Send to our endpoint (or mailto fallback)
-            try {
-                navigator.sendBeacon(
-                    'mailto:enchantsocials@gmail.com?subject=New%20Booking%20-%20' +
-                    encodeURIComponent(data.name) + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2))
-                );
-            } catch(e) {}
-
-            // Also try sending email notification via a simple form-to-email service
-            // For now, show success and store in localStorage as backup
-            const leads = JSON.parse(localStorage.getItem('ascend_leads') || '[]');
-            leads.push(data);
-            localStorage.setItem('ascend_leads', JSON.stringify(leads));
-
-            // Show success
+        // Show success message if redirected back after submission
+        if (window.location.search.includes('success=1')) {
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('successMsg').style.display = 'block';
-        });
+        }
     </script>
 </body>
 </html>
