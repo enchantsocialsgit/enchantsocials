@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Strategy Call — Ascend Agency</title>
     <meta name="description" content="Book a free 15-minute strategy call with Ascend Agency. Discover how AI automation can transform your practice.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Free AI Strategy Call",
+        "provider": {
+            "@type": "Organization",
+            "name": "Ascend Agency",
+            "url": "https://ascendagency.site"
+        },
+        "description": "Free 15-minute strategy call to discover how AI automation can double your leads in 30 days. Includes current setup audit, custom demo, and ROI breakdown.",
+        "serviceType": "AI Automation Consultation",
+        "areaServed": "US",
+        "url": "https://ascendagency.site/book",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "Free 15-minute strategy call"
+        }
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -213,7 +235,7 @@
                 <input type="hidden" name="_subject" value="New Booking Request - Ascend Agency">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://ascendagency.site/thanks.html">
+                <input type="hidden" name="_next" value="https://ascendagency.site/thanks">
                 <input type="text" name="_honey" style="display:none">
                 <div class="field">
                     <label>Your Name *</label>
@@ -240,7 +262,7 @@
                 </div>
                 <div class="field">
                     <label>What's your biggest challenge right now?</label>
-                    <textarea name="Challenge" id="fchallenge" placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
+                    <textarea name="Challenge" id="fchallenge" required placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
                 </div>
                 <button type="submit" class="submit-btn">Book My Free Strategy Call</button>
             </form>
