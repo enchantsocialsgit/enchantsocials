@@ -750,18 +750,188 @@
         .footer-social a:hover { border-color: var(--accent); color: var(--accent); }
         .footer-social svg { width: 16px; height: 16px; fill: currentColor; }
 
+        /* TRUST SIGNALS BAR */
+        .trust-signals { padding: 80px 0; background: rgba(139,92,246,0.02); border-bottom: 1px solid var(--border); }
+        .trust-signals-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius); overflow: hidden;
+        }
+        .trust-signal {
+            background: var(--bg2); padding: 40px 32px; text-align: center;
+            position: relative;
+        }
+        .trust-signal-icon {
+            width: 48px; height: 48px; margin: 0 auto 16px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            background: rgba(139,92,246,0.08); color: var(--accent);
+        }
+        .trust-signal-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .trust-signal h4 {
+            font-size: 18px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 6px;
+        }
+        .trust-signal p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        /* WHY ASCEND */
+        .why-ascend { padding: 160px 0; }
+        .why-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .why-card {
+            background: var(--bg2); padding: 48px 36px; position: relative;
+            transition: background .3s;
+        }
+        .why-card:hover { background: var(--bg3); }
+        .why-card-icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; font-size: 22px;
+        }
+        .why-card h3 {
+            font-size: 19px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 10px;
+        }
+        .why-card p { font-size: 14px; line-height: 1.7; }
+
+        /* COMPARISON TABLE */
+        .comparison { padding: 160px 0; }
+        .compare-table-wrap {
+            margin-top: 64px; border-radius: var(--radius); overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .compare-table { width: 100%; border-collapse: collapse; }
+        .compare-table thead th {
+            padding: 24px 20px; font-size: 13px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            text-align: center; border-bottom: 1px solid var(--border);
+            color: var(--dim); background: var(--bg2);
+        }
+        .compare-table thead th:first-child { text-align: left; }
+        .compare-table thead th.featured-col {
+            background: rgba(139,92,246,0.06); color: var(--accent);
+            position: relative;
+        }
+        .compare-table thead th.featured-col::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--accent), var(--pink));
+        }
+        .compare-table tbody td {
+            padding: 18px 20px; font-size: 14px; color: var(--muted);
+            text-align: center; border-bottom: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .compare-table tbody td:first-child {
+            text-align: left; font-weight: 600; color: var(--light);
+        }
+        .compare-table tbody td.featured-col {
+            background: rgba(139,92,246,0.03); color: var(--white); font-weight: 600;
+        }
+        .compare-table tbody tr:last-child td { border-bottom: none; }
+        .compare-check { color: var(--green); font-weight: 700; font-size: 16px; }
+        .compare-x { color: var(--dim); font-size: 16px; }
+        .compare-tag {
+            display: inline-block; font-size: 10px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(139,92,246,0.12); color: var(--accent);
+            padding: 4px 10px; border-radius: 100px; margin-top: 4px;
+        }
+
+        /* INDUSTRIES */
+        .industries { padding: 160px 0; }
+        .industries-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2px; background: var(--border); border-radius: var(--radius);
+            overflow: hidden; margin-top: 64px;
+        }
+        .industry-card {
+            background: var(--bg2); padding: 48px 36px; position: relative;
+            transition: background .3s; text-decoration: none; display: block;
+        }
+        .industry-card:hover { background: var(--bg3); }
+        .industry-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        }
+        .industry-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent), var(--blue)); }
+        .industry-card:nth-child(2)::before { background: linear-gradient(90deg, var(--pink), var(--accent)); }
+        .industry-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), var(--gold)); }
+        .industry-card-icon {
+            font-size: 36px; margin-bottom: 20px; display: block;
+        }
+        .industry-card h3 {
+            font-size: 22px; font-weight: 800; color: var(--white);
+            letter-spacing: -0.5px; margin-bottom: 8px;
+        }
+        .industry-card p { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 20px; }
+        .industry-card .card-link {
+            font-size: 13px; font-weight: 600; color: var(--accent);
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: gap .2s;
+        }
+        .industry-card:hover .card-link { gap: 10px; }
+
+        /* ROI CALCULATOR CTA CARD */
+        .roi-cta { padding: 120px 0; }
+        .roi-cta-card {
+            background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.04));
+            border: 1px solid rgba(139,92,246,0.15);
+            border-radius: 20px; padding: 64px 56px;
+            display: grid; grid-template-columns: 1fr auto;
+            gap: 48px; align-items: center; position: relative; overflow: hidden;
+        }
+        .roi-cta-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; background: linear-gradient(90deg, var(--accent), var(--pink), var(--blue));
+        }
+        .roi-cta-card h3 {
+            font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: var(--white);
+            letter-spacing: -1.5px; margin-bottom: 12px;
+        }
+        .roi-cta-card > p { font-size: 16px; line-height: 1.7; color: var(--muted); max-width: 520px; }
+        .roi-cta-stats {
+            display: flex; gap: 32px; margin-top: 20px;
+        }
+        .roi-cta-stat { text-align: center; }
+        .roi-cta-stat .stat-num {
+            font-size: 28px; font-weight: 900; letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--white), var(--accent2));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .roi-cta-stat .stat-label { font-size: 11px; color: var(--dim); margin-top: 4px; }
+
+        /* SOCIAL PROOF BANNER */
+        .social-proof-banner {
+            padding: 40px 0; text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .social-proof-banner p {
+            font-size: 15px; color: var(--dim); font-weight: 500;
+        }
+        .social-proof-banner strong {
+            color: var(--light); font-weight: 700;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 1024px) {
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .hiw-grid { grid-template-columns: 1fr; }
             .hiw-arrow { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .industries-grid { grid-template-columns: 1fr; }
+            .roi-cta-card { grid-template-columns: 1fr; text-align: center; }
+            .roi-cta-card > p { max-width: 100%; }
+            .roi-cta-stats { justify-content: center; }
         }
         @media (max-width: 900px) {
             .tier-cards { grid-template-columns: 1fr; }
             .results-grid { grid-template-columns: repeat(2, 1fr); }
             .dash-grid { grid-template-columns: repeat(2, 1fr); }
             .case-grid { grid-template-columns: 1fr; }
+            .trust-signals-grid { grid-template-columns: 1fr; }
+            .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .compare-table { min-width: 600px; }
         }
         @media (max-width: 768px) {
             .cursor { display: none !important; }
@@ -808,10 +978,13 @@
 <div class="menu-overlay" id="menuOverlay">
     <button class="menu-close" id="menuClose">CLOSE</button>
     <div class="menu-inner">
+        <a href="#why-ascend" class="menu-link" data-menu>Why Ascend</a>
         <a href="#how-it-works" class="menu-link" data-menu>How It Works</a>
+        <a href="#comparison" class="menu-link" data-menu>Compare</a>
         <a href="#services" class="menu-link" data-menu>Services</a>
+        <a href="#industries" class="menu-link" data-menu>Industries</a>
         <a href="#case-studies" class="menu-link" data-menu>Case Studies</a>
-        <a href="#results" class="menu-link" data-menu>Results</a>
+        <a href="roi.html" class="menu-link" data-menu>ROI Calculator</a>
         <a href="#audit" class="menu-link" data-menu>Free Audit</a>
         <a href="#cta" class="menu-link" data-menu>Book a Strategy Call</a>
         <div class="menu-contact" data-menu>
@@ -915,6 +1088,42 @@
     </div>
 </div>
 
+<!-- SOCIAL PROOF BANNER -->
+<div class="social-proof-banner">
+    <div class="w">
+        <p>Built for <strong>500+ professional services firms</strong> across law, real estate, and medical practices nationwide.</p>
+    </div>
+</div>
+
+<!-- TRUST SIGNALS -->
+<div class="trust-signals">
+    <div class="w">
+        <div class="trust-signals-grid">
+            <div class="trust-signal">
+                <div class="trust-signal-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h4>Sub-60-Second Response Time</h4>
+                <p>Your AI responds to every lead in under 60 seconds, 24/7. No missed calls. No delayed follow-ups. The first firm to respond wins the client.</p>
+            </div>
+            <div class="trust-signal">
+                <div class="trust-signal-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4>24/7 AI Coverage</h4>
+                <p>Your AI employee never sleeps, never takes breaks, and never misses a prospect. Full intake, qualification, and booking around the clock.</p>
+            </div>
+            <div class="trust-signal">
+                <div class="trust-signal-icon">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </div>
+                <h4>No Long-Term Contracts</h4>
+                <p>Month-to-month. Cancel anytime. We earn your business every single month with measurable ROI -- not vendor lock-in and fine print.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- STORY REVEAL -->
 <div class="story-reveal">
     <div class="w">
@@ -927,6 +1136,47 @@
     <div class="w-narrow">
         <h2>We eliminate that gap entirely.</h2>
         <p>AI infrastructure that responds in 3 seconds. Qualifies instantly. Books automatically. Operates 24/7/365 with zero human intervention required.</p>
+    </div>
+</div>
+
+<!-- WHY ASCEND -->
+<div class="why-ascend" id="why-ascend">
+    <div class="w">
+        <div class="section-label">Why Ascend</div>
+        <h2 class="section-title">The unfair advantages <em>your competitors don't have.</em></h2>
+        <div class="section-subtitle">We studied every major agency and platform in the market. Then we built the solution they should have built -- at a price they would never offer.</div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(139,92,246,0.08);color:var(--accent);">&#9889;</div>
+                <h3>Sub-60-Second Lead Response</h3>
+                <p>The average firm takes 47 hours to respond to a lead. Yours responds in under 60 seconds. Speed-to-lead is the number one predictor of conversion. We make sure you win that race, every time.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(34,197,94,0.08);color:var(--green);">&#9776;</div>
+                <h3>One Platform, Not 7 Vendors</h3>
+                <p>Stop paying for a chatbot company, an SEO agency, a social media manager, a CRM, and a review tool separately. Ascend consolidates your entire growth stack into one managed solution.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(236,72,153,0.08);color:var(--pink);">&#9888;</div>
+                <h3>See ROI in 30 Days or We Work Free</h3>
+                <p>No other agency in the market offers this guarantee. If you do not see measurable ROI within your first 30 days, we continue working at zero cost until you do. We back our systems with our revenue.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(59,130,246,0.08);color:var(--blue);">&#128274;</div>
+                <h3>No Lock-In, Ever</h3>
+                <p>Scorpion requires long-term contracts. Ylopo locks you in for 6-12 months. We operate month-to-month because our results speak for themselves. You stay because it works, not because you have to.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(245,158,11,0.08);color:var(--gold);">&#127919;</div>
+                <h3>Built for Professionals, Not Tech Companies</h3>
+                <p>We understand that law firms, real estate agents, and medical practices are not software companies. Our systems are designed for practitioners who want results without the learning curve.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-card-icon" style="background:rgba(20,184,166,0.08);color:#14b8a6;">&#128640;</div>
+                <h3>AI + Human Strategy</h3>
+                <p>Pure AI is fast but impersonal. Pure human is slow and expensive. Ascend combines AI automation for speed and scale with human strategy for nuance and optimization. The best of both worlds.</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1109,6 +1359,89 @@
     </div>
 </div>
 
+<!-- COMPARISON -->
+<div class="comparison" id="comparison">
+    <div class="w">
+        <div class="section-label">How We Compare</div>
+        <h2 class="section-title">Premium agency results. <em>Without premium agency pricing.</em></h2>
+        <div class="section-subtitle">Traditional agencies charge $3,500-$10,000+/mo. DIY tools cost $97-$497/mo but require you to do everything. Ascend is the sweet spot: done-for-you AI infrastructure at an accessible price.</div>
+        <div class="compare-table-wrap">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>DIY Tools<br><span style="font-weight:400;font-size:11px;color:var(--dim);">$97-$497/mo</span></th>
+                        <th class="featured-col">Ascend Agency<br><span style="font-weight:400;font-size:11px;">$997-$2,500/mo</span><br><span class="compare-tag">Best Value</span></th>
+                        <th>Traditional Agencies<br><span style="font-weight:400;font-size:11px;color:var(--dim);">$3,500-$10,000+/mo</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Chatbot &amp; Intake</td>
+                        <td>Template-based</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> Custom-built</td>
+                        <td><span class="compare-x">&#10005;</span> Not offered</td>
+                    </tr>
+                    <tr>
+                        <td>24/7 Lead Response</td>
+                        <td>Self-managed</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> Fully managed</td>
+                        <td>Limited / human only</td>
+                    </tr>
+                    <tr>
+                        <td>Content &amp; Social Media</td>
+                        <td><span class="compare-x">&#10005;</span> DIY</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> 30 posts/mo</td>
+                        <td><span class="compare-check">&#10003;</span> Included</td>
+                    </tr>
+                    <tr>
+                        <td>Review Generation</td>
+                        <td>Basic templates</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> AI-powered campaigns</td>
+                        <td>Manual / basic</td>
+                    </tr>
+                    <tr>
+                        <td>CRM &amp; Pipeline</td>
+                        <td><span class="compare-check">&#10003;</span> Platform only</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> Setup + managed</td>
+                        <td>Sometimes included</td>
+                    </tr>
+                    <tr>
+                        <td>Setup Time</td>
+                        <td>Weeks of learning</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> 48 hours</td>
+                        <td>2-4 weeks typical</td>
+                    </tr>
+                    <tr>
+                        <td>Long-Term Contracts</td>
+                        <td>Monthly</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> No contracts</td>
+                        <td><span class="compare-x">&#10005;</span> 6-12 month lock-in</td>
+                    </tr>
+                    <tr>
+                        <td>Performance Guarantee</td>
+                        <td><span class="compare-x">&#10005;</span> None</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> 30-day ROI guarantee</td>
+                        <td><span class="compare-x">&#10005;</span> None</td>
+                    </tr>
+                    <tr>
+                        <td>Human Strategy Support</td>
+                        <td><span class="compare-x">&#10005;</span> None</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> Bi-weekly calls</td>
+                        <td><span class="compare-check">&#10003;</span> Dedicated team</td>
+                    </tr>
+                    <tr>
+                        <td>Speed-to-Lead</td>
+                        <td>You decide</td>
+                        <td class="featured-col"><span class="compare-check">&#10003;</span> Under 60 seconds</td>
+                        <td>Depends on staff</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <!-- RESULTS -->
 <div class="results" id="results">
     <div class="w">
@@ -1163,11 +1496,38 @@
     </div>
 </div>
 
-<!-- NICHES -->
+<!-- INDUSTRIES WE SERVE -->
+<div class="industries" id="industries">
+    <div class="w">
+        <div class="section-label">Industries We Serve</div>
+        <h2 class="section-title">Purpose-built for professional services. <em>Dominant in every vertical.</em></h2>
+        <div class="section-subtitle">Each solution is engineered for the specific workflows, compliance requirements, and growth patterns of your industry. Not generic. Not templated.</div>
+        <div class="industries-grid">
+            <a href="law.html" class="industry-card">
+                <span class="industry-card-icon">&#9878;</span>
+                <h3>Law Firms</h3>
+                <p>24/7 AI intake that qualifies cases, books consultations, and captures after-hours leads. Automated review campaigns, case-type routing, and competitive intelligence. The first firm to respond wins the case -- we make sure it is yours.</p>
+                <span class="card-link">Explore law firm solutions <span class="btn-arrow">&rarr;</span></span>
+            </a>
+            <a href="re.html" class="industry-card">
+                <span class="industry-card-icon">&#127968;</span>
+                <h3>Real Estate</h3>
+                <p>Instant DM response with property-specific context, AI lead qualification and appointment scheduling, automated showing reminders, and performance content that attracts qualified buyers. Convert attention into closings.</p>
+                <span class="card-link">Explore real estate solutions <span class="btn-arrow">&rarr;</span></span>
+            </a>
+            <a href="#audit" class="industry-card">
+                <span class="industry-card-icon">&#127973;</span>
+                <h3>Medical &amp; Dental</h3>
+                <p>HIPAA-aware patient engagement, appointment scheduling automation, no-show reduction systems, and review management. Fill empty slots, reduce staff burden, and compete with corporate chains. Coming soon -- join the waitlist.</p>
+                <span class="card-link">Request early access <span class="btn-arrow">&rarr;</span></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- NICHES (DETAIL) -->
 <div class="niches" id="niches">
     <div class="w">
-        <div class="section-label">Practice Areas</div>
-        <h2 class="section-title">Purpose-built for two verticals. <em>Dominant in both.</em></h2>
         <div class="niche-grid">
             <div class="niche-card">
                 <div class="niche-tag">Real Estate Practices</div>
@@ -1337,6 +1697,37 @@
     </div>
 </div>
 
+<!-- ROI CALCULATOR CTA -->
+<div class="roi-cta">
+    <div class="w">
+        <div class="roi-cta-card">
+            <div>
+                <div class="section-label" style="text-align:left;">Free Tool</div>
+                <h3>Calculate your ROI in 60 seconds.</h3>
+                <p>See exactly how much revenue AI automation would generate for your practice. Enter your numbers, get an instant projection -- no signup, no sales pitch.</p>
+                <div class="roi-cta-stats">
+                    <div class="roi-cta-stat">
+                        <div class="stat-num">300%</div>
+                        <div class="stat-label">Avg. client ROI</div>
+                    </div>
+                    <div class="roi-cta-stat">
+                        <div class="stat-num">30 days</div>
+                        <div class="stat-label">To see results</div>
+                    </div>
+                    <div class="roi-cta-stat">
+                        <div class="stat-num">$0</div>
+                        <div class="stat-label">To calculate</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center;">
+                <a href="roi.html" class="btn btn-a btn-lg" style="white-space:nowrap;">Open ROI Calculator <span class="btn-arrow">&rarr;</span></a>
+                <p style="font-size:12px;color:var(--dim);margin-top:12px;">Free. No signup required.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- LEAD CAPTURE / FREE AUDIT -->
 <div class="lead-capture" id="audit">
     <div class="w">
@@ -1401,14 +1792,16 @@
                 <a href="#services">Launch Package</a>
                 <a href="#services">Growth Package</a>
                 <a href="#services">Enterprise</a>
-                <a href="#audit">Free Audit</a>
+                <a href="#comparison">Compare Plans</a>
                 <a href="roi.html">ROI Calculator</a>
+                <a href="#audit">Free Audit</a>
             </div>
             <div class="footer-col">
-                <h5>Company</h5>
+                <h5>Industries</h5>
+                <a href="law.html">Law Firms</a>
+                <a href="re.html">Real Estate</a>
+                <a href="#why-ascend">Why Ascend</a>
                 <a href="#case-studies">Case Studies</a>
-                <a href="#results">Results</a>
-                <a href="#niches">Practice Areas</a>
                 <a href="#how-it-works">How It Works</a>
             </div>
             <div class="footer-col">
@@ -1473,7 +1866,7 @@
             cur.style.top = cy + 'px';
             requestAnimationFrame(loop);
         })();
-        document.querySelectorAll('a,button,.btn,.tier-card,.niche-card,.result-stat,.case-card,.metric-card,.hiw-card').forEach(el => {
+        document.querySelectorAll('a,button,.btn,.tier-card,.niche-card,.result-stat,.case-card,.metric-card,.hiw-card,.why-card,.trust-signal,.industry-card,.roi-cta-card').forEach(el => {
             el.addEventListener('mouseenter', () => cur.classList.add('active'));
             el.addEventListener('mouseleave', () => cur.classList.remove('active'));
         });
@@ -1648,6 +2041,12 @@
     fadeUp('.cta-btns');
     fadeUp('.trust-logos');
     fadeUp('.footer-grid');
+    fadeUp('.trust-signal', { stagger: 0.08 });
+    fadeUp('.why-card', { stagger: 0.06 });
+    fadeUp('.compare-table-wrap');
+    fadeUp('.industry-card', { stagger: 0.08 });
+    fadeUp('.roi-cta-card');
+    fadeUp('.social-proof-banner p');
 
     // -- FORM HANDLING --
     const auditForm = document.getElementById('auditForm');
