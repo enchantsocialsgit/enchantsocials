@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Report Is on the Way — Ascend Agency</title>
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --card: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.06);
+            --dim: #444;
+            --muted: #777;
+            --light: #bbb;
+            --white: #f0f0f0;
+            --accent: #8b5cf6;
+            --accent2: #a78bfa;
+            --green: #22c55e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--muted);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-brand {
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .nav-brand span { color: var(--accent); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links .cta {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .nav-links .cta:hover { color: #fff; }
+
+        .main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+        }
+        .container {
+            max-width: 640px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .check-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(34,197,94,0.1);
+            border: 2px solid var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            animation: popIn .5s ease;
+        }
+        .check-circle svg { color: var(--green); }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        h1 em {
+            font-style: normal;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: var(--light);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            text-align: left;
+            margin-bottom: 48px;
+        }
+        .step {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: border-color .2s;
+        }
+        .step:hover { border-color: rgba(255,255,255,0.1); }
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(139,92,246,0.1);
+            color: var(--accent2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .step-done {
+            background: rgba(34,197,94,0.1);
+            color: var(--green);
+        }
+        .step-content h3 {
+            font-size: 15px;
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .step-content p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 48px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .cta-section p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all .2s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(139,92,246,0.35);
+        }
+        .cta-btn svg { transition: transform .2s; }
+        .cta-btn:hover svg { transform: translateX(4px); }
+
+        .proof {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 48px;
+        }
+        .proof-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .proof-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 4px;
+        }
+        .proof-label {
+            font-size: 11px;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .see-results {
+            margin-top: 24px;
+        }
+        .see-results a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .see-results a:hover { text-decoration: underline; }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: var(--dim);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .nav { padding: 16px 20px; }
+            h1 { font-size: 28px; }
+            .proof { grid-template-columns: 1fr; }
+            .main { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html" class="nav-brand">Ascend<span>.</span></a>
+        <div class="nav-links">
+            <a href="results.html">Results</a>
+            <a href="roi.html">ROI Calculator</a>
+            <a href="book.html" class="cta">Book a Call</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="container">
+            <div class="check-circle">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <h1>Your Report Is <em>On the Way</em></h1>
+            <p class="subtitle">Check your inbox in the next few minutes. We're putting together a personalized automation blueprint based on your answers.</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num step-done">&#10003;</div>
+                    <div class="step-content">
+                        <h3>Assessment complete</h3>
+                        <p>We've analyzed your responses and identified your biggest automation opportunities.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3>Report delivered to your inbox</h3>
+                        <p>A breakdown of exactly which automations will have the most impact on your practice.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3>15-min strategy call (optional)</h3>
+                        <p>Walk through your report with us. We'll show you what 90 days of automation looks like for your business.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="cta-section">
+                <h2>Skip the wait — let's talk now</h2>
+                <p>Most firms we work with are fully automated within 48 hours.<br>Book a free 15-minute call and we'll walk through your results live.</p>
+                <a href="book.html" class="cta-btn">
+                    Book Your Strategy Call
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+            </div>
+
+            <div class="proof">
+                <div class="proof-card">
+                    <div class="proof-num">&lt;60s</div>
+                    <div class="proof-label">Avg Response Time</div>
+                </div>
+                <div class="proof-card">
+                    <div class="proof-num">+40%</div>
+                    <div class="proof-label">More Consultations</div>
+                </div>
+                <div class="proof-card">
+                    <div class="proof-num">48hr</div>
+                    <div class="proof-label">Setup Time</div>
+                </div>
+            </div>
+
+            <div class="see-results">
+                <a href="results.html">See full client results &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">&copy; 2026 Ascend Agency. All rights reserved.</div>
+</body>
+</html>
