@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Readiness Assessment — Ascend Agency</title>
+    <meta name="description" content="Take our free 2-minute AI readiness assessment. See exactly where your business stands and what automation could unlock for you.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #050505;
+            color: #f0f0f0;
+            min-height: 100vh;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-brand { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; text-decoration: none; color: #f0f0f0; }
+        .nav-brand span { color: #8b5cf6; }
+        .nav a { color: #888; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav a:hover { color: #fff; }
+        .hero {
+            text-align: center;
+            padding: 50px 24px 30px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(139,92,246,0.15);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #a78bfa;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 14px;
+            letter-spacing: -1px;
+        }
+        h1 em { color: #8b5cf6; font-style: normal; }
+        .subtitle {
+            font-size: 16px;
+            color: #777;
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto 10px;
+        }
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 100px;
+            font-size: 12px;
+            color: #4ade80;
+            margin-top: 10px;
+        }
+
+        /* Assessment Container */
+        .assess-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: rgba(255,255,255,0.06);
+            border-radius: 100px;
+            height: 6px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+            border-radius: 100px;
+            transition: width 0.4s ease;
+        }
+        .progress-label {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 32px;
+            text-align: right;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 36px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        .question-card.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .q-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8b5cf6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .q-text {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+        .q-hint {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Answer Options */
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+        .option:hover {
+            background: rgba(139,92,246,0.08);
+            border-color: rgba(139,92,246,0.3);
+        }
+        .option.selected {
+            background: rgba(139,92,246,0.12);
+            border-color: #8b5cf6;
+        }
+        .option-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.15);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .option.selected .option-dot {
+            border-color: #8b5cf6;
+            background: #8b5cf6;
+        }
+        .option.selected .option-dot::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+        }
+        .option-label { color: #ccc; }
+        .option.selected .option-label { color: #fff; }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+        }
+        .btn-back {
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #888;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-back:hover { border-color: rgba(255,255,255,0.2); color: #ccc; }
+        .btn-next {
+            padding: 12px 28px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-next:hover { background: #7c3aed; }
+        .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Results Screen */
+        #results {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .score-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+        .score-circle .score-num {
+            font-size: 52px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            z-index: 1;
+        }
+        .score-circle .score-of {
+            font-size: 14px;
+            color: #666;
+            z-index: 1;
+        }
+        .score-label {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .score-desc {
+            text-align: center;
+            color: #888;
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 480px;
+            margin: 0 auto 36px;
+        }
+
+        /* Breakdown Cards */
+        .breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+        .bd-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .bd-card .bd-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .bd-card .bd-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .bd-card .bd-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .bd-card .bd-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        /* Recommendations */
+        .recs {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 36px;
+        }
+        .recs h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .rec-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .rec-item:last-child { border-bottom: none; }
+        .rec-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .rec-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .rec-content p { font-size: 13px; color: #888; line-height: 1.5; }
+
+        /* Lead Capture */
+        .capture {
+            background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(139,92,246,0.04));
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        .capture h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .capture p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .capture-form {
+            display: flex;
+            gap: 10px;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        .capture-form input {
+            flex: 1;
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #f0f0f0;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .capture-form input::placeholder { color: #555; }
+        .capture-form input:focus { outline: none; border-color: #8b5cf6; }
+        .capture-form button {
+            padding: 14px 24px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .capture-form button:hover { background: #7c3aed; }
+        .capture-sent {
+            display: none;
+            color: #4ade80;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 16px;
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            text-align: center;
+            padding: 48px 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .cta-banner h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .cta-banner p {
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .cta-banner .btn-cta {
+            display: inline-block;
+            padding: 16px 36px;
+            background: #8b5cf6;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        .cta-banner .btn-cta:hover { background: #7c3aed; transform: translateY(-1px); }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #333;
+            font-size: 12px;
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 28px; }
+            .question-card { padding: 24px; }
+            .q-text { font-size: 18px; }
+            .breakdown { grid-template-columns: 1fr; }
+            .capture-form { flex-direction: column; }
+            .nav { padding: 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-brand">ASCEND<span>.</span></a>
+        <a href="book.html">Book a Call</a>
+    </nav>
+
+    <div class="hero">
+        <div class="badge">Free Assessment</div>
+        <h1>How Ready Is Your Practice for <em>AI Automation</em>?</h1>
+        <p class="subtitle">Answer 8 quick questions. Get your AI readiness score and a personalized automation roadmap.</p>
+        <div class="time-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Takes 2 minutes
+        </div>
+    </div>
+
+    <div class="assess-container">
+        <!-- Progress -->
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+        <div class="progress-label" id="progressLabel">Question 1 of 8</div>
+
+        <!-- Questions -->
+        <div class="question-card active" data-q="0">
+            <div class="q-number">Question 1</div>
+            <div class="q-text">What industry is your practice in?</div>
+            <div class="options">
+                <div class="option" data-val="re" data-pts="10" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Real Estate</span></div>
+                <div class="option" data-val="law" data-pts="10" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Law Firm</span></div>
+                <div class="option" data-val="medical" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Medical / Dental</span></div>
+                <div class="option" data-val="insurance" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Insurance / Financial</span></div>
+                <div class="option" data-val="other" data-pts="6" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Other Professional Service</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="1">
+            <div class="q-number">Question 2</div>
+            <div class="q-text">How many leads or inquiries do you get per month?</div>
+            <div class="q-hint">Include calls, form submissions, emails, walk-ins, and referrals.</div>
+            <div class="options">
+                <div class="option" data-val="low" data-pts="4" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Under 20</span></div>
+                <div class="option" data-val="med" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">20 - 50</span></div>
+                <div class="option" data-val="high" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">50 - 150</span></div>
+                <div class="option" data-val="very_high" data-pts="15" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">150+</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="2">
+            <div class="q-number">Question 3</div>
+            <div class="q-text">How fast does someone respond to a new lead?</div>
+            <div class="q-hint">78% of buyers choose the first business that responds.</div>
+            <div class="options">
+                <div class="option" data-val="instant" data-pts="3" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Under 5 minutes</span></div>
+                <div class="option" data-val="fast" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">5 - 30 minutes</span></div>
+                <div class="option" data-val="slow" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">30 min - few hours</span></div>
+                <div class="option" data-val="very_slow" data-pts="15" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Next day or longer</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="3">
+            <div class="q-number">Question 4</div>
+            <div class="q-text">Do you follow up with leads that don't respond?</div>
+            <div class="q-hint">80% of deals close after the 5th follow-up. Most businesses stop after 1.</div>
+            <div class="options">
+                <div class="option" data-val="system" data-pts="3" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Yes, automated follow-up sequence</span></div>
+                <div class="option" data-val="manual" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Sometimes, manually</span></div>
+                <div class="option" data-val="rarely" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Rarely</span></div>
+                <div class="option" data-val="never" data-pts="15" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">No follow-up system</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="4">
+            <div class="q-number">Question 5</div>
+            <div class="q-text">What does your online presence look like?</div>
+            <div class="q-hint">Your website, social media, and review profiles.</div>
+            <div class="options">
+                <div class="option" data-val="strong" data-pts="3" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Strong — updated site, active socials, 50+ reviews</span></div>
+                <div class="option" data-val="decent" data-pts="7" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Decent — have a website, some reviews</span></div>
+                <div class="option" data-val="basic" data-pts="11" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Basic — outdated site, few reviews</span></div>
+                <div class="option" data-val="minimal" data-pts="14" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Minimal — barely any online presence</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="5">
+            <div class="q-number">Question 6</div>
+            <div class="q-text">How do you handle repetitive tasks?</div>
+            <div class="q-hint">Scheduling, data entry, reporting, client updates, etc.</div>
+            <div class="options">
+                <div class="option" data-val="auto" data-pts="2" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Fully automated with software</span></div>
+                <div class="option" data-val="partial" data-pts="7" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Some tools, mostly manual</span></div>
+                <div class="option" data-val="manual" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Almost everything is done manually</span></div>
+                <div class="option" data-val="overwhelmed" data-pts="15" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Drowning in admin work</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="6">
+            <div class="q-number">Question 7</div>
+            <div class="q-text">What's your team size?</div>
+            <div class="options">
+                <div class="option" data-val="solo" data-pts="15" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Just me</span></div>
+                <div class="option" data-val="small" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">2 - 5 people</span></div>
+                <div class="option" data-val="medium" data-pts="8" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">6 - 20 people</span></div>
+                <div class="option" data-val="large" data-pts="5" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">20+</span></div>
+            </div>
+        </div>
+
+        <div class="question-card" data-q="7">
+            <div class="q-number">Question 8</div>
+            <div class="q-text">What's your biggest operational bottleneck?</div>
+            <div class="q-hint">The one thing that, if solved, would unlock the most growth.</div>
+            <div class="options">
+                <div class="option" data-val="leads" data-pts="14" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Not enough leads / clients</span></div>
+                <div class="option" data-val="response" data-pts="14" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Slow response time / losing leads</span></div>
+                <div class="option" data-val="admin" data-pts="12" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Too much admin / manual work</span></div>
+                <div class="option" data-val="scale" data-pts="10" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Can't scale without hiring more</span></div>
+                <div class="option" data-val="retention" data-pts="10" onclick="selectOption(this)"><div class="option-dot"></div><span class="option-label">Client retention / repeat business</span></div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn-back" id="btnBack" onclick="prevQuestion()" style="visibility:hidden">Back</button>
+            <button class="btn-next" id="btnNext" onclick="nextQuestion()" disabled>Next</button>
+        </div>
+
+        <!-- Results -->
+        <div id="results">
+            <div class="score-circle" id="scoreCircle">
+                <svg width="180" height="180" viewBox="0 0 180 180">
+                    <circle cx="90" cy="90" r="82" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+                    <circle cx="90" cy="90" r="82" fill="none" stroke-width="8" stroke-linecap="round"
+                        id="scoreArc" stroke-dasharray="515" stroke-dashoffset="515"/>
+                </svg>
+                <div class="score-num" id="scoreNum">0</div>
+                <div class="score-of">/ 100</div>
+            </div>
+            <div class="score-label" id="scoreLabel"></div>
+            <div class="score-desc" id="scoreDesc"></div>
+
+            <div class="breakdown" id="breakdown"></div>
+
+            <div class="recs" id="recs">
+                <h3>Your Automation Roadmap</h3>
+                <div id="recItems"></div>
+            </div>
+
+            <div class="capture" id="captureSection">
+                <h3>Get Your Full Report</h3>
+                <p>We'll send a detailed PDF breakdown with specific automations tailored to your practice.</p>
+                <form class="capture-form" id="captureForm" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="AI Readiness Assessment Lead">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://ascendagency.site/assess.html?sent=1">
+                    <input type="hidden" name="score" id="hiddenScore" value="">
+                    <input type="hidden" name="industry" id="hiddenIndustry" value="">
+                    <input type="hidden" name="bottleneck" id="hiddenBottleneck" value="">
+                    <input type="hidden" name="lead_volume" id="hiddenLeadVol" value="">
+                    <input type="hidden" name="response_time" id="hiddenResponseTime" value="">
+                    <input type="text" name="name" placeholder="Your name" required>
+                    <input type="email" name="email" placeholder="your@email.com" required>
+                    <button type="submit">Send My Report</button>
+                </form>
+                <div class="capture-sent" id="captureSent">Your report is on the way. Check your inbox.</div>
+            </div>
+
+            <div class="cta-banner">
+                <h3>Want Us to Build It for You?</h3>
+                <p>Skip the DIY. We'll deploy your entire AI automation stack in under a week.</p>
+                <a href="book.html" class="btn-cta">Book a Free Strategy Call</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Ascend Agency. All rights reserved.
+    </div>
+
+    <script>
+    const TOTAL_QUESTIONS = 8;
+    let current = 0;
+    let answers = new Array(TOTAL_QUESTIONS).fill(null);
+
+    // Check if returning from form submission
+    if (window.location.search.includes('sent=1')) {
+        document.getElementById('captureForm').style.display = 'none';
+        document.getElementById('captureSent').style.display = 'block';
+    }
+
+    function selectOption(el) {
+        const card = el.closest('.question-card');
+        card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        answers[current] = {
+            val: el.dataset.val,
+            pts: parseInt(el.dataset.pts)
+        };
+        document.getElementById('btnNext').disabled = false;
+    }
+
+    function updateProgress() {
+        const pct = ((current + 1) / TOTAL_QUESTIONS) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `Question ${current + 1} of ${TOTAL_QUESTIONS}`;
+    }
+
+    function showQuestion(idx) {
+        document.querySelectorAll('.question-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.question-card')[idx].classList.add('active');
+        document.getElementById('btnBack').style.visibility = idx === 0 ? 'hidden' : 'visible';
+        document.getElementById('btnNext').textContent = idx === TOTAL_QUESTIONS - 1 ? 'See My Score' : 'Next';
+        document.getElementById('btnNext').disabled = answers[idx] === null;
+        updateProgress();
+    }
+
+    function nextQuestion() {
+        if (answers[current] === null) return;
+        if (current < TOTAL_QUESTIONS - 1) {
+            current++;
+            showQuestion(current);
+        } else {
+            showResults();
+        }
+    }
+
+    function prevQuestion() {
+        if (current > 0) {
+            current--;
+            showQuestion(current);
+        }
+    }
+
+    function showResults() {
+        // Hide question UI
+        document.querySelectorAll('.question-card').forEach(c => c.style.display = 'none');
+        document.getElementById('navButtons').style.display = 'none';
+        document.querySelector('.progress-bar').style.display = 'none';
+        document.getElementById('progressLabel').style.display = 'none';
+
+        // Calculate score — higher points = more room for improvement = higher automation potential
+        const totalPts = answers.reduce((sum, a) => sum + (a ? a.pts : 0), 0);
+        const maxPts = 113; // theoretical max
+        const score = Math.min(100, Math.round((totalPts / maxPts) * 100));
+
+        // Populate hidden fields
+        document.getElementById('hiddenScore').value = score;
+        document.getElementById('hiddenIndustry').value = answers[0] ? answers[0].val : '';
+        document.getElementById('hiddenBottleneck').value = answers[7] ? answers[7].val : '';
+        document.getElementById('hiddenLeadVol').value = answers[1] ? answers[1].val : '';
+        document.getElementById('hiddenResponseTime').value = answers[2] ? answers[2].val : '';
+
+        // Score color
+        let color, label, desc;
+        if (score >= 75) {
+            color = '#ef4444';
+            label = 'Critical — You Need This Yesterday';
+            desc = 'Your practice is leaving serious money on the table. Every day without automation, you\'re losing leads, wasting hours on admin, and falling behind competitors who\'ve already made the switch.';
+        } else if (score >= 55) {
+            color = '#f59e0b';
+            label = 'High Potential — Ready for Liftoff';
+            desc = 'You have the volume and opportunity to see massive ROI from AI automation. A few strategic deployments could transform your workflow and capture leads you\'re currently missing.';
+        } else if (score >= 35) {
+            color = '#8b5cf6';
+            label = 'Moderate — Strategic Wins Available';
+            desc = 'You\'ve got some foundations in place, but targeted automation could still unlock significant time savings and revenue growth. Focus on the quick wins first.';
+        } else {
+            color = '#22c55e';
+            label = 'Good Foundation — Optimize & Scale';
+            desc = 'You\'re ahead of most practices. The next level is about optimization — using AI to scale what\'s already working, handle edge cases, and compound your advantage.';
+        }
+
+        // Animate score circle
+        const arc = document.getElementById('scoreArc');
+        arc.style.stroke = color;
+        const circumference = 515;
+        const offset = circumference - (score / 100) * circumference;
+        setTimeout(() => { arc.style.transition = 'stroke-dashoffset 1.2s ease'; arc.style.strokeDashoffset = offset; }, 100);
+
+        // Animate number
+        const numEl = document.getElementById('scoreNum');
+        numEl.style.color = color;
+        let c = 0;
+        const step = Math.ceil(score / 30);
+        const counter = setInterval(() => {
+            c = Math.min(c + step, score);
+            numEl.textContent = c;
+            if (c >= score) clearInterval(counter);
+        }, 40);
+
+        document.getElementById('scoreLabel').textContent = label;
+        document.getElementById('scoreLabel').style.color = color;
+        document.getElementById('scoreDesc').textContent = desc;
+
+        // Breakdown categories
+        const categories = [
+            { label: 'Lead Response', score: answers[2] ? answers[2].pts : 0, max: 15, color: '#ef4444' },
+            { label: 'Follow-Up', score: answers[3] ? answers[3].pts : 0, max: 15, color: '#f59e0b' },
+            { label: 'Operations', score: answers[5] ? answers[5].pts : 0, max: 15, color: '#8b5cf6' },
+            { label: 'Online Presence', score: answers[4] ? answers[4].pts : 0, max: 14, color: '#3b82f6' },
+        ];
+        const bdContainer = document.getElementById('breakdown');
+        bdContainer.innerHTML = '';
+        categories.forEach(cat => {
+            const pct = Math.round((cat.score / cat.max) * 100);
+            const card = document.createElement('div');
+            card.className = 'bd-card';
+            card.innerHTML = `
+                <div class="bd-label">${cat.label}</div>
+                <div class="bd-value" style="color:${cat.color}">${pct}%<span style="font-size:12px;color:#555;font-weight:400"> automation potential</span></div>
+                <div class="bd-bar"><div class="bd-bar-fill" style="width:0%;background:${cat.color}"></div></div>
+            `;
+            bdContainer.appendChild(card);
+            setTimeout(() => { card.querySelector('.bd-bar-fill').style.width = pct + '%'; }, 300);
+        });
+
+        // Recommendations based on answers
+        const recItems = document.getElementById('recItems');
+        recItems.innerHTML = '';
+        const recs = [];
+
+        if (answers[2] && answers[2].pts >= 12) {
+            recs.push({ icon: '&#9889;', bg: 'rgba(239,68,68,0.15)', title: 'Deploy Instant Lead Response', desc: 'AI chatbot + auto-text responds to every lead in under 60 seconds, 24/7. Captures 3x more leads than waiting hours.' });
+        }
+        if (answers[3] && answers[3].pts >= 8) {
+            recs.push({ icon: '&#128257;', bg: 'rgba(245,158,11,0.15)', title: 'Build Automated Follow-Up Sequences', desc: 'Multi-step email + SMS sequences that nurture leads over 14 days. 80% of conversions happen after the 5th touchpoint.' });
+        }
+        if (answers[5] && answers[5].pts >= 7) {
+            recs.push({ icon: '&#9881;', bg: 'rgba(139,92,246,0.15)', title: 'Automate Repetitive Operations', desc: 'Scheduling, intake forms, document generation, and reporting — all on autopilot. Save 15+ hours per week.' });
+        }
+        if (answers[4] && answers[4].pts >= 7) {
+            recs.push({ icon: '&#127775;', bg: 'rgba(59,130,246,0.15)', title: 'Launch Review Generation Campaign', desc: 'Automated review requests after every transaction. Build to 100+ 5-star reviews in 90 days to dominate local search.' });
+        }
+        if (answers[6] && (answers[6].val === 'solo' || answers[6].val === 'small')) {
+            recs.push({ icon: '&#129302;', bg: 'rgba(34,197,94,0.15)', title: 'Add AI as Your First Team Member', desc: 'AI handles lead qualification, scheduling, and admin work 24/7 — the equivalent of hiring a full-time assistant for a fraction of the cost.' });
+        }
+        if (recs.length === 0) {
+            recs.push({ icon: '&#128200;', bg: 'rgba(139,92,246,0.15)', title: 'Optimize Your Existing Stack', desc: 'You\'re ahead of the curve. Let\'s identify the 20% of improvements that deliver 80% of the results and scale your advantage.' });
+        }
+
+        recs.forEach(r => {
+            const item = document.createElement('div');
+            item.className = 'rec-item';
+            item.innerHTML = `
+                <div class="rec-icon" style="background:${r.bg}">${r.icon}</div>
+                <div class="rec-content">
+                    <h4>${r.title}</h4>
+                    <p>${r.desc}</p>
+                </div>
+            `;
+            recItems.appendChild(item);
+        });
+
+        document.getElementById('results').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    </script>
+</body>
+</html>
