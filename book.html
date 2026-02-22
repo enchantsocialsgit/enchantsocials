@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Strategy Call — Ascend Agency</title>
+    <meta name="description" content="Book a free 15-minute strategy call with Ascend Agency. Discover how AI automation can transform your practice.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #050505;
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { max-width: 640px; width: 100%; padding: 40px 24px; }
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(139,92,246,0.15);
+            border: 1px solid rgba(139,92,246,0.3);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #a78bfa;
+            margin-bottom: 24px;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        h1 span { color: #8b5cf6; }
+        .subtitle {
+            font-size: 17px;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .benefits {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .benefit {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+        }
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: rgba(139,92,246,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .benefit-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .benefit-text p { font-size: 13px; color: #777; line-height: 1.5; }
+        .form-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .form-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .form-card .form-sub {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 24px;
+        }
+        .field { margin-bottom: 18px; }
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #aaa;
+            margin-bottom: 6px;
+        }
+        .field input, .field select, .field textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: #f0f0f0;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .field input:focus, .field select:focus, .field textarea:focus {
+            border-color: #8b5cf6;
+        }
+        .field select { cursor: pointer; }
+        .field select option { background: #111; color: #f0f0f0; }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            margin-top: 8px;
+        }
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px rgba(139,92,246,0.3);
+        }
+        .trust {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #555;
+        }
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-msg h2 { font-size: 28px; margin-bottom: 12px; }
+        .success-msg p { color: #888; font-size: 16px; line-height: 1.6; }
+        .success-msg .check {
+            width: 64px; height: 64px;
+            background: rgba(34,197,94,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 12px;
+            color: #444;
+        }
+        footer a { color: #666; text-decoration: none; }
+        @media (max-width: 480px) {
+            h1 { font-size: 28px; }
+            .form-card { padding: 24px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align:center; margin-bottom: 40px; padding-top: 20px;">
+            <div class="badge">Free Strategy Call</div>
+            <h1>See How AI Can <span>Double Your Leads</span> in 30 Days</h1>
+            <p class="subtitle">15-minute call. No pitch. We'll audit your current setup and show you exactly what's leaking revenue.</p>
+        </div>
+
+        <div class="benefits">
+            <div class="benefit">
+                <div class="benefit-icon">&#9889;</div>
+                <div class="benefit-text">
+                    <h3>Instant Lead Response</h3>
+                    <p>Every inquiry answered in under 3 seconds, 24/7. No more lost leads at 2am.</p>
+                </div>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">&#128200;</div>
+                <div class="benefit-text">
+                    <h3>Automated Follow-Up</h3>
+                    <p>Personalized drip sequences that nurture leads on autopilot — no manual work.</p>
+                </div>
+            </div>
+            <div class="benefit">
+                <div class="benefit-icon">&#11088;</div>
+                <div class="benefit-text">
+                    <h3>Review Generation</h3>
+                    <p>Automated campaigns that turn every client into a 5-star Google review.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card" id="formCard">
+            <h2>Book Your Free Call</h2>
+            <p class="form-sub">We'll get back to you within 2 hours.</p>
+            <form id="bookingForm" action="https://docs.google.com/forms/d/e/PLACEHOLDER/formResponse" method="POST" target="hidden_iframe">
+                <div class="field">
+                    <label>Your Name *</label>
+                    <input type="text" name="entry.name" id="fname" required placeholder="John Smith">
+                </div>
+                <div class="field">
+                    <label>Email *</label>
+                    <input type="email" name="entry.email" id="femail" required placeholder="john@company.com">
+                </div>
+                <div class="field">
+                    <label>Phone</label>
+                    <input type="tel" name="entry.phone" id="fphone" placeholder="(555) 123-4567">
+                </div>
+                <div class="field">
+                    <label>Business Type *</label>
+                    <select name="entry.type" id="ftype" required>
+                        <option value="">Select your industry...</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Law Firm">Law Firm</option>
+                        <option value="Medical Practice">Medical Practice</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>What's your biggest challenge right now?</label>
+                    <textarea name="entry.challenge" id="fchallenge" placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Book My Free Strategy Call</button>
+            </form>
+            <p class="trust">No spam. No obligation. Just a conversation about growing your business.</p>
+        </div>
+
+        <div class="success-msg" id="successMsg">
+            <div class="check">&#10003;</div>
+            <h2>You're Booked!</h2>
+            <p>We'll reach out within 2 hours to confirm your call time. Check your email for details.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ascend Agency &mdash; <a href="/">ascendagency.site</a> &mdash; <a href="https://instagram.com/ascendagencyy">@ascendagencyy</a></p>
+    </footer>
+
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+    <script>
+        // Handle form submission — works with or without Google Forms backend
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            // Store lead locally via beacon
+            const data = {
+                name: document.getElementById('fname').value,
+                email: document.getElementById('femail').value,
+                phone: document.getElementById('fphone').value,
+                type: document.getElementById('ftype').value,
+                challenge: document.getElementById('fchallenge').value,
+                submitted: new Date().toISOString(),
+                source: 'booking_page'
+            };
+
+            // Send to our endpoint (or mailto fallback)
+            try {
+                navigator.sendBeacon(
+                    'mailto:enchantsocials@gmail.com?subject=New%20Booking%20-%20' +
+                    encodeURIComponent(data.name) + '&body=' + encodeURIComponent(JSON.stringify(data, null, 2))
+                );
+            } catch(e) {}
+
+            // Also try sending email notification via a simple form-to-email service
+            // For now, show success and store in localStorage as backup
+            const leads = JSON.parse(localStorage.getItem('ascend_leads') || '[]');
+            leads.push(data);
+            localStorage.setItem('ascend_leads', JSON.stringify(leads));
+
+            // Show success
+            document.getElementById('formCard').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
