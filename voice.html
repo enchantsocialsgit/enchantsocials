@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Agent — Never Miss a Call Again | Ascend Agency</title>
+    <meta name="description" content="AI voice agent that answers your phone 24/7. Qualifies leads, books appointments, and sounds human. Under $40/month per client. Built for law firms and real estate agents.">
+    <meta name="keywords" content="AI voice agent, AI phone answering, AI receptionist, law firm phone automation, real estate AI calling">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ascendagency.site/voice">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ascendagency.site/voice">
+    <meta property="og:title" content="AI Voice Agent — Never Miss a Call Again">
+    <meta property="og:description" content="An AI that answers your phone 24/7. Qualifies leads, books appointments, captures details. Sounds human. Built for law firms and real estate agents.">
+    <meta property="og:site_name" content="Ascend Agency">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "AI Voice Agent by Ascend Agency",
+        "description": "24/7 AI phone receptionist that qualifies leads, books appointments, and captures caller details for law firms and real estate agents.",
+        "url": "https://ascendagency.site/voice",
+        "provider": {"@type": "Organization", "name": "Ascend Agency", "url": "https://ascendagency.site"}
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505; --bg2: #0a0a0a; --bg3: #0f0f0f;
+            --white: #f0f0f0; --light: #a0a0a0; --muted: #666; --dim: #444;
+            --border: #1a1a1a; --accent: #10b981; --accent2: #34d399;
+            --red: #ef4444; --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--light); line-height: 1.6; overflow-x: hidden; }
+        a { color: inherit; text-decoration: none; }
+        .w { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; transition: all .3s; }
+        nav.scrolled { background: rgba(5,5,5,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 14px 32px; }
+        .nav-logo { font-size: 18px; font-weight: 900; color: var(--white); letter-spacing: -1px; }
+        .nav-logo span { color: var(--accent); }
+        .nav-right { display: flex; align-items: center; gap: 24px; }
+        .nav-link { font-size: 13px; color: var(--muted); transition: color .2s; }
+        .nav-link:hover { color: var(--white); }
+        .nav-cta { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #000; background: var(--accent); padding: 10px 24px; border-radius: 100px; transition: all .2s; }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(16,185,129,0.3); }
+
+        .hero { padding: 180px 0 120px; text-align: center; position: relative; }
+        .hero-glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+        .hero-glow-1 { width: 500px; height: 500px; background: rgba(16,185,129,0.06); top: -100px; left: 50%; transform: translateX(-50%); }
+        .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; padding: 8px 20px; background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.1); border-radius: 100px; }
+        .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero h1 { font-size: clamp(38px, 5vw, 64px); font-weight: 900; color: var(--white); letter-spacing: -3px; line-height: 1.08; margin-bottom: 24px; }
+        .hero h1 em { font-style: normal; color: var(--accent); }
+        .hero p { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero-cta { display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: 700; border-radius: 100px; cursor: pointer; transition: all .2s; border: none; text-decoration: none; }
+        .btn-green { font-size: 15px; padding: 16px 36px; background: var(--accent); color: #000; }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(16,185,129,0.35); }
+        .btn-o { font-size: 15px; padding: 16px 36px; background: transparent; color: var(--light); border: 1px solid var(--border); }
+        .btn-o:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-lg { font-size: 16px; padding: 18px 40px; }
+
+        .section-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; text-align: center; }
+        .section-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; color: var(--white); letter-spacing: -2px; line-height: 1.15; text-align: center; margin-bottom: 20px; }
+        .section-title em { font-style: normal; color: var(--dim); }
+        .section-subtitle { font-size: 17px; color: var(--muted); text-align: center; max-width: 560px; margin: 0 auto 64px; line-height: 1.7; }
+
+        .problem { padding: 120px 0; border-top: 1px solid var(--border); }
+        .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .problem h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; color: var(--white); letter-spacing: -1.5px; line-height: 1.15; margin-bottom: 24px; }
+        .problem p { font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
+        .stat-cards { display: flex; flex-direction: column; gap: 16px; }
+        .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; position: relative; overflow: hidden; }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--red), transparent); }
+        .stat-num { font-size: 32px; font-weight: 900; color: var(--red); letter-spacing: -2px; margin-bottom: 4px; }
+        .stat-text { font-size: 14px; color: var(--light); }
+
+        .how-it-works { padding: 160px 0; }
+        .flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
+        .flow-card { background: var(--bg2); padding: 40px 28px; text-align: center; }
+        .flow-num { font-size: 40px; font-weight: 900; color: var(--accent); opacity: 0.3; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+        .flow-card h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+        .flow-card p { font-size: 14px; line-height: 1.6; }
+
+        .features { padding: 120px 0; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
+        .feature-card { background: var(--bg2); padding: 40px 32px; }
+        .feature-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.12); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .feature-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+        .feature-card h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+        .feature-card p { font-size: 14px; line-height: 1.7; }
+
+        .pricing { padding: 120px 0; }
+        .pricing-card { max-width: 560px; margin: 0 auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 48px; text-align: center; position: relative; overflow: hidden; }
+        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+        .pricing-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+        .pricing-price { font-size: 48px; font-weight: 900; color: var(--white); letter-spacing: -3px; margin-bottom: 4px; }
+        .pricing-price span { font-size: 18px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+        .pricing-desc { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+        .pricing-list { text-align: left; margin-bottom: 32px; }
+        .pricing-list li { padding: 10px 0; font-size: 14px; color: var(--light); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+        .pricing-list li:last-child { border: none; }
+        .pricing-list svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2.5; flex-shrink: 0; }
+
+        .cta-section { padding: 160px 0 80px; text-align: center; }
+        .cta-big { font-size: clamp(36px, 5vw, 56px); font-weight: 900; color: var(--white); letter-spacing: -3px; line-height: 1.1; margin-bottom: 24px; }
+        .cta-big em { font-style: normal; color: var(--dim); }
+        .cta-sub { font-size: 17px; color: var(--muted); max-width: 500px; margin: 0 auto 40px; line-height: 1.7; }
+        .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        footer { padding: 60px 0 40px; border-top: 1px solid var(--border); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-brand { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; }
+        .footer-brand span { color: var(--accent); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
+        .footer-links a:hover { color: var(--accent); }
+        .footer-copy { font-size: 12px; color: var(--dim); }
+
+        @media (max-width: 768px) {
+            .problem-grid { grid-template-columns: 1fr; }
+            .flow-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; }
+            .hero { padding: 140px 0 80px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+
+        body::after {
+            content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .fade-up { opacity: 0; transform: translateY(40px); }
+    </style>
+</head>
+<body>
+
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">Ascend<span>.</span></a>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="demo.html" class="nav-link">Live Demo</a>
+            <a href="assess.html" class="nav-link" style="color:var(--accent2);font-weight:600">Free Assessment</a>
+            <a href="book.html" class="nav-cta">BOOK A CALL</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="w">
+            <div class="hero-tag">
+                <div class="hero-tag-dot"></div>
+                AI VOICE AGENT
+            </div>
+            <h1>Your Phone. <em>Answered.</em><br>24/7. By AI.</h1>
+            <p>An AI receptionist that sounds human, qualifies leads, captures details, and books appointments on your calendar. Even at 2 AM on a Sunday.</p>
+            <div class="hero-cta">
+                <a href="book.html" class="btn btn-green btn-lg">
+                    Book a Demo
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12h14m-6-6 6 6-6 6"/></svg>
+                </a>
+                <a href="demo.html" class="btn btn-o btn-lg">See It In Action</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="w">
+            <div class="problem-grid fade-up">
+                <div>
+                    <div class="section-label" style="text-align:left">The Problem</div>
+                    <h2>Every Missed Call Is a Missed Client</h2>
+                    <p>When a potential client calls your office at 6 PM on a Friday, what happens? For most firms: voicemail. And 80% of callers who hit voicemail never call back.</p>
+                    <p>They call the next firm on Google instead. You never even knew they existed.</p>
+                    <p>Hiring a 24/7 answering service costs $2,000-$5,000/month. And they still can't qualify leads or book appointments.</p>
+                </div>
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <div class="stat-num">80%</div>
+                        <div class="stat-text">of callers who reach voicemail never call back</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">67%</div>
+                        <div class="stat-text">of calls to small firms go unanswered after hours</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">$3,200</div>
+                        <div class="stat-text">average revenue lost per missed qualified call</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="w">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Four Steps to <em>Zero Missed Calls</em></div>
+            <div class="section-subtitle">From ring to booked appointment in under 90 seconds. No hold music. No voicemail. No lost leads.</div>
+            <div class="flow-grid">
+                <div class="flow-card fade-up">
+                    <div class="flow-num">01</div>
+                    <h3>Phone Rings</h3>
+                    <p>Your AI agent answers instantly. Greets the caller by your business name with a natural, human-sounding voice.</p>
+                </div>
+                <div class="flow-card fade-up">
+                    <div class="flow-num">02</div>
+                    <h3>Qualifies the Lead</h3>
+                    <p>Asks the right questions for your business. Case type and severity for lawyers. Property preferences for agents.</p>
+                </div>
+                <div class="flow-card fade-up">
+                    <div class="flow-num">03</div>
+                    <h3>Captures Details</h3>
+                    <p>Name, phone, email, situation details -- all captured and sent to your CRM or inbox instantly.</p>
+                </div>
+                <div class="flow-card fade-up">
+                    <div class="flow-num">04</div>
+                    <h3>Books Appointment</h3>
+                    <p>Checks your calendar availability and books the consultation or showing. Sends confirmation to both parties.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="w">
+            <div class="section-label">Capabilities</div>
+            <div class="section-title">Not Your Average <em>Answering Service</em></div>
+            <div class="section-subtitle">This is not a phone tree. It is an AI that has a real conversation, understands context, and takes action.</div>
+            <div class="features-grid">
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+                    <h3>Natural Voice</h3>
+                    <p>Sounds like a real person. Callers cannot tell the difference. Customizable voice, tone, and personality.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                    <h3>24/7/365 Coverage</h3>
+                    <p>Never sleeps. Never calls in sick. Never takes a vacation. Answers every call within 1 ring.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                    <h3>Smart Qualification</h3>
+                    <p>Asks the right screening questions for your practice area or listing type. Only sends you qualified leads.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                    <h3>Calendar Booking</h3>
+                    <p>Syncs with Google Calendar, Calendly, or your scheduling tool. Books appointments in real-time during the call.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                    <h3>Instant Transcripts</h3>
+                    <p>Full call transcript sent to your email and CRM immediately after each call. Never miss a detail.</p>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                    <h3>Performance Analytics</h3>
+                    <p>Track call volume, qualification rates, booking rates, and peak hours. Optimize based on real data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="w">
+            <div class="section-label">Simple Pricing</div>
+            <div class="section-title">Less Than a <em>Part-Time Hire</em></div>
+            <div class="section-subtitle">An AI receptionist that works 24/7 for less than what you pay for coffee each month.</div>
+            <div class="pricing-card fade-up">
+                <div class="pricing-label">AI Voice Agent</div>
+                <div class="pricing-price">$297<span>/mo</span></div>
+                <div class="pricing-desc">Included with Growth plan. Standalone available.</div>
+                <ul class="pricing-list" style="list-style:none;">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 24/7 AI phone answering</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Custom voice and script</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lead qualification built-in</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Calendar booking integration</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> CRM auto-sync</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Call transcripts and recordings</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> No per-minute charges under 500 min</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> No contracts. Cancel anytime.</li>
+                </ul>
+                <a href="book.html" class="btn btn-green btn-lg" style="width:100%;justify-content:center;">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="w">
+            <div class="cta-big fade-up">Stop Losing Calls.<br><em>Start Booking Clients.</em></div>
+            <p class="cta-sub fade-up">Every unanswered call is revenue walking out the door. Let us show you what AI phone answering looks like for your business.</p>
+            <div class="cta-btns fade-up">
+                <a href="book.html" class="btn btn-green btn-lg">Book Your Free Demo</a>
+                <a href="assess.html" class="btn btn-o btn-lg">Take the AI Assessment</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="w">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-brand">Ascend<span>.</span></a>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="law.html">For Law Firms</a>
+                    <a href="re.html">For Real Estate</a>
+                    <a href="book.html">Book a Call</a>
+                </div>
+                <div class="footer-copy">2026 Ascend Agency. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Fade-in animations
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.transition = 'opacity .7s ease, transform .7s ease';
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>
