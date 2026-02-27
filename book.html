@@ -53,44 +53,131 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
+        /* ═══════════════════════════════════════════
+           VARIABLES — matches index.html design system
+           ═══════════════════════════════════════════ */
         :root {
-            --bg: #0a0908;
-            --bg2: #12110f;
-            --card: rgba(201,169,110,0.04);
-            --border: rgba(201,169,110,0.1);
-            --border-h: rgba(201,169,110,0.2);
-            --dim: #5a554a;
-            --muted: #8a8378;
-            --light: #c4bdb2;
-            --cream: #f5efe6;
-            --accent: #c9a96e;
-            --accent2: #dfc697;
-            --green: #7ec47e;
-            --red: #e05555;
+            --bg: #0a0a0a;
+            --bg2: #0e0e12;
+            --bg3: #111118;
+            --surface: rgba(0,240,255,0.03);
+            --surface-h: rgba(0,240,255,0.06);
+            --border: rgba(0,240,255,0.08);
+            --border-h: rgba(0,240,255,0.18);
+            --dim: #3a3a4a;
+            --muted: #6a6a7a;
+            --light: #b0b0c0;
+            --white: #f0f0f5;
+            --cyan: #00f0ff;
+            --cyan-dim: rgba(0,240,255,0.5);
+            --cyan-glow: rgba(0,240,255,0.12);
+            --cyan-deep: #00b8c5;
+            --magenta: #ff00aa;
+            --green: #00ff88;
+            --red: #ff3355;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Outfit', -apple-system, sans-serif;
+            --font-mono: 'Fira Code', monospace;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ═══════════════════════════════════════════
+           RESET + BASE
+           ═══════════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Manrope', -apple-system, sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
-            color: var(--cream);
+            color: var(--muted);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none;
         }
+        ::selection { background: var(--cyan); color: var(--bg); }
+
+        /* Scanline overlay */
         body::after {
             content: '';
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px);
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10000;
         }
-        ::selection { background: var(--accent); color: var(--bg); }
 
+        /* ═══════════════════════════════════════════
+           CUSTOM CURSOR
+           ═══════════════════════════════════════════ */
+        .cursor {
+            width: 8px; height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            transition: width 0.2s, height 0.2s, margin-left 0.2s, margin-top 0.2s, background 0.2s;
+        }
+        .cursor.hover {
+            width: 40px; height: 40px;
+            margin-left: -16px; margin-top: -16px;
+            background: transparent;
+            border: 2px solid var(--cyan);
+        }
+
+        /* ═══════════════════════════════════════════
+           SCROLL PROGRESS
+           ═══════════════════════════════════════════ */
+        .scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            z-index: 10001;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* ═══════════════════════════════════════════
+           PARTICLE CANVAS
+           ═══════════════════════════════════════════ */
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════
+           GRID BACKGROUND
+           ═══════════════════════════════════════════ */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%);
+        }
+
+        /* ═══════════════════════════════════════════
+           NAV
+           ═══════════════════════════════════════════ */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -100,79 +187,136 @@
             max-width: 900px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
+            z-index: 100;
         }
         .logo {
-            font-family: 'Libre Bodoni', serif;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-weight: 800;
             font-size: 20px;
-            color: var(--cream);
+            color: var(--white);
             text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        .logo span { color: var(--accent); }
-        .top-links { display: flex; gap: 18px; align-items: center; }
+        .logo span { color: var(--cyan); }
+        .top-links { display: flex; gap: 24px; align-items: center; }
         .top-links a {
             color: var(--muted);
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
-            transition: color 0.2s;
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            transition: color 0.25s;
         }
-        .top-links a:hover { color: var(--cream); }
+        .top-links a:hover { color: var(--cyan); }
 
-        .container { max-width: 680px; width: 100%; padding: 40px 24px; }
+        /* ═══════════════════════════════════════════
+           MAIN CONTAINER
+           ═══════════════════════════════════════════ */
+        .container { max-width: 720px; width: 100%; padding: 40px 24px; position: relative; z-index: 10; }
 
-        .hero-section { text-align: center; margin-bottom: 36px; padding-top: 16px; }
+        /* ═══════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════ */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 36px;
+            padding-top: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroReveal 0.8s ease forwards 0.3s;
+        }
+        @keyframes heroReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .badge {
             display: inline-block;
             padding: 8px 20px;
-            background: var(--card);
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 100px;
             font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 24px;
-        }
-        h1 {
-            font-family: 'Libre Bodoni', serif;
-            font-size: 36px;
             font-weight: 500;
-            line-height: 1.15;
-            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            font-family: var(--font-mono);
+            margin-bottom: 24px;
+            position: relative;
         }
-        h1 em { font-style: italic; color: var(--accent); }
+        .badge::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--cyan), transparent, var(--cyan));
+            opacity: 0;
+            z-index: -1;
+            animation: badgePulse 3s ease infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.3; }
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 44px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        h1 em {
+            font-style: normal;
+            color: var(--cyan);
+            text-shadow: 0 0 40px rgba(0,240,255,0.25);
+        }
         .subtitle {
             font-size: 16px;
             color: var(--light);
             line-height: 1.7;
             margin-bottom: 24px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .spots {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(126,196,126,0.08);
-            border: 1px solid rgba(126,196,126,0.15);
-            border-radius: 8px;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(0,255,136,0.04);
+            border: 1px solid rgba(0,255,136,0.12);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
         }
         .spots-dot {
             width: 8px; height: 8px;
             background: var(--green);
             border-radius: 50%;
             animation: pulse 2s infinite;
+            box-shadow: 0 0 12px rgba(0,255,136,0.5);
         }
-        .spots span { font-size: 13px; color: var(--green); font-weight: 500; }
-        @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
+        .spots span { font-size: 12px; color: var(--green); font-weight: 500; letter-spacing: 0.5px; }
+        @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.3 } }
 
-        /* Progress Steps */
+        /* ═══════════════════════════════════════════
+           PROGRESS STEPS
+           ═══════════════════════════════════════════ */
         .progress-bar {
             display: flex;
             justify-content: center;
             gap: 8px;
             margin-bottom: 32px;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            animation: heroReveal 0.8s ease forwards 0.5s;
         }
         .progress-step {
             display: flex;
@@ -181,199 +325,384 @@
             font-size: 12px;
             font-weight: 600;
             color: var(--dim);
-            transition: color 0.3s;
+            transition: color 0.4s;
+            font-family: var(--font-mono);
         }
-        .progress-step.active { color: var(--accent); }
+        .progress-step.active { color: var(--cyan); }
         .progress-step.done { color: var(--green); }
         .progress-num {
-            width: 28px; height: 28px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             border: 2px solid var(--dim);
             display: flex; align-items: center; justify-content: center;
             font-size: 12px; font-weight: 700;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            font-family: var(--font-mono);
         }
-        .progress-step.active .progress-num { border-color: var(--accent); color: var(--accent); background: rgba(201,169,110,0.1); }
-        .progress-step.done .progress-num { border-color: var(--green); color: var(--bg); background: var(--green); }
+        .progress-step.active .progress-num {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(0,240,255,0.08);
+            box-shadow: 0 0 20px rgba(0,240,255,0.15);
+        }
+        .progress-step.done .progress-num {
+            border-color: var(--green);
+            color: var(--bg);
+            background: var(--green);
+            box-shadow: 0 0 20px rgba(0,255,136,0.2);
+        }
         .progress-line {
-            width: 40px; height: 2px;
+            width: 48px; height: 2px;
             background: var(--dim);
             align-self: center;
-            transition: background 0.3s;
+            transition: all 0.4s;
+            position: relative;
         }
-        .progress-line.done { background: var(--green); }
+        .progress-line.done {
+            background: var(--green);
+            box-shadow: 0 0 8px rgba(0,255,136,0.3);
+        }
 
-        /* Form Card */
+        /* ═══════════════════════════════════════════
+           FORM CARD
+           ═══════════════════════════════════════════ */
         .form-card {
-            background: var(--card);
+            background: var(--bg2);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 36px;
+            padding: 40px;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            animation: heroReveal 0.8s ease forwards 0.6s;
         }
+        /* Corner accents */
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 40px; height: 40px;
+            border-top: 2px solid var(--cyan);
+            border-left: 2px solid var(--cyan);
+            opacity: 0.4;
+        }
+        .form-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 40px; height: 40px;
+            border-bottom: 2px solid var(--cyan);
+            border-right: 2px solid var(--cyan);
+            opacity: 0.4;
+        }
+        /* Inner glow */
+        .form-inner-glow {
+            position: absolute;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,240,255,0.04), transparent 70%);
+            pointer-events: none;
+        }
+
         .form-card h2 {
-            font-family: 'Libre Bodoni', serif;
-            font-size: 22px;
-            font-weight: 500;
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 4px;
+            color: var(--white);
         }
-        .form-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-
-        /* Steps */
-        .form-step { display: none; }
-        .form-step.active { display: block; animation: fadeSlide 0.3s ease; }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+        .form-sub {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 28px;
+            font-family: var(--font-mono);
+            font-size: 13px;
         }
 
-        /* Fields */
-        .field { margin-bottom: 16px; }
+        /* ═══════════════════════════════════════════
+           FORM STEPS
+           ═══════════════════════════════════════════ */
+        .form-step { display: none; position: relative; z-index: 1; }
+        .form-step.active { display: block; animation: stepSlide 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes stepSlide {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ═══════════════════════════════════════════
+           FORM FIELDS
+           ═══════════════════════════════════════════ */
+        .field { margin-bottom: 18px; }
         .field label {
             display: block;
             font-size: 13px;
             font-weight: 600;
             color: var(--light);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
         }
-        .field label .req { color: var(--accent); }
-        .field .hint { font-size: 11px; color: var(--dim); margin-top: 4px; }
+        .field label .req { color: var(--cyan); }
+        .field .hint {
+            font-size: 11px;
+            color: var(--dim);
+            margin-top: 6px;
+            font-family: var(--font-mono);
+        }
         .field input, .field select, .field textarea {
             width: 100%;
-            padding: 13px 16px;
-            background: rgba(201,169,110,0.04);
+            padding: 14px 16px;
+            background: rgba(0,240,255,0.02);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--cream);
-            font-family: inherit;
+            border-radius: var(--radius-sm);
+            color: var(--white);
+            font-family: var(--font-body);
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
-        .field input.error, .field select.error, .field textarea.error { border-color: var(--red); }
-        .field select { cursor: pointer; }
-        .field select option { background: #12110f; color: var(--cream); }
+        .field input:focus, .field select:focus, .field textarea:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,240,255,0.08), inset 0 0 20px rgba(0,240,255,0.02);
+        }
+        .field input.error, .field select.error, .field textarea.error {
+            border-color: var(--red);
+            box-shadow: 0 0 15px rgba(255,51,85,0.1);
+        }
+        .field select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2300f0ff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+        .field select option { background: var(--bg2); color: var(--white); }
         .field textarea { resize: vertical; min-height: 80px; }
         .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
 
-        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-        .other-field {
-            display: none;
-            margin-top: 8px;
-        }
-        .other-field.visible { display: block; }
+        .other-field { display: none; margin-top: 10px; }
+        .other-field.visible { display: block; animation: stepSlide 0.3s ease; }
 
-        /* Radio/Checkbox Groups */
+        /* ═══════════════════════════════════════════
+           OPTION CARDS (Radio/Checkbox)
+           ═══════════════════════════════════════════ */
         .option-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
         .option-card {
             padding: 14px 16px;
-            background: rgba(201,169,110,0.03);
+            background: rgba(0,240,255,0.02);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        .option-card:hover { border-color: var(--border-h); }
-        .option-card.selected { border-color: var(--accent); background: rgba(201,169,110,0.08); }
+        .option-card:hover {
+            border-color: var(--border-h);
+            background: rgba(0,240,255,0.04);
+        }
+        .option-card.selected {
+            border-color: var(--cyan);
+            background: rgba(0,240,255,0.06);
+            box-shadow: 0 0 20px rgba(0,240,255,0.06);
+        }
         .option-card input { display: none; }
         .option-dot {
             width: 18px; height: 18px; min-width: 18px;
             border-radius: 50%;
             border: 2px solid var(--dim);
-            transition: all 0.2s;
+            transition: all 0.25s;
             position: relative;
         }
         .option-card.selected .option-dot {
-            border-color: var(--accent);
+            border-color: var(--cyan);
+            box-shadow: 0 0 8px rgba(0,240,255,0.3);
         }
         .option-card.selected .option-dot::after {
             content: '';
             position: absolute;
             top: 3px; left: 3px;
             width: 8px; height: 8px;
-            background: var(--accent);
+            background: var(--cyan);
             border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyan);
         }
         .option-check {
             width: 18px; height: 18px; min-width: 18px;
             border-radius: 4px;
             border: 2px solid var(--dim);
-            transition: all 0.2s;
+            transition: all 0.25s;
             display: flex; align-items: center; justify-content: center;
             font-size: 11px; color: transparent;
         }
         .option-card.selected .option-check {
-            border-color: var(--accent);
-            background: var(--accent);
+            border-color: var(--cyan);
+            background: var(--cyan);
             color: var(--bg);
         }
-        .option-label { font-size: 14px; font-weight: 500; }
+        .option-label { font-size: 14px; font-weight: 500; color: var(--light); }
+        .option-card.selected .option-label { color: var(--white); }
 
-        /* Buttons */
-        .btn-row { display: flex; gap: 12px; margin-top: 24px; }
+        /* ═══════════════════════════════════════════
+           BUTTONS
+           ═══════════════════════════════════════════ */
+        .btn-row { display: flex; gap: 12px; margin-top: 28px; }
         .btn-back {
-            padding: 14px 24px;
+            padding: 14px 28px;
             background: transparent;
             border: 1px solid var(--border);
             border-radius: 100px;
             color: var(--muted);
-            font-family: inherit;
+            font-family: var(--font-body);
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.25s;
+            letter-spacing: 0.3px;
         }
-        .btn-back:hover { border-color: var(--border-h); color: var(--cream); }
+        .btn-back:hover {
+            border-color: var(--border-h);
+            color: var(--white);
+        }
         .btn-next, .submit-btn {
             flex: 1;
-            padding: 14px 24px;
-            background: var(--accent);
+            padding: 14px 28px;
+            background: var(--cyan);
             color: var(--bg);
             border: none;
             border-radius: 100px;
-            font-family: inherit;
+            font-family: var(--font-display);
             font-size: 14px;
             font-weight: 700;
-            letter-spacing: 0.3px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-next::before, .submit-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+        .btn-next:hover::before, .submit-btn:hover::before {
+            transform: translateX(100%);
         }
         .btn-next:hover, .submit-btn:hover {
-            background: var(--accent2);
-            transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(201,169,110,0.2);
+            box-shadow: 0 0 30px rgba(0,240,255,0.3), 0 0 60px rgba(0,240,255,0.1);
+            transform: translateY(-2px);
         }
         .btn-next:disabled, .submit-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-
-        .trust { text-align: center; margin-top: 14px; font-size: 12px; color: var(--dim); }
-
-        /* Success */
-        .success-msg { display: none; text-align: center; padding: 40px 20px; }
-        .success-msg h2 { font-family: 'Libre Bodoni', serif; font-size: 28px; margin-bottom: 12px; }
-        .success-msg p { color: var(--muted); font-size: 16px; line-height: 1.6; }
-        .success-msg .check {
-            width: 64px; height: 64px;
-            background: rgba(126,196,126,0.1);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; margin: 0 auto 20px;
+        .btn-next:active, .submit-btn:active {
+            transform: scale(0.98);
         }
 
+        .trust {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--dim);
+            font-family: var(--font-mono);
+        }
+
+        /* ═══════════════════════════════════════════
+           SUCCESS MESSAGE
+           ═══════════════════════════════════════════ */
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .success-msg.show {
+            display: block;
+            animation: successReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes successReveal {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .success-msg h2 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+        .success-msg p {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .success-check {
+            width: 80px; height: 80px;
+            background: rgba(0,255,136,0.06);
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 40px rgba(0,255,136,0.15);
+        }
+        .success-check svg {
+            width: 32px; height: 32px;
+            stroke: var(--green);
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .success-check svg path {
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: checkDraw 0.5s ease forwards 0.3s;
+        }
+        @keyframes checkDraw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* ═══════════════════════════════════════════
+           FLOATING SHAPES
+           ═══════════════════════════════════════════ */
+        .float-shape {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+        .float-shape svg {
+            stroke: var(--cyan);
+            fill: none;
+            stroke-width: 1;
+        }
+        .fs1 { top: 15%; left: 5%; animation: floatA 18s ease-in-out infinite; }
+        .fs2 { top: 55%; right: 3%; animation: floatB 22s ease-in-out infinite; }
+        .fs3 { bottom: 20%; left: 8%; animation: floatC 20s ease-in-out infinite; }
+        @keyframes floatA {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(12deg); }
+        }
+        @keyframes floatB {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(-8deg); }
+        }
+        @keyframes floatC {
+            0%, 100% { transform: translate(0) rotate(0deg); }
+            50% { transform: translate(15px, -20px) rotate(6deg); }
+        }
+
+        /* ═══════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════ */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -381,11 +710,23 @@
             color: var(--dim);
             border-top: 1px solid var(--border);
             width: 100%;
+            position: relative;
+            z-index: 10;
+            font-family: var(--font-mono);
         }
-        footer a { color: var(--muted); text-decoration: none; }
-        footer a:hover { color: var(--cream); }
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        footer a:hover { color: var(--cyan); }
 
-        @media (max-width: 520px) {
+        /* ═══════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════ */
+        @media (max-width: 600px) {
+            body { cursor: auto; }
+            .cursor { display: none; }
             h1 { font-size: 28px; }
             .form-card { padding: 24px 18px; }
             .field-row { grid-template-columns: 1fr; }
@@ -393,19 +734,66 @@
             .progress-bar { gap: 4px; }
             .progress-step span { display: none; }
             .progress-line { width: 24px; }
+            .top-bar { padding: 16px 20px; }
+            .float-shape { display: none; }
+        }
+
+        /* ═══════════════════════════════════════════
+           REDUCED MOTION
+           ═══════════════════════════════════════════ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001s !important;
+                transition-duration: 0.001s !important;
+            }
+            .hero-section, .progress-bar, .form-card {
+                opacity: 1;
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Particles -->
+    <canvas id="particles"></canvas>
+
+    <!-- Floating Shapes -->
+    <div class="float-shape fs1">
+        <svg width="60" height="60" viewBox="0 0 60 60">
+            <polygon points="30,2 58,18 58,42 30,58 2,42 2,18" />
+        </svg>
+    </div>
+    <div class="float-shape fs2">
+        <svg width="50" height="50" viewBox="0 0 50 50">
+            <polygon points="25,2 48,48 2,48" />
+        </svg>
+    </div>
+    <div class="float-shape fs3">
+        <svg width="45" height="45" viewBox="0 0 45 45">
+            <polygon points="22.5,2 43,22.5 22.5,43 2,22.5" />
+        </svg>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Nav -->
     <div class="top-bar">
         <a href="index.html" class="logo">Ascend<span>.</span></a>
         <div class="top-links">
-            <a href="index.html">Home</a>
-            <a href="results.html">Results</a>
+            <a href="index.html">// home</a>
+            <a href="index.html#results">// results</a>
         </div>
     </div>
 
     <div class="container">
+        <!-- Hero -->
         <div class="hero-section">
             <div class="badge">Free Instagram Audit</div>
             <h1>See What's <em>Costing</em> You Clients</h1>
@@ -434,7 +822,9 @@
             </div>
         </div>
 
+        <!-- Form Card -->
         <div class="form-card" id="formCard">
+            <div class="form-inner-glow"></div>
             <form id="bookingForm" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
                 <input type="hidden" name="_subject" value="New Lead — Ascend Agency Intake">
                 <input type="hidden" name="_captcha" value="false">
@@ -445,7 +835,7 @@
                 <!-- STEP 1: Contact Info -->
                 <div class="form-step active" id="step1">
                     <h2>Let's start with you</h2>
-                    <p class="form-sub">So we know who we're talking to.</p>
+                    <p class="form-sub">// contact_info</p>
 
                     <div class="field-row">
                         <div class="field">
@@ -464,7 +854,7 @@
                     <div class="field">
                         <label>Phone Number <span class="req">*</span></label>
                         <input type="tel" name="Phone" id="phone" required placeholder="(555) 123-4567">
-                        <p class="hint">We'll text you to confirm your call — no spam, ever.</p>
+                        <p class="hint">// we'll text to confirm — no spam, ever.</p>
                     </div>
                     <div class="field">
                         <label>Best way to reach you?</label>
@@ -493,14 +883,14 @@
                     </div>
 
                     <div class="btn-row">
-                        <button type="button" class="btn-next" onclick="goStep(2)">Continue</button>
+                        <button type="button" class="btn-next magnetic" onclick="goStep(2)">Continue &rarr;</button>
                     </div>
                 </div>
 
                 <!-- STEP 2: Practice Details -->
                 <div class="form-step" id="step2">
                     <h2>About your practice</h2>
-                    <p class="form-sub">Helps us tailor everything to your niche.</p>
+                    <p class="form-sub">// practice_details</p>
 
                     <div class="field">
                         <label>Practice / Business Name <span class="req">*</span></label>
@@ -564,15 +954,15 @@
                     </div>
 
                     <div class="btn-row">
-                        <button type="button" class="btn-back" onclick="goStep(1)">Back</button>
-                        <button type="button" class="btn-next" onclick="goStep(3)">Continue</button>
+                        <button type="button" class="btn-back magnetic" onclick="goStep(1)">&larr; Back</button>
+                        <button type="button" class="btn-next magnetic" onclick="goStep(3)">Continue &rarr;</button>
                     </div>
                 </div>
 
                 <!-- STEP 3: Goals & Budget -->
                 <div class="form-step" id="step3">
                     <h2>Goals & budget</h2>
-                    <p class="form-sub">Last step — so we show up to the call prepared.</p>
+                    <p class="form-sub">// final_step — so we show up prepared.</p>
 
                     <div class="field">
                         <label>What's your #1 goal right now? <span class="req">*</span></label>
@@ -653,148 +1043,341 @@
                     </div>
 
                     <div class="btn-row">
-                        <button type="button" class="btn-back" onclick="goStep(2)">Back</button>
-                        <button type="submit" class="submit-btn">Book My Free Audit</button>
+                        <button type="button" class="btn-back magnetic" onclick="goStep(2)">&larr; Back</button>
+                        <button type="submit" class="submit-btn magnetic">Book My Free Audit</button>
                     </div>
-                    <p class="trust">No spam. No obligation. Just a real conversation about your growth.</p>
+                    <p class="trust">// no spam. no obligation. just a real conversation.</p>
                 </div>
             </form>
         </div>
 
+        <!-- Success State -->
         <div class="success-msg" id="successMsg">
-            <div class="check">✓</div>
+            <div class="success-check">
+                <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>
+            </div>
             <h2>You're In.</h2>
             <p>We'll reach out within 2 hours to confirm your call. Check your email for a custom audit of your Instagram.</p>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Ascend Agency &mdash; <a href="/">ascendagency.xyz</a> &mdash; <a href="https://instagram.com/ascendagencyy">@ascendagencyy</a></p>
+        <p>// 2026 Ascend Agency &mdash; <a href="/">ascendagency.xyz</a> &mdash; <a href="https://instagram.com/ascendagencyy">@ascendagencyy</a></p>
     </footer>
 
     <script>
-        let currentStep = 1;
-
-        function goStep(n) {
-            // Validate current step before advancing
-            if (n > currentStep && !validateStep(currentStep)) return;
-
-            document.getElementById('step' + currentStep).classList.remove('active');
-            document.getElementById('step' + n).classList.add('active');
-
-            // Update progress bar
-            for (let i = 1; i <= 3; i++) {
-                const ps = document.getElementById('ps' + i);
-                ps.classList.remove('active', 'done');
-                if (i < n) ps.classList.add('done');
-                else if (i === n) ps.classList.add('active');
+    /* ═══════════════════════════════════════════
+       SOUND ENGINE (Web Audio API — no files needed)
+       ═══════════════════════════════════════════ */
+    const Sound = (() => {
+        let ctx;
+        const getCtx = () => {
+            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+            return ctx;
+        };
+        return {
+            click() {
+                try {
+                    const c = getCtx(), o = c.createOscillator(), g = c.createGain();
+                    o.connect(g); g.connect(c.destination);
+                    o.frequency.setValueAtTime(2400, c.currentTime);
+                    o.frequency.exponentialRampToValueAtTime(1200, c.currentTime + 0.06);
+                    g.gain.setValueAtTime(0.04, c.currentTime);
+                    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.06);
+                    o.start(c.currentTime); o.stop(c.currentTime + 0.06);
+                } catch(e) {}
+            },
+            hover() {
+                try {
+                    const c = getCtx(), o = c.createOscillator(), g = c.createGain();
+                    o.connect(g); g.connect(c.destination);
+                    o.type = 'sine';
+                    o.frequency.setValueAtTime(1800, c.currentTime);
+                    g.gain.setValueAtTime(0.015, c.currentTime);
+                    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.08);
+                    o.start(c.currentTime); o.stop(c.currentTime + 0.08);
+                } catch(e) {}
+            },
+            success() {
+                try {
+                    const c = getCtx();
+                    [800, 1000, 1200, 1600].forEach((freq, i) => {
+                        const o = c.createOscillator(), g = c.createGain();
+                        o.connect(g); g.connect(c.destination);
+                        o.frequency.setValueAtTime(freq, c.currentTime + i * 0.08);
+                        g.gain.setValueAtTime(0.03, c.currentTime + i * 0.08);
+                        g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + i * 0.08 + 0.15);
+                        o.start(c.currentTime + i * 0.08);
+                        o.stop(c.currentTime + i * 0.08 + 0.15);
+                    });
+                } catch(e) {}
+            },
+            step() {
+                try {
+                    const c = getCtx(), o = c.createOscillator(), g = c.createGain();
+                    o.connect(g); g.connect(c.destination);
+                    o.type = 'triangle';
+                    o.frequency.setValueAtTime(600, c.currentTime);
+                    o.frequency.exponentialRampToValueAtTime(1400, c.currentTime + 0.1);
+                    g.gain.setValueAtTime(0.025, c.currentTime);
+                    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.12);
+                    o.start(c.currentTime); o.stop(c.currentTime + 0.12);
+                } catch(e) {}
             }
-            for (let i = 1; i <= 2; i++) {
-                const pl = document.getElementById('pl' + i);
-                pl.classList.toggle('done', i < n);
+        };
+    })();
+
+    /* ═══════════════════════════════════════════
+       CUSTOM CURSOR
+       ═══════════════════════════════════════════ */
+    const cursor = document.getElementById('cursor');
+    if (window.matchMedia('(pointer: fine)').matches) {
+        let cx = -100, cy = -100;
+        document.addEventListener('mousemove', e => {
+            cx = e.clientX; cy = e.clientY;
+            cursor.style.left = cx + 'px';
+            cursor.style.top = cy + 'px';
+        });
+        document.querySelectorAll('a, button, .option-card, select, input, textarea').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); Sound.hover(); });
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+        document.addEventListener('mousedown', () => Sound.click());
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL PROGRESS
+       ═══════════════════════════════════════════ */
+    const scrollBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        scrollBar.style.transform = `scaleX(${Math.min(pct, 1)})`;
+    });
+
+    /* ═══════════════════════════════════════════
+       PARTICLES
+       ═══════════════════════════════════════════ */
+    const canvas = document.getElementById('particles');
+    const pctx = canvas.getContext('2d');
+    let particles = [];
+    const isMobile = window.innerWidth < 768;
+    const PARTICLE_COUNT = isMobile ? 10 : 22;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                r: Math.random() * 1.5 + 0.5
+            });
+        }
+    }
+    initParticles();
+
+    let mouseX = -1000, mouseY = -1000;
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+    function drawParticles() {
+        pctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+
+            // Cursor repulsion
+            const dx = p.x - mouseX, dy = p.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+                const force = (120 - dist) / 120 * 0.4;
+                p.x += (dx / dist) * force;
+                p.y += (dy / dist) * force;
             }
 
-            currentStep = n;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            pctx.beginPath();
+            pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            pctx.fillStyle = 'rgba(0,240,255,0.3)';
+            pctx.fill();
+        });
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 160) {
+                    pctx.beginPath();
+                    pctx.moveTo(particles[i].x, particles[i].y);
+                    pctx.lineTo(particles[j].x, particles[j].y);
+                    pctx.strokeStyle = `rgba(0,240,255,${0.06 * (1 - dist / 160)})`;
+                    pctx.lineWidth = 0.5;
+                    pctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    /* ═══════════════════════════════════════════
+       FORM WIZARD
+       ═══════════════════════════════════════════ */
+    let currentStep = 1;
+
+    function goStep(n) {
+        if (n > currentStep && !validateStep(currentStep)) return;
+
+        document.getElementById('step' + currentStep).classList.remove('active');
+        document.getElementById('step' + n).classList.add('active');
+
+        // Update progress bar
+        for (let i = 1; i <= 3; i++) {
+            const ps = document.getElementById('ps' + i);
+            ps.classList.remove('active', 'done');
+            if (i < n) ps.classList.add('done');
+            else if (i === n) ps.classList.add('active');
+        }
+        for (let i = 1; i <= 2; i++) {
+            const pl = document.getElementById('pl' + i);
+            pl.classList.toggle('done', i < n);
         }
 
-        function validateStep(step) {
-            if (step === 1) {
-                const fname = document.getElementById('fname');
-                const lname = document.getElementById('lname');
-                const email = document.getElementById('email');
-                const phone = document.getElementById('phone');
-                let valid = true;
+        currentStep = n;
+        Sound.step();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-                [fname, lname, email, phone].forEach(el => {
-                    el.classList.remove('error');
-                    if (!el.value.trim()) {
-                        el.classList.add('error');
-                        valid = false;
-                    }
-                });
-                if (email.value && !email.value.includes('@')) {
-                    email.classList.add('error');
+    function validateStep(step) {
+        if (step === 1) {
+            const fname = document.getElementById('fname');
+            const lname = document.getElementById('lname');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            let valid = true;
+
+            [fname, lname, email, phone].forEach(el => {
+                el.classList.remove('error');
+                if (!el.value.trim()) {
+                    el.classList.add('error');
                     valid = false;
                 }
-                return valid;
+            });
+            if (email.value && !email.value.includes('@')) {
+                email.classList.add('error');
+                valid = false;
             }
-            if (step === 2) {
-                const biz = document.getElementById('bizname');
-                const type = document.getElementById('practiceType');
-                let valid = true;
-
-                [biz, type].forEach(el => {
-                    el.classList.remove('error');
-                    if (!el.value.trim()) {
-                        el.classList.add('error');
-                        valid = false;
-                    }
-                });
-                // If Other selected, require the other input
-                if (type.value === 'Other') {
-                    const other = document.getElementById('otherInput');
-                    other.classList.remove('error');
-                    if (!other.value.trim()) {
-                        other.classList.add('error');
-                        valid = false;
-                    }
-                }
-                return valid;
-            }
-            return true;
+            return valid;
         }
+        if (step === 2) {
+            const biz = document.getElementById('bizname');
+            const type = document.getElementById('practiceType');
+            let valid = true;
 
-        function toggleOther() {
-            const sel = document.getElementById('practiceType');
-            const field = document.getElementById('otherField');
-            const input = document.getElementById('otherInput');
-            if (sel.value === 'Other') {
-                field.classList.add('visible');
-                input.required = true;
-            } else {
-                field.classList.remove('visible');
-                input.required = false;
-                input.value = '';
-            }
-        }
-
-        // Option card selection
-        document.querySelectorAll('.option-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const input = this.querySelector('input');
-                const group = this.closest('.option-grid') || this.closest('.field');
-                if (input.type === 'radio') {
-                    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                    input.checked = true;
-                } else {
-                    this.classList.toggle('selected');
-                    input.checked = !input.checked;
+            [biz, type].forEach(el => {
+                el.classList.remove('error');
+                if (!el.value.trim()) {
+                    el.classList.add('error');
+                    valid = false;
                 }
             });
-        });
-
-        // Pre-select first radio in each group
-        document.querySelectorAll('.option-grid').forEach(grid => {
-            const first = grid.querySelector('.option-card');
-            if (first && first.querySelector('input[type=radio]:checked')) {
-                first.classList.add('selected');
+            if (type.value === 'Other') {
+                const other = document.getElementById('otherInput');
+                other.classList.remove('error');
+                if (!other.value.trim()) {
+                    other.classList.add('error');
+                    valid = false;
+                }
             }
-        });
-
-        // Clear error on input
-        document.querySelectorAll('input, select, textarea').forEach(el => {
-            el.addEventListener('input', () => el.classList.remove('error'));
-            el.addEventListener('change', () => el.classList.remove('error'));
-        });
-
-        // Success state
-        if (window.location.search.includes('success=1')) {
-            document.getElementById('formCard').style.display = 'none';
-            document.getElementById('successMsg').style.display = 'block';
-            document.querySelector('.progress-bar').style.display = 'none';
+            return valid;
         }
+        return true;
+    }
+
+    function toggleOther() {
+        const sel = document.getElementById('practiceType');
+        const field = document.getElementById('otherField');
+        const input = document.getElementById('otherInput');
+        if (sel.value === 'Other') {
+            field.classList.add('visible');
+            input.required = true;
+        } else {
+            field.classList.remove('visible');
+            input.required = false;
+            input.value = '';
+        }
+    }
+
+    /* ═══════════════════════════════════════════
+       OPTION CARD SELECTION
+       ═══════════════════════════════════════════ */
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const input = this.querySelector('input');
+            const group = this.closest('.option-grid') || this.closest('.field');
+            if (input.type === 'radio') {
+                group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                input.checked = true;
+            } else {
+                this.classList.toggle('selected');
+                input.checked = !input.checked;
+            }
+            Sound.click();
+        });
+    });
+
+    // Pre-select first radio in each group
+    document.querySelectorAll('.option-grid').forEach(grid => {
+        const first = grid.querySelector('.option-card');
+        if (first && first.querySelector('input[type=radio]:checked')) {
+            first.classList.add('selected');
+        }
+    });
+
+    // Clear error on input
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', () => el.classList.remove('error'));
+        el.addEventListener('change', () => el.classList.remove('error'));
+    });
+
+    /* ═══════════════════════════════════════════
+       MAGNETIC BUTTONS
+       ═══════════════════════════════════════════ */
+    if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.magnetic').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+        });
+    }
+
+    /* ═══════════════════════════════════════════
+       SUCCESS STATE
+       ═══════════════════════════════════════════ */
+    if (window.location.search.includes('success=1')) {
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('successMsg').classList.add('show');
+        document.querySelector('.progress-bar').style.display = 'none';
+        Sound.success();
+    }
     </script>
 </body>
 </html>
