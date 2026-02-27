@@ -29,15 +29,14 @@
             "name": "Ascend Agency",
             "url": "https://ascendagency.xyz"
         },
-        "description": "Free 15-minute Instagram audit call. We'll review your content, your competitors, and show you exactly how to turn your Instagram into a client-booking machine.",
+        "description": "Free 15-minute Instagram audit call for med spas, dentists, and wellness practices.",
         "serviceType": "Social Media Consultation",
         "areaServed": "US",
         "url": "https://ascendagency.xyz/book",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD",
-            "description": "Free 15-minute Instagram audit call"
+            "priceCurrency": "USD"
         }
     }
     </script>
@@ -69,6 +68,7 @@
             --accent: #c9a96e;
             --accent2: #dfc697;
             --green: #7ec47e;
+            --red: #e05555;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -119,9 +119,9 @@
         }
         .top-links a:hover { color: var(--cream); }
 
-        .container { max-width: 640px; width: 100%; padding: 40px 24px; }
+        .container { max-width: 680px; width: 100%; padding: 40px 24px; }
 
-        .hero-section { text-align: center; margin-bottom: 40px; padding-top: 20px; }
+        .hero-section { text-align: center; margin-bottom: 36px; padding-top: 16px; }
         .badge {
             display: inline-block;
             padding: 8px 20px;
@@ -167,43 +167,78 @@
         .spots span { font-size: 13px; color: var(--green); font-weight: 500; }
         @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
 
-        .benefits { display: grid; gap: 14px; margin-bottom: 40px; }
-        .benefit {
+        /* Progress Steps */
+        .progress-bar {
             display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            padding: 18px 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: border-color 0.2s;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
         }
-        .benefit:hover { border-color: var(--border-h); }
-        .benefit-icon {
-            width: 36px; height: 36px; min-width: 36px;
-            background: rgba(201,169,110,0.1);
-            border-radius: 8px;
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dim);
+            transition: color 0.3s;
+        }
+        .progress-step.active { color: var(--accent); }
+        .progress-step.done { color: var(--green); }
+        .progress-num {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--dim);
             display: flex; align-items: center; justify-content: center;
-            font-size: 16px;
+            font-size: 12px; font-weight: 700;
+            transition: all 0.3s;
         }
-        .benefit-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-        .benefit-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+        .progress-step.active .progress-num { border-color: var(--accent); color: var(--accent); background: rgba(201,169,110,0.1); }
+        .progress-step.done .progress-num { border-color: var(--green); color: var(--bg); background: var(--green); }
+        .progress-line {
+            width: 40px; height: 2px;
+            background: var(--dim);
+            align-self: center;
+            transition: background 0.3s;
+        }
+        .progress-line.done { background: var(--green); }
 
+        /* Form Card */
         .form-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 36px;
+            position: relative;
+            overflow: hidden;
         }
         .form-card h2 {
             font-family: 'Libre Bodoni', serif;
             font-size: 22px;
             font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .form-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+        /* Steps */
+        .form-step { display: none; }
+        .form-step.active { display: block; animation: fadeSlide 0.3s ease; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fields */
+        .field { margin-bottom: 16px; }
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--light);
             margin-bottom: 6px;
         }
-        .form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-        .field { margin-bottom: 18px; }
-        .field label { display: block; font-size: 13px; font-weight: 600; color: var(--light); margin-bottom: 6px; }
+        .field label .req { color: var(--accent); }
+        .field .hint { font-size: 11px; color: var(--dim); margin-top: 4px; }
         .field input, .field select, .field textarea {
             width: 100%;
             padding: 13px 16px;
@@ -217,86 +252,117 @@
             transition: border-color 0.2s;
         }
         .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+        .field input.error, .field select.error, .field textarea.error { border-color: var(--red); }
         .field select { cursor: pointer; }
         .field select option { background: #12110f; color: var(--cream); }
         .field textarea { resize: vertical; min-height: 80px; }
         .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
+
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .other-field {
+            display: none;
+            margin-top: 8px;
+        }
+        .other-field.visible { display: block; }
+
+        /* Radio/Checkbox Groups */
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .option-card {
+            padding: 14px 16px;
+            background: rgba(201,169,110,0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option-card:hover { border-color: var(--border-h); }
+        .option-card.selected { border-color: var(--accent); background: rgba(201,169,110,0.08); }
+        .option-card input { display: none; }
+        .option-dot {
+            width: 18px; height: 18px; min-width: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--dim);
+            transition: all 0.2s;
+            position: relative;
+        }
+        .option-card.selected .option-dot {
+            border-color: var(--accent);
+        }
+        .option-card.selected .option-dot::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        .option-check {
+            width: 18px; height: 18px; min-width: 18px;
+            border-radius: 4px;
+            border: 2px solid var(--dim);
+            transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: transparent;
+        }
+        .option-card.selected .option-check {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .option-label { font-size: 14px; font-weight: 500; }
+
+        /* Buttons */
+        .btn-row { display: flex; gap: 12px; margin-top: 24px; }
+        .btn-back {
+            padding: 14px 24px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-back:hover { border-color: var(--border-h); color: var(--cream); }
+        .btn-next, .submit-btn {
+            flex: 1;
+            padding: 14px 24px;
             background: var(--accent);
             color: var(--bg);
             border: none;
             border-radius: 100px;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.3px;
             cursor: pointer;
             transition: all 0.25s;
-            margin-top: 8px;
         }
-        .submit-btn:hover {
+        .btn-next:hover, .submit-btn:hover {
             background: var(--accent2);
             transform: translateY(-1px);
             box-shadow: 0 8px 30px rgba(201,169,110,0.2);
         }
-        .trust { text-align: center; margin-top: 16px; font-size: 12px; color: var(--dim); }
+        .btn-next:disabled, .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-        .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-        .stat-num {
-            font-family: 'Libre Bodoni', serif;
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 4px;
-        }
-        .stat-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.5px; }
+        .trust { text-align: center; margin-top: 14px; font-size: 12px; color: var(--dim); }
 
-        .expect-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 40px;
-        }
-        .expect-card h3 {
-            font-family: 'Libre Bodoni', serif;
-            font-size: 20px;
-            font-weight: 500;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .expect-step {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-        .expect-step:last-child { margin-bottom: 0; }
-        .expect-num {
-            width: 28px; height: 28px; min-width: 28px;
-            border-radius: 6px;
-            background: rgba(201,169,110,0.1);
-            color: var(--accent);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 13px;
-        }
-        .expect-step h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-        .expect-step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-
+        /* Success */
         .success-msg { display: none; text-align: center; padding: 40px 20px; }
         .success-msg h2 { font-family: 'Libre Bodoni', serif; font-size: 28px; margin-bottom: 12px; }
         .success-msg p { color: var(--muted); font-size: 16px; line-height: 1.6; }
@@ -319,10 +385,14 @@
         footer a { color: var(--muted); text-decoration: none; }
         footer a:hover { color: var(--cream); }
 
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
             h1 { font-size: 28px; }
-            .form-card { padding: 24px 20px; }
-            .stats-grid { grid-template-columns: 1fr; }
+            .form-card { padding: 24px 18px; }
+            .field-row { grid-template-columns: 1fr; }
+            .option-grid { grid-template-columns: 1fr; }
+            .progress-bar { gap: 4px; }
+            .progress-step span { display: none; }
+            .progress-line { width: 24px; }
         }
     </style>
 </head>
@@ -339,130 +409,262 @@
         <div class="hero-section">
             <div class="badge">Free Instagram Audit</div>
             <h1>See What's <em>Costing</em> You Clients</h1>
-            <p class="subtitle">15-minute call. We'll audit your Instagram and show you exactly what's missing &mdash; and how we'd fix it.</p>
+            <p class="subtitle">Fill this out and we'll build a custom growth profile for your practice. Takes 2 minutes.</p>
             <div class="spots">
                 <div class="spots-dot"></div>
                 <span>3 spots left this week</span>
             </div>
         </div>
 
-        <div class="benefits">
-            <div class="benefit">
-                <div class="benefit-icon">📸</div>
-                <div class="benefit-text">
-                    <h3>Content That Books</h3>
-                    <p>5 posts/week designed for your niche. Carousels, reels, stories &mdash; all built to convert.</p>
-                </div>
+        <!-- Progress -->
+        <div class="progress-bar">
+            <div class="progress-step active" id="ps1">
+                <div class="progress-num">1</div>
+                <span>About You</span>
             </div>
-            <div class="benefit">
-                <div class="benefit-icon">📈</div>
-                <div class="benefit-text">
-                    <h3>Real Growth, Not Vanity Metrics</h3>
-                    <p>We track consultations and bookings, not just likes. Your ROI is clear every month.</p>
-                </div>
+            <div class="progress-line" id="pl1"></div>
+            <div class="progress-step" id="ps2">
+                <div class="progress-num">2</div>
+                <span>Your Practice</span>
             </div>
-            <div class="benefit">
-                <div class="benefit-icon">⚡</div>
-                <div class="benefit-text">
-                    <h3>Live in 48 Hours</h3>
-                    <p>Your first posts go up within two days. No lengthy onboarding. No waiting weeks.</p>
-                </div>
+            <div class="progress-line" id="pl2"></div>
+            <div class="progress-step" id="ps3">
+                <div class="progress-num">3</div>
+                <span>Goals</span>
             </div>
         </div>
 
         <div class="form-card" id="formCard">
-            <h2>Book Your Free Audit</h2>
-            <p class="form-sub">We'll get back to you within 2 hours.</p>
             <form id="bookingForm" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="New Instagram Audit Request - Ascend Agency">
+                <input type="hidden" name="_subject" value="New Lead — Ascend Agency Intake">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_next" value="https://ascendagency.xyz/thanks">
                 <input type="text" name="_honey" style="display:none">
-                <div class="field">
-                    <label>Your Name *</label>
-                    <input type="text" name="Name" required placeholder="Dr. Sarah Chen">
+
+                <!-- STEP 1: Contact Info -->
+                <div class="form-step active" id="step1">
+                    <h2>Let's start with you</h2>
+                    <p class="form-sub">So we know who we're talking to.</p>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label>First Name <span class="req">*</span></label>
+                            <input type="text" name="First Name" id="fname" required placeholder="Sarah">
+                        </div>
+                        <div class="field">
+                            <label>Last Name <span class="req">*</span></label>
+                            <input type="text" name="Last Name" id="lname" required placeholder="Chen">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Email <span class="req">*</span></label>
+                        <input type="email" name="Email" id="email" required placeholder="sarah@yourpractice.com">
+                    </div>
+                    <div class="field">
+                        <label>Phone Number <span class="req">*</span></label>
+                        <input type="tel" name="Phone" id="phone" required placeholder="(555) 123-4567">
+                        <p class="hint">We'll text you to confirm your call — no spam, ever.</p>
+                    </div>
+                    <div class="field">
+                        <label>Best way to reach you?</label>
+                        <div class="option-grid">
+                            <label class="option-card">
+                                <input type="radio" name="Contact Preference" value="Phone Call" checked>
+                                <div class="option-dot"></div>
+                                <span class="option-label">Phone Call</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Contact Preference" value="Text/SMS">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Text / SMS</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Contact Preference" value="Email">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Email</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Contact Preference" value="Instagram DM">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Instagram DM</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn-next" onclick="goStep(2)">Continue</button>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Email *</label>
-                    <input type="email" name="Email" required placeholder="sarah@practice.com">
+
+                <!-- STEP 2: Practice Details -->
+                <div class="form-step" id="step2">
+                    <h2>About your practice</h2>
+                    <p class="form-sub">Helps us tailor everything to your niche.</p>
+
+                    <div class="field">
+                        <label>Practice / Business Name <span class="req">*</span></label>
+                        <input type="text" name="Business Name" id="bizname" required placeholder="Glow Med Spa">
+                    </div>
+                    <div class="field">
+                        <label>Practice Type <span class="req">*</span></label>
+                        <select name="Practice Type" id="practiceType" required onchange="toggleOther()">
+                            <option value="">Select your practice...</option>
+                            <option value="Med Spa">Med Spa</option>
+                            <option value="Cosmetic Dentist">Cosmetic Dentist</option>
+                            <option value="Wellness / Functional Medicine">Wellness / Functional Medicine</option>
+                            <option value="Chiropractor">Chiropractor</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Plastic Surgery">Plastic Surgery</option>
+                            <option value="Physical Therapy">Physical Therapy</option>
+                            <option value="Veterinary">Veterinary</option>
+                            <option value="Salon / Beauty">Salon / Beauty</option>
+                            <option value="Fitness / Gym">Fitness / Gym</option>
+                            <option value="Other">Other (please specify)</option>
+                        </select>
+                        <div class="other-field" id="otherField">
+                            <input type="text" name="Practice Type (Other)" id="otherInput" placeholder="Tell us what you do...">
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label>City / Location</label>
+                            <input type="text" name="City" placeholder="Miami, FL">
+                        </div>
+                        <div class="field">
+                            <label>How many locations?</label>
+                            <select name="Locations">
+                                <option value="1">1 location</option>
+                                <option value="2-3">2 - 3 locations</option>
+                                <option value="4-10">4 - 10 locations</option>
+                                <option value="10+">10+ locations</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Website URL</label>
+                        <input type="url" name="Website" placeholder="https://yourpractice.com">
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Instagram Handle</label>
+                            <input type="text" name="Instagram" placeholder="@yourpractice">
+                        </div>
+                        <div class="field">
+                            <label>Approx. Follower Count</label>
+                            <select name="Follower Count">
+                                <option value="">Select...</option>
+                                <option value="Under 500">Under 500</option>
+                                <option value="500-1000">500 - 1,000</option>
+                                <option value="1000-5000">1,000 - 5,000</option>
+                                <option value="5000-10000">5,000 - 10,000</option>
+                                <option value="10000+">10,000+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn-back" onclick="goStep(1)">Back</button>
+                        <button type="button" class="btn-next" onclick="goStep(3)">Continue</button>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Phone</label>
-                    <input type="tel" name="Phone" placeholder="(555) 123-4567">
+
+                <!-- STEP 3: Goals & Budget -->
+                <div class="form-step" id="step3">
+                    <h2>Goals & budget</h2>
+                    <p class="form-sub">Last step — so we show up to the call prepared.</p>
+
+                    <div class="field">
+                        <label>What's your #1 goal right now? <span class="req">*</span></label>
+                        <div class="option-grid">
+                            <label class="option-card">
+                                <input type="radio" name="Primary Goal" value="More bookings/appointments" required>
+                                <div class="option-dot"></div>
+                                <span class="option-label">More bookings</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Primary Goal" value="Grow followers & brand awareness">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Grow brand</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Primary Goal" value="Better content quality">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Better content</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Primary Goal" value="Automate DMs & lead capture">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Automate DMs</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Current monthly marketing budget</label>
+                        <select name="Monthly Budget">
+                            <option value="">Prefer not to say</option>
+                            <option value="Under $500">Under $500/mo</option>
+                            <option value="$500-$1000">$500 - $1,000/mo</option>
+                            <option value="$1000-$2500">$1,000 - $2,500/mo</option>
+                            <option value="$2500-$5000">$2,500 - $5,000/mo</option>
+                            <option value="$5000+">$5,000+/mo</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Are you currently running ads?</label>
+                        <div class="option-grid">
+                            <label class="option-card">
+                                <input type="radio" name="Running Ads" value="No">
+                                <div class="option-dot"></div>
+                                <span class="option-label">No</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Running Ads" value="Yes, on Instagram/Facebook">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Yes, Meta ads</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Running Ads" value="Yes, on Google">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Yes, Google ads</span>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="Running Ads" value="Yes, both">
+                                <div class="option-dot"></div>
+                                <span class="option-label">Yes, both</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>How did you hear about us?</label>
+                        <select name="How Heard">
+                            <option value="">Select...</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Google Search">Google Search</option>
+                            <option value="Referral">Referral / Word of Mouth</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Email">Email</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Anything else we should know?</label>
+                        <textarea name="Notes" placeholder="Timeline, past agency experience, specific pain points..."></textarea>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn-back" onclick="goStep(2)">Back</button>
+                        <button type="submit" class="submit-btn">Book My Free Audit</button>
+                    </div>
+                    <p class="trust">No spam. No obligation. Just a real conversation about your growth.</p>
                 </div>
-                <div class="field">
-                    <label>Practice Type *</label>
-                    <select name="Practice Type" required>
-                        <option value="">Select your practice...</option>
-                        <option value="Med Spa">Med Spa</option>
-                        <option value="Cosmetic Dentist">Cosmetic Dentist</option>
-                        <option value="Wellness Practice">Wellness / Functional Medicine</option>
-                        <option value="Chiropractor">Chiropractor</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Plastic Surgery">Plastic Surgery</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>Your Instagram handle</label>
-                    <input type="text" name="Instagram" placeholder="@yourpractice">
-                </div>
-                <div class="field">
-                    <label>Biggest frustration with social media?</label>
-                    <textarea name="Challenge" placeholder="e.g., No time to post consistently, content doesn't get engagement, competitors look better online..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Book My Free Audit →</button>
             </form>
-            <p class="trust">No spam. No obligation. Just a conversation about growing your practice.</p>
         </div>
 
         <div class="success-msg" id="successMsg">
             <div class="check">✓</div>
             <h2>You're In.</h2>
-            <p>We'll reach out within 2 hours to confirm your call. Check your email for a Loom video audit of your Instagram.</p>
-        </div>
-    </div>
-
-    <div class="container" style="padding-top:0">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-num">5x</div>
-                <div class="stat-label">Posts / Week</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num">3x</div>
-                <div class="stat-label">More Consultations</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-num">48hr</div>
-                <div class="stat-label">First Posts Live</div>
-            </div>
-        </div>
-
-        <div class="expect-card">
-            <h3>What Happens on the Call</h3>
-            <div class="expect-step">
-                <div class="expect-num">1</div>
-                <div>
-                    <h4>Instagram Audit</h4>
-                    <p>We'll review your current content, your competitors, and identify what's working and what's not.</p>
-                </div>
-            </div>
-            <div class="expect-step">
-                <div class="expect-num">2</div>
-                <div>
-                    <h4>Content Strategy</h4>
-                    <p>We'll outline what content types would work best for your practice and your audience.</p>
-                </div>
-            </div>
-            <div class="expect-step">
-                <div class="expect-num">3</div>
-                <div>
-                    <h4>Clear Next Steps</h4>
-                    <p>If it's a fit, you'll know exactly what happens next. If not, you walk away with free insights.</p>
-                </div>
-            </div>
+            <p>We'll reach out within 2 hours to confirm your call. Check your email for a custom audit of your Instagram.</p>
         </div>
     </div>
 
@@ -471,9 +673,127 @@
     </footer>
 
     <script>
+        let currentStep = 1;
+
+        function goStep(n) {
+            // Validate current step before advancing
+            if (n > currentStep && !validateStep(currentStep)) return;
+
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + n).classList.add('active');
+
+            // Update progress bar
+            for (let i = 1; i <= 3; i++) {
+                const ps = document.getElementById('ps' + i);
+                ps.classList.remove('active', 'done');
+                if (i < n) ps.classList.add('done');
+                else if (i === n) ps.classList.add('active');
+            }
+            for (let i = 1; i <= 2; i++) {
+                const pl = document.getElementById('pl' + i);
+                pl.classList.toggle('done', i < n);
+            }
+
+            currentStep = n;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            if (step === 1) {
+                const fname = document.getElementById('fname');
+                const lname = document.getElementById('lname');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                let valid = true;
+
+                [fname, lname, email, phone].forEach(el => {
+                    el.classList.remove('error');
+                    if (!el.value.trim()) {
+                        el.classList.add('error');
+                        valid = false;
+                    }
+                });
+                if (email.value && !email.value.includes('@')) {
+                    email.classList.add('error');
+                    valid = false;
+                }
+                return valid;
+            }
+            if (step === 2) {
+                const biz = document.getElementById('bizname');
+                const type = document.getElementById('practiceType');
+                let valid = true;
+
+                [biz, type].forEach(el => {
+                    el.classList.remove('error');
+                    if (!el.value.trim()) {
+                        el.classList.add('error');
+                        valid = false;
+                    }
+                });
+                // If Other selected, require the other input
+                if (type.value === 'Other') {
+                    const other = document.getElementById('otherInput');
+                    other.classList.remove('error');
+                    if (!other.value.trim()) {
+                        other.classList.add('error');
+                        valid = false;
+                    }
+                }
+                return valid;
+            }
+            return true;
+        }
+
+        function toggleOther() {
+            const sel = document.getElementById('practiceType');
+            const field = document.getElementById('otherField');
+            const input = document.getElementById('otherInput');
+            if (sel.value === 'Other') {
+                field.classList.add('visible');
+                input.required = true;
+            } else {
+                field.classList.remove('visible');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        // Option card selection
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const input = this.querySelector('input');
+                const group = this.closest('.option-grid') || this.closest('.field');
+                if (input.type === 'radio') {
+                    group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    input.checked = true;
+                } else {
+                    this.classList.toggle('selected');
+                    input.checked = !input.checked;
+                }
+            });
+        });
+
+        // Pre-select first radio in each group
+        document.querySelectorAll('.option-grid').forEach(grid => {
+            const first = grid.querySelector('.option-card');
+            if (first && first.querySelector('input[type=radio]:checked')) {
+                first.classList.add('selected');
+            }
+        });
+
+        // Clear error on input
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('input', () => el.classList.remove('error'));
+            el.addEventListener('change', () => el.classList.remove('error'));
+        });
+
+        // Success state
         if (window.location.search.includes('success=1')) {
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('successMsg').style.display = 'block';
+            document.querySelector('.progress-bar').style.display = 'none';
         }
     </script>
 </body>
