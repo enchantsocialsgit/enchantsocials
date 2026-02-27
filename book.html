@@ -3,360 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Strategy Call — Ascend Agency</title>
-    <meta name="description" content="Book a free 15-minute strategy call with Ascend Agency. Discover how AI automation can transform your practice.">
+    <title>Book Your Free Instagram Audit — Ascend Agency</title>
+    <meta name="description" content="Book a free 15-minute call. We'll audit your Instagram and show you exactly what's missing. Done-for-you content for med spas, dentists, and wellness practices.">
     <link rel="canonical" href="https://ascendagency.xyz/book">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ascendagency.xyz/book">
-    <meta property="og:title" content="Book a Free AI Strategy Call — Ascend Agency">
-    <meta property="og:description" content="15-minute call. No pitch. We'll audit your current setup and show you exactly what's leaking revenue.">
+    <meta property="og:title" content="Book Your Free Instagram Audit — Ascend Agency">
+    <meta property="og:description" content="15-minute call. We'll audit your Instagram and show you exactly what's costing you clients.">
     <meta property="og:image" content="https://ascendagency.xyz/assets/og-image.png">
     <meta property="og:site_name" content="Ascend Agency">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Book a Free AI Strategy Call — Ascend Agency">
-    <meta name="twitter:description" content="15-minute call. No pitch. We'll audit your current setup and show you exactly what's leaking revenue.">
+    <meta name="twitter:title" content="Book Your Free Instagram Audit — Ascend Agency">
+    <meta name="twitter:description" content="15-minute call. We'll audit your Instagram and show you exactly what's costing you clients.">
     <meta name="twitter:image" content="https://ascendagency.xyz/assets/og-image.png">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "Free AI Strategy Call",
+        "name": "Free Instagram Audit Call",
         "provider": {
             "@type": "Organization",
             "name": "Ascend Agency",
             "url": "https://ascendagency.xyz"
         },
-        "description": "Free 15-minute strategy call to discover how AI automation can double your leads in 30 days. Includes current setup audit, custom demo, and ROI breakdown.",
-        "serviceType": "AI Automation Consultation",
+        "description": "Free 15-minute Instagram audit call. We'll review your content, your competitors, and show you exactly how to turn your Instagram into a client-booking machine.",
+        "serviceType": "Social Media Consultation",
         "areaServed": "US",
         "url": "https://ascendagency.xyz/book",
         "offers": {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD",
-            "description": "Free 15-minute strategy call"
+            "description": "Free 15-minute Instagram audit call"
         }
     }
     </script>
-    <!-- BreadcrumbList Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://ascendagency.xyz"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Book a Strategy Call",
-                "item": "https://ascendagency.xyz/book"
-            }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ascendagency.xyz" },
+            { "@type": "ListItem", "position": 2, "name": "Book a Call", "item": "https://ascendagency.xyz/book" }
         ]
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0a0908;
+            --bg2: #12110f;
+            --card: rgba(201,169,110,0.04);
+            --border: rgba(201,169,110,0.1);
+            --border-h: rgba(201,169,110,0.2);
+            --dim: #5a554a;
+            --muted: #8a8378;
+            --light: #c4bdb2;
+            --cream: #f5efe6;
+            --accent: #c9a96e;
+            --accent2: #dfc697;
+            --green: #7ec47e;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #050505;
-            color: #f0f0f0;
+            font-family: 'Manrope', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--cream);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            -webkit-font-smoothing: antialiased;
         }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+        ::selection { background: var(--accent); color: var(--bg); }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .logo {
+            font-family: 'Libre Bodoni', serif;
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--cream);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+        .top-links { display: flex; gap: 18px; align-items: center; }
+        .top-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .top-links a:hover { color: var(--cream); }
+
         .container { max-width: 640px; width: 100%; padding: 40px 24px; }
+
+        .hero-section { text-align: center; margin-bottom: 40px; padding-top: 20px; }
         .badge {
             display: inline-block;
-            padding: 6px 16px;
-            background: rgba(139,92,246,0.15);
-            border: 1px solid rgba(139,92,246,0.3);
+            padding: 8px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #a78bfa;
+            color: var(--accent);
             margin-bottom: 24px;
         }
         h1 {
+            font-family: 'Libre Bodoni', serif;
             font-size: 36px;
-            font-weight: 800;
+            font-weight: 500;
             line-height: 1.15;
             margin-bottom: 16px;
         }
-        h1 span { color: #8b5cf6; }
+        h1 em { font-style: italic; color: var(--accent); }
         .subtitle {
-            font-size: 17px;
-            color: #888;
-            line-height: 1.6;
-            margin-bottom: 40px;
+            font-size: 16px;
+            color: var(--light);
+            line-height: 1.7;
+            margin-bottom: 24px;
         }
-        .benefits {
-            display: grid;
-            gap: 16px;
-            margin-bottom: 40px;
+        .spots {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(126,196,126,0.08);
+            border: 1px solid rgba(126,196,126,0.15);
+            border-radius: 8px;
         }
+        .spots-dot {
+            width: 8px; height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .spots span { font-size: 13px; color: var(--green); font-weight: 500; }
+        @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
+
+        .benefits { display: grid; gap: 14px; margin-bottom: 40px; }
         .benefit {
             display: flex;
             gap: 14px;
             align-items: flex-start;
-            padding: 16px 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.07);
+            padding: 18px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 12px;
+            transition: border-color 0.2s;
         }
+        .benefit:hover { border-color: var(--border-h); }
         .benefit-icon {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            background: rgba(139,92,246,0.15);
+            width: 36px; height: 36px; min-width: 36px;
+            background: rgba(201,169,110,0.1);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 16px;
         }
-        .benefit-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-        .benefit-text p { font-size: 13px; color: #777; line-height: 1.5; }
+        .benefit-text h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .benefit-text p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
         .form-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 32px;
+            padding: 36px;
         }
         .form-card h2 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .form-card .form-sub {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 24px;
-        }
-        .field { margin-bottom: 18px; }
-        .field label {
-            display: block;
-            font-size: 13px;
+            font-family: 'Libre Bodoni', serif;
+            font-size: 22px;
             font-weight: 500;
-            color: #aaa;
             margin-bottom: 6px;
         }
+        .form-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+        .field { margin-bottom: 18px; }
+        .field label { display: block; font-size: 13px; font-weight: 600; color: var(--light); margin-bottom: 6px; }
         .field input, .field select, .field textarea {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
+            padding: 13px 16px;
+            background: rgba(201,169,110,0.04);
+            border: 1px solid var(--border);
             border-radius: 10px;
-            color: #f0f0f0;
+            color: var(--cream);
             font-family: inherit;
             font-size: 15px;
             outline: none;
             transition: border-color 0.2s;
         }
-        .field input:focus, .field select:focus, .field textarea:focus {
-            border-color: #8b5cf6;
-        }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
         .field select { cursor: pointer; }
-        .field select option { background: #111; color: #f0f0f0; }
+        .field select option { background: #12110f; color: var(--cream); }
         .field textarea { resize: vertical; min-height: 80px; }
+        .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
         .submit-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
+            background: var(--accent);
+            color: var(--bg);
             border: none;
-            border-radius: 12px;
+            border-radius: 100px;
             font-family: inherit;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
+            letter-spacing: 0.3px;
             cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.2s;
+            transition: all 0.25s;
             margin-top: 8px;
         }
         .submit-btn:hover {
+            background: var(--accent2);
             transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(139,92,246,0.3);
+            box-shadow: 0 8px 30px rgba(201,169,110,0.2);
         }
-        .trust {
+        .trust { text-align: center; margin-top: 16px; font-size: 12px; color: var(--dim); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
-            margin-top: 16px;
-            font-size: 12px;
-            color: #555;
         }
-        .success-msg {
-            display: none;
+        .stat-num {
+            font-family: 'Libre Bodoni', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+        .stat-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .expect-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+        .expect-card h3 {
+            font-family: 'Libre Bodoni', serif;
+            font-size: 20px;
+            font-weight: 500;
             text-align: center;
-            padding: 40px 20px;
+            margin-bottom: 24px;
         }
-        .success-msg h2 { font-size: 28px; margin-bottom: 12px; }
-        .success-msg p { color: #888; font-size: 16px; line-height: 1.6; }
+        .expect-step {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .expect-step:last-child { margin-bottom: 0; }
+        .expect-num {
+            width: 28px; height: 28px; min-width: 28px;
+            border-radius: 6px;
+            background: rgba(201,169,110,0.1);
+            color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px;
+        }
+        .expect-step h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .expect-step p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        .success-msg { display: none; text-align: center; padding: 40px 20px; }
+        .success-msg h2 { font-family: 'Libre Bodoni', serif; font-size: 28px; margin-bottom: 12px; }
+        .success-msg p { color: var(--muted); font-size: 16px; line-height: 1.6; }
         .success-msg .check {
             width: 64px; height: 64px;
-            background: rgba(34,197,94,0.15);
+            background: rgba(126,196,126,0.1);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; margin: 0 auto 20px;
         }
+
         footer {
             text-align: center;
             padding: 40px 20px;
             font-size: 12px;
-            color: #444;
+            color: var(--dim);
+            border-top: 1px solid var(--border);
+            width: 100%;
         }
-        footer a { color: #666; text-decoration: none; }
+        footer a { color: var(--muted); text-decoration: none; }
+        footer a:hover { color: var(--cream); }
+
         @media (max-width: 480px) {
             h1 { font-size: 28px; }
             .form-card { padding: 24px 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.06);max-width:900px;margin:0 auto;width:100%">
-        <a href="index.html" style="font-weight:800;font-size:18px;color:#f0f0f0;text-decoration:none">Ascend<span style="color:#8b5cf6">.</span></a>
-        <div style="display:flex;gap:18px;align-items:center">
-            <a href="assess.html" style="color:#a78bfa;text-decoration:none;font-size:13px;font-weight:600">AI Assessment</a>
-            <a href="results.html" style="color:#888;text-decoration:none;font-size:13px;font-weight:500">Results</a>
+    <div class="top-bar">
+        <a href="index.html" class="logo">Ascend<span>.</span></a>
+        <div class="top-links">
+            <a href="index.html">Home</a>
+            <a href="results.html">Results</a>
         </div>
     </div>
+
     <div class="container">
-        <div style="text-align:center; margin-bottom: 40px; padding-top: 20px;">
-            <div class="badge">Free Strategy Call</div>
-            <h1>See How AI Can <span>Double Your Leads</span> in 30 Days</h1>
-            <p class="subtitle">15-minute call. No pitch. We'll audit your current setup and show you exactly what's leaking revenue.</p>
-            <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:8px;margin-top:12px">
-                <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 2s infinite"></span>
-                <span style="font-size:13px;color:#22c55e;font-weight:500">3 spots left this week</span>
+        <div class="hero-section">
+            <div class="badge">Free Instagram Audit</div>
+            <h1>See What's <em>Costing</em> You Clients</h1>
+            <p class="subtitle">15-minute call. We'll audit your Instagram and show you exactly what's missing &mdash; and how we'd fix it.</p>
+            <div class="spots">
+                <div class="spots-dot"></div>
+                <span>3 spots left this week</span>
             </div>
-            <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}</style>
         </div>
 
         <div class="benefits">
             <div class="benefit">
-                <div class="benefit-icon">&#9889;</div>
+                <div class="benefit-icon">📸</div>
                 <div class="benefit-text">
-                    <h3>Instant Lead Response</h3>
-                    <p>Every inquiry answered in under 3 seconds, 24/7. No more lost leads at 2am.</p>
+                    <h3>Content That Books</h3>
+                    <p>5 posts/week designed for your niche. Carousels, reels, stories &mdash; all built to convert.</p>
                 </div>
             </div>
             <div class="benefit">
-                <div class="benefit-icon">&#128200;</div>
+                <div class="benefit-icon">📈</div>
                 <div class="benefit-text">
-                    <h3>Automated Follow-Up</h3>
-                    <p>Personalized drip sequences that nurture leads on autopilot — no manual work.</p>
+                    <h3>Real Growth, Not Vanity Metrics</h3>
+                    <p>We track consultations and bookings, not just likes. Your ROI is clear every month.</p>
                 </div>
             </div>
             <div class="benefit">
-                <div class="benefit-icon">&#11088;</div>
+                <div class="benefit-icon">⚡</div>
                 <div class="benefit-text">
-                    <h3>Review Generation</h3>
-                    <p>Automated campaigns that turn every client into a 5-star Google review.</p>
+                    <h3>Live in 48 Hours</h3>
+                    <p>Your first posts go up within two days. No lengthy onboarding. No waiting weeks.</p>
                 </div>
             </div>
         </div>
 
         <div class="form-card" id="formCard">
-            <h2>Book Your Free Call</h2>
+            <h2>Book Your Free Audit</h2>
             <p class="form-sub">We'll get back to you within 2 hours.</p>
             <form id="bookingForm" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="New Booking Request - Ascend Agency">
+                <input type="hidden" name="_subject" value="New Instagram Audit Request - Ascend Agency">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_next" value="https://ascendagency.xyz/thanks">
                 <input type="text" name="_honey" style="display:none">
                 <div class="field">
                     <label>Your Name *</label>
-                    <input type="text" name="Name" id="fname" required placeholder="John Smith">
+                    <input type="text" name="Name" required placeholder="Dr. Sarah Chen">
                 </div>
                 <div class="field">
                     <label>Email *</label>
-                    <input type="email" name="Email" id="femail" required placeholder="john@company.com">
+                    <input type="email" name="Email" required placeholder="sarah@practice.com">
                 </div>
                 <div class="field">
                     <label>Phone</label>
-                    <input type="tel" name="Phone" id="fphone" placeholder="(555) 123-4567">
+                    <input type="tel" name="Phone" placeholder="(555) 123-4567">
                 </div>
                 <div class="field">
-                    <label>Business Type *</label>
-                    <select name="Business Type" id="ftype" required>
-                        <option value="">Select your industry...</option>
-                        <option value="Real Estate">Real Estate</option>
-                        <option value="Law Firm">Law Firm</option>
-                        <option value="Medical Practice">Medical Practice</option>
-                        <option value="Insurance">Insurance</option>
+                    <label>Practice Type *</label>
+                    <select name="Practice Type" required>
+                        <option value="">Select your practice...</option>
+                        <option value="Med Spa">Med Spa</option>
+                        <option value="Cosmetic Dentist">Cosmetic Dentist</option>
+                        <option value="Wellness Practice">Wellness / Functional Medicine</option>
+                        <option value="Chiropractor">Chiropractor</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Plastic Surgery">Plastic Surgery</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="field">
-                    <label>What's your biggest challenge right now?</label>
-                    <textarea name="Challenge" id="fchallenge" required placeholder="e.g., Too many leads going cold, no time to follow up, need more Google reviews..."></textarea>
+                    <label>Your Instagram handle</label>
+                    <input type="text" name="Instagram" placeholder="@yourpractice">
                 </div>
-                <button type="submit" class="submit-btn">Book My Free Strategy Call</button>
+                <div class="field">
+                    <label>Biggest frustration with social media?</label>
+                    <textarea name="Challenge" placeholder="e.g., No time to post consistently, content doesn't get engagement, competitors look better online..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Book My Free Audit →</button>
             </form>
-            <p class="trust">No spam. No obligation. Just a conversation about growing your business.</p>
+            <p class="trust">No spam. No obligation. Just a conversation about growing your practice.</p>
         </div>
 
         <div class="success-msg" id="successMsg">
-            <div class="check">&#10003;</div>
-            <h2>You're Booked!</h2>
-            <p>We'll reach out within 2 hours to confirm your call time. Check your email for details.</p>
+            <div class="check">✓</div>
+            <h2>You're In.</h2>
+            <p>We'll reach out within 2 hours to confirm your call. Check your email for a Loom video audit of your Instagram.</p>
         </div>
     </div>
 
     <div class="container" style="padding-top:0">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px">
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;text-align:center">
-                <div style="font-size:28px;font-weight:800;color:#22c55e;margin-bottom:4px">&lt;60s</div>
-                <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px">Response Time</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num">5x</div>
+                <div class="stat-label">Posts / Week</div>
             </div>
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;text-align:center">
-                <div style="font-size:28px;font-weight:800;color:#22c55e;margin-bottom:4px">+40%</div>
-                <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px">More Bookings</div>
+            <div class="stat-card">
+                <div class="stat-num">3x</div>
+                <div class="stat-label">More Consultations</div>
             </div>
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:20px;text-align:center">
-                <div style="font-size:28px;font-weight:800;color:#22c55e;margin-bottom:4px">48hr</div>
-                <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px">Full Setup</div>
+            <div class="stat-card">
+                <div class="stat-num">48hr</div>
+                <div class="stat-label">First Posts Live</div>
             </div>
         </div>
-        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;margin-bottom:40px">
-            <h3 style="font-size:18px;font-weight:700;color:#f0f0f0;margin-bottom:20px;text-align:center">What to Expect on the Call</h3>
-            <div style="display:grid;gap:16px">
-                <div style="display:flex;gap:14px;align-items:flex-start">
-                    <div style="width:28px;height:28px;min-width:28px;border-radius:6px;background:rgba(139,92,246,0.1);color:#a78bfa;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">1</div>
-                    <div>
-                        <div style="font-size:14px;font-weight:600;color:#f0f0f0;margin-bottom:2px">Quick Audit</div>
-                        <div style="font-size:13px;color:#777;line-height:1.5">We'll review your current lead flow and identify where opportunities are slipping through</div>
-                    </div>
+
+        <div class="expect-card">
+            <h3>What Happens on the Call</h3>
+            <div class="expect-step">
+                <div class="expect-num">1</div>
+                <div>
+                    <h4>Instagram Audit</h4>
+                    <p>We'll review your current content, your competitors, and identify what's working and what's not.</p>
                 </div>
-                <div style="display:flex;gap:14px;align-items:flex-start">
-                    <div style="width:28px;height:28px;min-width:28px;border-radius:6px;background:rgba(139,92,246,0.1);color:#a78bfa;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">2</div>
-                    <div>
-                        <div style="font-size:14px;font-weight:600;color:#f0f0f0;margin-bottom:2px">Custom Demo</div>
-                        <div style="font-size:13px;color:#777;line-height:1.5">See exactly how AI automation would work for your specific business and industry</div>
-                    </div>
+            </div>
+            <div class="expect-step">
+                <div class="expect-num">2</div>
+                <div>
+                    <h4>Content Strategy</h4>
+                    <p>We'll outline what content types would work best for your practice and your audience.</p>
                 </div>
-                <div style="display:flex;gap:14px;align-items:flex-start">
-                    <div style="width:28px;height:28px;min-width:28px;border-radius:6px;background:rgba(139,92,246,0.1);color:#a78bfa;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px">3</div>
-                    <div>
-                        <div style="font-size:14px;font-weight:600;color:#f0f0f0;margin-bottom:2px">ROI Breakdown</div>
-                        <div style="font-size:13px;color:#777;line-height:1.5">We'll show you the projected revenue impact with real numbers, not hypotheticals</div>
-                    </div>
+            </div>
+            <div class="expect-step">
+                <div class="expect-num">3</div>
+                <div>
+                    <h4>Clear Next Steps</h4>
+                    <p>If it's a fit, you'll know exactly what happens next. If not, you walk away with free insights.</p>
                 </div>
             </div>
         </div>
@@ -367,12 +471,10 @@
     </footer>
 
     <script>
-        // Show success message if redirected back after submission
         if (window.location.search.includes('success=1')) {
             document.getElementById('formCard').style.display = 'none';
             document.getElementById('successMsg').style.display = 'block';
         }
     </script>
-<script src="chat-widget.js" defer></script>
 </body>
 </html>
