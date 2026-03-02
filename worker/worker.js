@@ -256,9 +256,12 @@ async function callOpenRouter(systemPrompt, handle, apiKey) {
   const content = data.choices?.[0]?.message?.content;
   if (!content) throw new Error('Empty response from OpenRouter');
 
-  // Parse JSON — strip any markdown fences if present
-  const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  return JSON.parse(jsonStr);
+  // Parse JSON — extract the JSON object robustly
+  const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  const start = cleaned.indexOf('{');
+  const end = cleaned.lastIndexOf('}');
+  if (start === -1 || end === -1) throw new Error('No JSON object in response');
+  return JSON.parse(cleaned.slice(start, end + 1));
 }
 
 export default {
