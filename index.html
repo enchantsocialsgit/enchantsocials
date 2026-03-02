@@ -1420,17 +1420,722 @@
             color: var(--muted);
             line-height: 1.6;
         }
-        .timeline-intro {
-            text-align: center;
-            color: var(--muted);
-            font-size: 16px;
-            margin-bottom: 48px;
-            margin-top: -8px;
-        }
         @media (max-width: 768px) {
             .customer-grid { grid-template-columns: 1fr; }
             .testimonial-card { flex: 0 0 220px; }
         }
+
+        /* ═══════════════════════════════════════════
+           SECTION DESCRIPTION (shared)
+           ═══════════════════════════════════════════ */
+        .section-desc {
+            font-size: 17px;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            text-align: center;
+            line-height: 1.75;
+        }
+
+        /* ═══════════════════════════════════════════
+           COMPETITOR COMPARISON
+           ═══════════════════════════════════════════ */
+        .compare-section { padding: 140px 0; }
+        .compare-section h2 { text-align: center; margin-bottom: 12px; }
+        .compare-section .section-label { text-align: center; }
+        .compare-form { max-width: 700px; margin: 0 auto; }
+        .compare-inputs {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .compare-input-group { flex: 1; }
+        .compare-label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .compare-vs-text {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dim);
+            padding-top: 22px;
+            flex-shrink: 0;
+        }
+        .compare-bottom {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .compare-loading {
+            display: none;
+            text-align: center;
+            padding: 48px 0;
+        }
+        .compare-loading.show { display: block; }
+        .compare-loading-text {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 16px;
+            font-family: var(--font-mono);
+        }
+        .compare-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 4px;
+            background: var(--surface);
+            border-radius: 2px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .compare-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .compare-results {
+            display: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .compare-results.show { display: block; }
+        .compare-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 40px;
+            padding: 32px 0;
+        }
+        .compare-profile { text-align: center; }
+        .compare-score-ring {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 12px;
+        }
+        .compare-score-ring svg { width: 80px; height: 80px; transform: rotate(-90deg); }
+        .compare-score-ring .score-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 5;
+        }
+        .compare-sf {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 5;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        .compare-sn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .compare-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .compare-vs-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .compare-cat-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .compare-cat-row:last-child { border-bottom: none; }
+        .compare-cat-label {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .compare-cat-grade {
+            width: 60px;
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .compare-cat-grade.winner { color: var(--success); }
+        .compare-cat-grade.loser { color: var(--danger); opacity: 0.6; }
+        .compare-cat-grade.tie { color: var(--accent); }
+        .compare-winner {
+            text-align: center;
+            padding: 32px;
+            margin: 32px 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .compare-winner-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .compare-winner-name {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .compare-winner-margin {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════════
+           ROI CALCULATOR
+           ═══════════════════════════════════════════ */
+        .roi-section { padding: 140px 0; }
+        .roi-section h2 { text-align: center; margin-bottom: 12px; }
+        .roi-section .section-label { text-align: center; }
+        .roi-calc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            max-width: 900px;
+            margin: 0 auto;
+            align-items: start;
+        }
+        .roi-sliders { display: flex; flex-direction: column; gap: 32px; }
+        .roi-slider-group {}
+        .roi-slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--light);
+        }
+        .roi-val {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 15px;
+        }
+        .roi-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+        .roi-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(200,162,255,0.4);
+            transition: box-shadow 0.3s;
+        }
+        .roi-range::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 24px rgba(200,162,255,0.6);
+        }
+        .roi-range::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(200,162,255,0.4);
+        }
+        .roi-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .roi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        .roi-card:hover {
+            border-color: var(--border-h);
+            transform: translateY(-2px);
+        }
+        .roi-card.accent-card {
+            background: rgba(200,162,255,0.06);
+            border-color: rgba(200,162,255,0.15);
+        }
+        .roi-card-num {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+        .accent-card .roi-card-num { color: var(--accent); }
+        .roi-card-label {
+            font-size: 12px;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: var(--font-mono);
+        }
+
+        /* ═══════════════════════════════════════════
+           BEFORE / AFTER SLIDER
+           ═══════════════════════════════════════════ */
+        .ba-section { padding: 140px 0; }
+        .ba-section h2 { text-align: center; margin-bottom: 12px; }
+        .ba-section .section-label { text-align: center; }
+        .ba-wrapper { max-width: 800px; margin: 0 auto; }
+        .ba-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            user-select: none;
+        }
+        .ba-side {
+            padding: 32px;
+        }
+        .ba-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+            clip-path: inset(0 50% 0 0);
+            background: var(--bg2);
+        }
+        .ba-after {
+            position: relative;
+            z-index: 1;
+        }
+        .ba-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .ba-before .ba-label { color: var(--danger); }
+        .ba-after .ba-label { color: var(--success); }
+        .ba-ig-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .ba-post {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .ba-post.bad {
+            background: rgba(255,107,107,0.06);
+            border: 1px solid rgba(255,107,107,0.15);
+        }
+        .ba-post.good {
+            background: rgba(125,235,160,0.06);
+            border: 1px solid rgba(125,235,160,0.15);
+        }
+        .ba-post-inner {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.3;
+        }
+        .ba-stat {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+        .ba-post.bad .ba-stat { color: var(--danger); opacity: 0.7; }
+        .ba-post.good .ba-stat { color: var(--success); }
+        .ba-stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            color: var(--dim);
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .ba-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+        }
+        .ba-handle-line {
+            flex: 1;
+            width: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(200,162,255,0.4);
+        }
+        .ba-handle-grip {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg);
+            box-shadow: 0 0 20px rgba(200,162,255,0.4);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .ba-handle-grip:hover {
+            box-shadow: 0 0 32px rgba(200,162,255,0.6);
+            transform: scale(1.1);
+        }
+        .ba-handle-grip svg { width: 14px; height: 14px; }
+
+        /* ═══════════════════════════════════════════
+           CONTENT PREVIEW
+           ═══════════════════════════════════════════ */
+        .content-preview-section { padding: 140px 0; }
+        .content-preview-section h2 { text-align: center; margin-bottom: 12px; }
+        .content-preview-section .section-label { text-align: center; }
+        .preview-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        .preview-result {
+            display: none;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+        .preview-result.show { display: block; }
+        .preview-phone {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .preview-phone-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .preview-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+        }
+        .preview-handle {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .preview-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--bg3), var(--bg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+        .preview-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(200,162,255,0.1), transparent);
+        }
+        .preview-actions {
+            display: flex;
+            gap: 16px;
+            padding: 12px 16px;
+            color: var(--light);
+        }
+        .preview-actions svg { cursor: pointer; transition: color 0.3s; }
+        .preview-actions svg:hover { color: var(--accent); }
+        .preview-likes {
+            padding: 0 16px 4px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .preview-caption {
+            padding: 0 16px 8px;
+            font-size: 13px;
+            color: var(--light);
+            line-height: 1.5;
+        }
+        .preview-tags {
+            padding: 0 16px 8px;
+            font-size: 12px;
+            color: var(--accent);
+        }
+        .preview-engagement {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+        }
+        .preview-engagement strong { color: var(--success); }
+
+        /* ═══════════════════════════════════════════
+           AI DEMO CHAT WIDGET
+           ═══════════════════════════════════════════ */
+        .ai-chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
+            z-index: 9990;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 24px rgba(200,162,255,0.4);
+            transition: all 0.4s ease;
+        }
+        .ai-chat-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(200,162,255,0.5);
+        }
+        .ai-chat-fab.open { transform: rotate(45deg); }
+        .ai-chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            max-height: 520px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            z-index: 9989;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+            animation: chatSlideUp 0.4s cubic-bezier(0.33,1,0.68,1);
+        }
+        .ai-chat-window.open { display: flex; }
+        @keyframes chatSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ai-chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg3);
+        }
+        .ai-chat-header-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: chatPulse 2s ease infinite;
+        }
+        @keyframes chatPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .ai-chat-header-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+        }
+        .ai-chat-header-sub {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .ai-chat-scenarios {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        .ai-chat-scenario-btn {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .ai-chat-scenario-btn:hover,
+        .ai-chat-scenario-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(200,162,255,0.08);
+        }
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 240px;
+            max-height: 320px;
+        }
+        .ai-chat-msg {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: msgFade 0.3s ease;
+        }
+        @keyframes msgFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ai-chat-msg.bot {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--light);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .ai-chat-msg.user {
+            background: var(--accent);
+            color: var(--bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+        .ai-chat-typing {
+            display: flex;
+            gap: 4px;
+            padding: 10px 14px;
+            align-self: flex-start;
+        }
+        .ai-chat-typing span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--dim);
+            animation: typingDot 1.4s ease infinite;
+        }
+        .ai-chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .ai-chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingDot {
+            0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-4px); }
+        }
+        .ai-chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            background: var(--bg3);
+        }
+        .ai-chat-input {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 8px 16px;
+            color: var(--white);
+            font-size: 13px;
+            font-family: var(--font-body);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .ai-chat-input:focus { border-color: var(--accent); }
+        .ai-chat-input::placeholder { color: var(--dim); }
+        .ai-chat-send {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        .ai-chat-send:hover { box-shadow: 0 0 16px rgba(200,162,255,0.4); }
 
         /* ═══════════════════════════════════════════
            FOOTER
@@ -1490,6 +2195,9 @@
             .steps-line { display: none; }
             .pricing-cards { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
             .audit-grades { grid-template-columns: 1fr; }
+            .roi-calc { grid-template-columns: 1fr; gap: 32px; }
+            .compare-inputs { flex-direction: column; }
+            .compare-vs-text { padding-top: 0; }
         }
         @media (max-width: 768px) {
             section { padding: 100px 0; }
@@ -1502,6 +2210,24 @@
             .audit-email-form { flex-direction: column; }
             .footer-inner { flex-direction: column; text-align: center; }
             .result-number { font-size: 56px; }
+            .compare-section, .roi-section, .ba-section, .content-preview-section { padding: 80px 0; }
+            .compare-bottom { flex-direction: column; }
+            .compare-header { gap: 16px; }
+            .compare-score-ring { width: 64px; height: 64px; }
+            .compare-score-ring svg { width: 64px; height: 64px; }
+            .compare-sn { font-size: 18px; }
+            .roi-results { grid-template-columns: 1fr; }
+            .roi-card-num { font-size: 28px; }
+            .ba-ig-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+            .ba-side { padding: 20px; }
+            .ba-post-inner { font-size: 9px; }
+            .ba-stat { font-size: 9px; }
+            .ba-stats-row { font-size: 10px; }
+            .preview-form { flex-direction: column; align-items: stretch; }
+            .preview-phone { border-radius: 16px; }
+            .section-desc { font-size: 15px; }
+            .ai-chat-window { width: calc(100vw - 32px); right: 16px; bottom: 90px; }
+            .ai-chat-fab { width: 52px; height: 52px; bottom: 16px; right: 16px; }
         }
 
         /* ═══════════════════════════════════════════
@@ -1710,154 +2436,185 @@
     </div>
 </section>
 
-<!-- ═══ VALUE TIMELINE ═════════════════════════════ -->
-<section class="value-timeline" id="value">
+<!-- ═══ COMPETITOR COMPARISON ═══════════════════════ -->
+<section class="compare-section" id="compare">
     <div class="container">
-        <div class="section-label code-font reveal">// YOUR FIRST WEEK</div>
-        <h2 class="reveal">This is what happens <span class="accent">in 7 days.</span></h2>
-        <p class="timeline-intro reveal">While your competitors are still Googling "how to use AI" &mdash; yours is already working.</p>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 1</div>
-                <div class="timeline-title">We study your entire business</div>
-                <div class="timeline-desc">Your Instagram, your website, your reviews, your competitors. We find out exactly what's working, what's not, and where you're losing money.</div>
+        <div class="section-label code-font reveal">// HEAD TO HEAD</div>
+        <h2 class="reveal">See how you stack up <span class="accent">against your competitor.</span></h2>
+        <p class="section-desc reveal">Enter two Instagram handles. AI analyzes both and shows you who's winning &mdash; and exactly where you can overtake them.</p>
+        <div class="compare-form reveal" id="compare-form">
+            <div class="compare-inputs">
+                <div class="compare-input-group">
+                    <label class="compare-label">YOU</label>
+                    <input type="text" class="audit-input" id="compare-handle-1" placeholder="@yourbusiness" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="compare-vs-text">VS</div>
+                <div class="compare-input-group">
+                    <label class="compare-label">COMPETITOR</label>
+                    <input type="text" class="audit-input" id="compare-handle-2" placeholder="@competitor" autocomplete="off" spellcheck="false">
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 2</div>
-                <div class="timeline-title">We find who's stealing your customers</div>
-                <div class="timeline-desc">Your competitors are running ads you've never seen. Posting content that's getting your clients. We map all of it &mdash; and show you how to take them back.</div>
+            <div class="compare-bottom">
+                <select class="audit-niche-select" id="compare-niche">
+                    <option value="other">Industry</option>
+                    <option value="medspa">Med Spa</option>
+                    <option value="dental">Dentist</option>
+                    <option value="realestate">Real Estate</option>
+                    <option value="law">Law Firm</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="gym">Gym / Fitness</option>
+                    <option value="salon">Salon / Barber</option>
+                </select>
+                <button class="audit-btn" id="compare-btn" data-magnetic>Compare Now</button>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 3</div>
-                <div class="timeline-title">30 posts. Done. Ready to go.</div>
-                <div class="timeline-desc">Captions, hashtags, stories, video scripts. All of it sounds like you. Written for your audience. Your competitors won't know what hit them.</div>
+        </div>
+        <div class="compare-loading" id="compare-loading">
+            <div class="compare-loading-text">Analyzing both accounts...</div>
+            <div class="compare-bar"><div class="compare-bar-fill" id="compare-fill"></div></div>
+        </div>
+        <div class="compare-results" id="compare-results">
+            <div class="compare-header">
+                <div class="compare-profile">
+                    <div class="compare-score-ring"><svg viewBox="0 0 80 80"><circle class="score-bg" cx="40" cy="40" r="34"/><circle class="compare-sf" id="csf1" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="213.63"/></svg><span class="compare-sn" id="csn1">0</span></div>
+                    <div class="compare-name" id="cn1"></div>
+                </div>
+                <div class="compare-vs-badge"><span>VS</span></div>
+                <div class="compare-profile">
+                    <div class="compare-score-ring"><svg viewBox="0 0 80 80"><circle class="score-bg" cx="40" cy="40" r="34"/><circle class="compare-sf" id="csf2" cx="40" cy="40" r="34" stroke-dasharray="213.63" stroke-dashoffset="213.63"/></svg><span class="compare-sn" id="csn2">0</span></div>
+                    <div class="compare-name" id="cn2"></div>
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 4</div>
-                <div class="timeline-title">Someone DMs you at 3am? Handled.</div>
-                <div class="timeline-desc">AI responds instantly. Books the appointment. Answers the question. Your customers never wait. You never lose a lead because you were asleep.</div>
+            <div class="compare-cats" id="compare-cats"></div>
+            <div class="compare-winner" id="compare-winner">
+                <div class="compare-winner-label">OVERALL WINNER</div>
+                <div class="compare-winner-name" id="compare-winner-name"></div>
+                <div class="compare-winner-margin" id="compare-winner-margin"></div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 5</div>
-                <div class="timeline-title">Your marketing runs itself now</div>
-                <div class="timeline-desc">Emails going out. Posts going up. Ads optimized. All automated. You didn't lift a finger. Your competitor is still doing this manually.</div>
+            <div style="text-align:center"><a href="book.html" class="btn-primary" data-magnetic>Close the Gap &mdash; Book a Call &rarr;</a></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ ROI CALCULATOR ═════════════════════════════ -->
+<section class="roi-section" id="roi">
+    <div class="container">
+        <div class="section-label code-font reveal">// YOUR MONEY</div>
+        <h2 class="reveal">See how much you're <span class="accent">leaving on the table.</span></h2>
+        <p class="section-desc reveal">Move the sliders. Watch the numbers. This is what AI saves you every single month.</p>
+        <div class="roi-calc reveal">
+            <div class="roi-sliders">
+                <div class="roi-slider-group">
+                    <div class="roi-slider-label"><span>Hours/week on social media</span><span class="roi-val" id="roi-hours-val">10</span></div>
+                    <input type="range" class="roi-range" id="roi-hours" min="1" max="40" value="10">
+                </div>
+                <div class="roi-slider-group">
+                    <div class="roi-slider-label"><span>Average customer value</span><span class="roi-val" id="roi-value-val">$500</span></div>
+                    <input type="range" class="roi-range" id="roi-value" min="50" max="5000" value="500" step="50">
+                </div>
+                <div class="roi-slider-group">
+                    <div class="roi-slider-label"><span>Monthly marketing spend</span><span class="roi-val" id="roi-spend-val">$2,000</span></div>
+                    <input type="range" class="roi-range" id="roi-spend" min="0" max="10000" value="2000" step="100">
+                </div>
             </div>
-            <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-day">DAY 7</div>
-                <div class="timeline-title">You see the numbers. They're real.</div>
-                <div class="timeline-desc">A full report lands in your inbox. Engagement up. Leads coming in. Real dollars tracked. This is what happens when AI works for you 24/7.</div>
+            <div class="roi-results">
+                <div class="roi-card">
+                    <div class="roi-card-num" id="roi-time-saved">40</div>
+                    <div class="roi-card-label">Hours Saved / Month</div>
+                </div>
+                <div class="roi-card accent-card">
+                    <div class="roi-card-num" id="roi-money-saved">$3,200</div>
+                    <div class="roi-card-label">Money Saved / Month</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-card-num" id="roi-leads">12</div>
+                    <div class="roi-card-label">New Leads / Month</div>
+                </div>
+                <div class="roi-card accent-card">
+                    <div class="roi-card-num" id="roi-roi">340%</div>
+                    <div class="roi-card-label">Estimated ROI</div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═══ HOW IT WORKS ════════════════════════════════ -->
-<section class="how-it-works" id="how">
+<!-- ═══ BEFORE / AFTER SLIDER ═════════════════════ -->
+<section class="ba-section" id="beforeafter">
     <div class="container">
-        <div class="section-label code-font reveal">// HOW IT WORKS</div>
-        <h2 class="reveal">Three steps. <span class="accent">That's it.</span></h2>
-        <div class="steps reveal">
-            <div class="steps-line"><div class="steps-line-fill" id="steps-fill"></div></div>
-            <div class="step" data-step="1">
-                <div class="step-num">01</div>
-                <h3>You tell us what your business does</h3>
-                <p>One quick call. 15 minutes. You talk, we listen. That's literally all you have to do.</p>
-            </div>
-            <div class="step" data-step="2">
-                <div class="step-num">02</div>
-                <h3>We build your AI in 48 hours</h3>
-                <p>We set everything up. Train it on your business. Turn it on. You don't touch a single thing.</p>
-            </div>
-            <div class="step" data-step="3">
-                <div class="step-num">03</div>
-                <h3>You check your phone. Watch it grow.</h3>
-                <p>Approve posts with one tap. See new leads rolling in. That's your whole job now. The AI does everything else.</p>
-            </div>
-        </div>
-        <p class="industries-note reveal">Med spas, law firms, gyms, restaurants, salons, agencies, e-commerce &mdash; if you have customers, this works for you.</p>
-    </div>
-</section>
-
-<!-- ═══ KNOW YOUR CUSTOMER ═══════════════════════════ -->
-<section class="know-customer" id="customers">
-    <div class="container">
-        <div class="section-label code-font reveal">// WHO THIS IS FOR</div>
-        <h2 class="reveal">Built for people who <span class="accent">run businesses.</span></h2>
-        <p class="know-sub reveal">You don't need to understand AI. You just need customers. We handle the rest.</p>
-        <div class="customer-grid">
-            <div class="customer-card reveal">
-                <div class="customer-icon">💉</div>
-                <h4>Med Spas & Clinics</h4>
-                <p>Book more Botox, fillers, and laser appointments. AI posts before/afters, responds to DMs, and fills your calendar while you treat patients.</p>
-            </div>
-            <div class="customer-card reveal">
-                <div class="customer-icon">⚖️</div>
-                <h4>Law Firms</h4>
-                <p>More consultations on autopilot. AI handles intake, answers FAQs at 2am, and makes sure no lead slips through the cracks.</p>
-            </div>
-            <div class="customer-card reveal">
-                <div class="customer-icon">🏋️</div>
-                <h4>Gyms & Studios</h4>
-                <p>Fill classes, sell memberships, and keep members engaged. AI posts transformation stories and responds to "how much?" instantly.</p>
-            </div>
-            <div class="customer-card reveal">
-                <div class="customer-icon">🍽️</div>
-                <h4>Restaurants & Bars</h4>
-                <p>More reservations, more reviews, more regulars. AI posts your food, responds to questions, and gets people in the door tonight.</p>
-            </div>
-            <div class="customer-card reveal">
-                <div class="customer-icon">✂️</div>
-                <h4>Salons & Barbershops</h4>
-                <p>Book out every chair. AI posts your work, manages your DMs, and turns followers into paying clients on repeat.</p>
-            </div>
-            <div class="customer-card reveal">
-                <div class="customer-icon">🏠</div>
-                <h4>Any Local Business</h4>
-                <p>Contractors, auto shops, real estate, e-commerce, coaches &mdash; if you have customers, AI can bring in more of them. Period.</p>
+        <div class="section-label code-font reveal">// THE DIFFERENCE</div>
+        <h2 class="reveal">This is what AI does to <span class="accent">your Instagram.</span></h2>
+        <p class="section-desc reveal">Drag the slider. Left is without us. Right is with us. See the difference yourself.</p>
+        <div class="ba-wrapper reveal">
+            <div class="ba-container" id="ba-container">
+                <div class="ba-side ba-before" id="ba-before">
+                    <div class="ba-label">WITHOUT AI</div>
+                    <div class="ba-ig-grid">
+                        <div class="ba-post bad"><div class="ba-post-inner">Low effort photo</div><div class="ba-stat">23 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-inner">No caption</div><div class="ba-stat">8 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-inner">Blurry pic</div><div class="ba-stat">12 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-inner">Stock image</div><div class="ba-stat">5 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-inner">Last post: 3 weeks ago</div><div class="ba-stat">0 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-inner">Nothing here</div><div class="ba-stat">&mdash;</div></div>
+                    </div>
+                    <div class="ba-stats-row"><span>247 followers</span><span>2 posts/month</span><span>0.3% engagement</span></div>
+                </div>
+                <div class="ba-side ba-after">
+                    <div class="ba-label">WITH ASCEND AI</div>
+                    <div class="ba-ig-grid">
+                        <div class="ba-post good"><div class="ba-post-inner">Carousel: 5 Tips</div><div class="ba-stat">842 likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-inner">Reel: Before/After</div><div class="ba-stat">2.1K likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-inner">Testimonial post</div><div class="ba-stat">634 likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-inner">Educational reel</div><div class="ba-stat">1.8K likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-inner">Transformation</div><div class="ba-stat">3.2K likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-inner">Client story</div><div class="ba-stat">956 likes</div></div>
+                    </div>
+                    <div class="ba-stats-row"><span>12.4K followers</span><span>5 posts/week</span><span>4.7% engagement</span></div>
+                </div>
+                <div class="ba-handle" id="ba-handle"><div class="ba-handle-line"></div><div class="ba-handle-grip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></div><div class="ba-handle-line"></div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═══ RESULTS ═════════════════════════════════════ -->
-<section class="results" id="results">
+<!-- ═══ LIVE CONTENT PREVIEW ═══════════════════════ -->
+<section class="content-preview-section" id="preview">
     <div class="container">
-        <div class="section-label code-font reveal">// THE DATA</div>
-        <h2 class="reveal">The numbers don't lie.</h2>
-        <div class="results-grid">
-            <div class="result-card reveal" data-tilt>
-                <div class="card-glow"></div>
-                <div class="result-number"><span data-count="3.5" data-suffix="x" data-decimals="1">0</span></div>
-                <div class="result-label">Revenue Growth</div>
-                <div class="result-desc">Businesses using AI grow 3.5x faster than competitors. Early adopters capture market share that's nearly impossible to reclaim.</div>
-                <div class="result-source">McKinsey Global Institute, 2024</div>
-            </div>
-            <div class="result-card reveal" data-tilt>
-                <div class="card-glow"></div>
-                <div class="result-number"><span data-count="40" data-suffix="%">0</span></div>
-                <div class="result-label">Cost Reduction</div>
-                <div class="result-desc">AI automation reduces operational costs by up to 40%. Replace repetitive tasks with intelligent systems that improve over time.</div>
-                <div class="result-source">Deloitte AI Institute</div>
-            </div>
-            <div class="result-card reveal" data-tilt>
-                <div class="card-glow"></div>
-                <div class="result-number"><span data-count="72" data-suffix="%">0</span></div>
-                <div class="result-label">Higher Engagement</div>
-                <div class="result-desc">AI-optimized content generates 72% higher engagement. The algorithm rewards consistency and relevance &mdash; AI delivers both.</div>
-                <div class="result-source">HBR Digital Marketing</div>
-            </div>
-            <div class="result-card reveal" data-tilt>
-                <div class="card-glow"></div>
-                <div class="result-number">24/7</div>
-                <div class="result-label">Always On</div>
-                <div class="result-desc">Your AI doesn't sleep, take vacation, or call in sick. Every customer inquiry answered. Every opportunity captured. Around the clock.</div>
-                <div class="result-source">Ascend AI</div>
+        <div class="section-label code-font reveal">// TRY IT NOW</div>
+        <h2 class="reveal">See what AI creates for <span class="accent">your business.</span></h2>
+        <p class="section-desc reveal">Type your business name. Pick your niche. Watch AI create a real Instagram post for you in seconds.</p>
+        <div class="preview-form reveal">
+            <input type="text" class="audit-input" id="preview-biz" placeholder="Your business name" autocomplete="off" spellcheck="false">
+            <select class="audit-niche-select" id="preview-niche">
+                <option value="medspa">Med Spa</option>
+                <option value="dental">Dentist</option>
+                <option value="law">Law Firm</option>
+                <option value="gym">Gym / Fitness</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="salon">Salon / Barber</option>
+                <option value="realestate">Real Estate</option>
+            </select>
+            <button class="audit-btn" id="preview-btn" data-magnetic>Generate Post</button>
+        </div>
+        <div class="preview-result" id="preview-result">
+            <div class="preview-phone">
+                <div class="preview-phone-header">
+                    <div class="preview-avatar"></div>
+                    <div class="preview-handle" id="preview-handle-display"></div>
+                    <span style="margin-left:auto;color:var(--accent);font-size:12px;font-weight:600">Follow</span>
+                </div>
+                <div class="preview-image" id="preview-image"></div>
+                <div class="preview-actions">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4z"/></svg>
+                    <svg style="margin-left:auto" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="preview-likes" id="preview-likes"></div>
+                <div class="preview-caption" id="preview-caption"></div>
+                <div class="preview-tags" id="preview-tags"></div>
+                <div class="preview-engagement">
+                    <span>Predicted engagement: <strong id="preview-eng-rate"></strong></span>
+                </div>
             </div>
         </div>
     </div>
@@ -2069,6 +2826,31 @@
         </div>
     </div>
 </section>
+
+<!-- ═══ AI DEMO CHAT WIDGET ═════════════════════════ -->
+<button class="ai-chat-fab" id="ai-chat-fab" aria-label="Chat with AI demo">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+<div class="ai-chat-window" id="ai-chat-window">
+    <div class="ai-chat-header">
+        <div class="ai-chat-header-dot"></div>
+        <div>
+            <div class="ai-chat-header-title">Ascend AI Assistant</div>
+            <div class="ai-chat-header-sub">See how AI talks to your customers</div>
+        </div>
+    </div>
+    <div class="ai-chat-scenarios" id="ai-chat-scenarios">
+        <button class="ai-chat-scenario-btn active" data-scenario="medspa">Med Spa</button>
+        <button class="ai-chat-scenario-btn" data-scenario="law">Law Firm</button>
+        <button class="ai-chat-scenario-btn" data-scenario="dental">Dentist</button>
+        <button class="ai-chat-scenario-btn" data-scenario="realestate">Real Estate</button>
+    </div>
+    <div class="ai-chat-messages" id="ai-chat-messages"></div>
+    <div class="ai-chat-input-area">
+        <input type="text" class="ai-chat-input" id="ai-chat-input" placeholder="Type a message..." autocomplete="off">
+        <button class="ai-chat-send" id="ai-chat-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4z"/></svg></button>
+    </div>
+</div>
 
 <!-- ═══ FOOTER ══════════════════════════════════════ -->
 <footer>
@@ -2626,6 +3408,395 @@
             }
         });
     });
+
+    /* ═══════════════════════════════════════════
+       COMPETITOR COMPARISON
+       ═══════════════════════════════════════════ */
+    const compareBtn = document.getElementById('compare-btn');
+    const compareForm = document.getElementById('compare-form');
+    const compareLoading = document.getElementById('compare-loading');
+    const compareResults = document.getElementById('compare-results');
+    const compareFill = document.getElementById('compare-fill');
+
+    if (compareBtn) {
+        compareBtn.addEventListener('click', async () => {
+            const h1 = document.getElementById('compare-handle-1').value.trim();
+            const h2 = document.getElementById('compare-handle-2').value.trim();
+            const niche = document.getElementById('compare-niche').value;
+            if (!h1 || !h2) return;
+
+            compareForm.style.display = 'none';
+            compareResults.classList.remove('show');
+            compareLoading.classList.add('show');
+            compareFill.style.width = '0%';
+
+            // Animate progress bar
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 90) progress = 90;
+                compareFill.style.width = progress + '%';
+            }, 500);
+
+            try {
+                const [r1, r2] = await Promise.all([
+                    fetch(AUDIT_WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ handle: h1.replace(/^@/, ''), niche }),
+                    }).then(r => r.json()),
+                    fetch(AUDIT_WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ handle: h2.replace(/^@/, ''), niche }),
+                    }).then(r => r.json()),
+                ]);
+
+                clearInterval(progressInterval);
+                compareFill.style.width = '100%';
+
+                if (r1.error || r2.error) throw new Error(r1.error || r2.error);
+
+                // Render scores
+                const circ = 213.63;
+                setTimeout(() => {
+                    document.getElementById('csf1').style.strokeDashoffset = circ - (r1.score / 100) * circ;
+                    document.getElementById('csf2').style.strokeDashoffset = circ - (r2.score / 100) * circ;
+                    document.getElementById('csn1').textContent = r1.score;
+                    document.getElementById('csn2').textContent = r2.score;
+                    document.getElementById('cn1').textContent = '@' + h1.replace(/^@/, '');
+                    document.getElementById('cn2').textContent = '@' + h2.replace(/^@/, '');
+
+                    // Category grades
+                    const cats = document.getElementById('compare-cats');
+                    cats.innerHTML = '';
+                    const gradeVal = g => ({ A: 5, B: 4, C: 3, D: 2, F: 1 }[g?.toUpperCase()] || 0);
+                    const categories = ['postingFrequency', 'contentQuality', 'audienceEngagement'];
+                    const catLabels = { postingFrequency: 'POSTING', contentQuality: 'CONTENT', audienceEngagement: 'ENGAGEMENT' };
+
+                    categories.forEach(cat => {
+                        const g1 = r1.sections?.[cat]?.grade || '—';
+                        const g2 = r2.sections?.[cat]?.grade || '—';
+                        const v1 = gradeVal(g1), v2 = gradeVal(g2);
+                        const row = document.createElement('div');
+                        row.className = 'compare-cat-row';
+                        row.innerHTML = `
+                            <div class="compare-cat-grade ${v1 > v2 ? 'winner' : v1 < v2 ? 'loser' : 'tie'}">${g1}</div>
+                            <div class="compare-cat-label">${catLabels[cat] || cat}</div>
+                            <div class="compare-cat-grade ${v2 > v1 ? 'winner' : v2 < v1 ? 'loser' : 'tie'}">${g2}</div>
+                        `;
+                        cats.appendChild(row);
+                    });
+
+                    // Winner
+                    const winnerName = document.getElementById('compare-winner-name');
+                    const winnerMargin = document.getElementById('compare-winner-margin');
+                    if (r1.score > r2.score) {
+                        winnerName.textContent = '@' + h1.replace(/^@/, '');
+                        winnerMargin.textContent = `Wins by ${r1.score - r2.score} points`;
+                    } else if (r2.score > r1.score) {
+                        winnerName.textContent = '@' + h2.replace(/^@/, '');
+                        winnerMargin.textContent = `Wins by ${r2.score - r1.score} points`;
+                    } else {
+                        winnerName.textContent = "It's a tie!";
+                        winnerMargin.textContent = 'Both scored ' + r1.score;
+                    }
+
+                    compareLoading.classList.remove('show');
+                    compareResults.classList.add('show');
+                }, 400);
+            } catch (err) {
+                clearInterval(progressInterval);
+                compareLoading.classList.remove('show');
+                compareForm.style.display = '';
+                alert('Could not complete comparison. Please try again.');
+            }
+        });
+    }
+
+    /* ═══════════════════════════════════════════
+       ROI CALCULATOR
+       ═══════════════════════════════════════════ */
+    const roiHours = document.getElementById('roi-hours');
+    const roiValue = document.getElementById('roi-value');
+    const roiSpend = document.getElementById('roi-spend');
+
+    function updateROI() {
+        if (!roiHours) return;
+        const hours = parseInt(roiHours.value);
+        const value = parseInt(roiValue.value);
+        const spend = parseInt(roiSpend.value);
+
+        // Display slider values
+        document.getElementById('roi-hours-val').textContent = hours;
+        document.getElementById('roi-value-val').textContent = '$' + value.toLocaleString();
+        document.getElementById('roi-spend-val').textContent = '$' + spend.toLocaleString();
+
+        // Calculate results
+        const hoursSaved = hours * 4;
+        const hourlyRate = 40;
+        const moneySaved = hoursSaved * hourlyRate;
+        const newLeads = Math.round((hours * 0.3) + (spend / value) * 2 + 3);
+        const totalValue = moneySaved + (newLeads * value * 0.15);
+        const planCost = 997;
+        const roi = Math.round(((totalValue - planCost) / planCost) * 100);
+
+        // Update display with animation
+        const animate = (el, val) => {
+            el.style.transform = 'scale(1.05)';
+            el.textContent = val;
+            setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+        };
+
+        animate(document.getElementById('roi-time-saved'), hoursSaved);
+        animate(document.getElementById('roi-money-saved'), '$' + moneySaved.toLocaleString());
+        animate(document.getElementById('roi-leads'), newLeads);
+        animate(document.getElementById('roi-roi'), roi + '%');
+    }
+
+    if (roiHours) {
+        [roiHours, roiValue, roiSpend].forEach(slider => {
+            slider.addEventListener('input', updateROI);
+        });
+        updateROI();
+    }
+
+    /* ═══════════════════════════════════════════
+       BEFORE / AFTER SLIDER
+       ═══════════════════════════════════════════ */
+    const baContainer = document.getElementById('ba-container');
+    const baHandle = document.getElementById('ba-handle');
+    const baBefore = document.getElementById('ba-before');
+
+    if (baContainer && baHandle && baBefore) {
+        let isDragging = false;
+
+        function updateBA(x) {
+            const rect = baContainer.getBoundingClientRect();
+            let pct = ((x - rect.left) / rect.width) * 100;
+            pct = Math.max(5, Math.min(95, pct));
+            baBefore.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+            baHandle.style.left = pct + '%';
+        }
+
+        baHandle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateBA(e.clientX);
+        });
+        document.addEventListener('mouseup', () => { isDragging = false; });
+
+        // Touch support
+        baHandle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        }, { passive: false });
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateBA(e.touches[0].clientX);
+        });
+        document.addEventListener('touchend', () => { isDragging = false; });
+
+        // Click anywhere on container to move handle
+        baContainer.addEventListener('click', (e) => {
+            if (e.target.closest('.ba-handle')) return;
+            updateBA(e.clientX);
+        });
+    }
+
+    /* ═══════════════════════════════════════════
+       LIVE CONTENT PREVIEW
+       ═══════════════════════════════════════════ */
+    const previewBtn = document.getElementById('preview-btn');
+    const previewResult = document.getElementById('preview-result');
+
+    const contentTemplates = {
+        medspa: [
+            { hook: "Your skin is aging 2x faster than it should.", caption: "UV damage, stress, and pollution are breaking down your collagen every single day. But here's the good news — we can reverse it. Our HydraFacial + LED combo restores what time took away.", tags: "#medspa #skincare #hydrafacial #antiaging #glowup", likes: "1,247", eng: "4.8%" },
+            { hook: "This $200 treatment replaces your $3,000 routine.", caption: "Stop buying 14 products that don't work. One 45-minute session does what your entire skincare shelf can't. Book your first treatment — results are visible in 24 hours.", tags: "#aesthetics #beauty #skincaretips #medspalife #transformation", likes: "892", eng: "3.9%" },
+        ],
+        dental: [
+            { hook: "Your smile is the first thing people judge.", caption: "Studies show people form opinions in 7 seconds. A confident smile changes everything — your career, your dating life, your self-esteem. Invisible aligners. 6 months. Life changed.", tags: "#cosmeticdentist #smilemakeover #veneers #invisalign #dentalcare", likes: "634", eng: "3.2%" },
+            { hook: "This patient said no to veneers. Then saw the results.", caption: "Before: hiding their smile in every photo. After: can't stop showing it off. Sometimes all it takes is a whitening session and bonding. No surgery. No pain. Just confidence.", tags: "#dentist #beforeandafter #teethwhitening #smiletransformation", likes: "1,456", eng: "5.1%" },
+        ],
+        law: [
+            { hook: "You're losing $10,000 by not calling a lawyer.", caption: "That slip and fall? That contract dispute? That wrongful termination? Every day you wait, the statute of limitations gets closer. Free consultations exist for a reason. Use them.", tags: "#lawyer #attorney #legaladvice #personalinjury #knowyourrights", likes: "523", eng: "2.8%" },
+            { hook: "3 things your employer doesn't want you to know.", caption: "1. You can't be fired for filing a complaint. 2. Unpaid overtime is illegal, period. 3. Non-competes are unenforceable in most states. Knowledge is power. Share this.", tags: "#employmentlaw #workersrights #lawfirm #legalhelp", likes: "2,891", eng: "6.4%" },
+        ],
+        gym: [
+            { hook: "You're working out wrong. Here's proof.", caption: "90% of gym members do the same 5 exercises and wonder why nothing changes. Progressive overload + proper nutrition + recovery = results. We build the plan. You show up.", tags: "#fitness #gym #personaltrainer #workout #gains", likes: "1,823", eng: "5.7%" },
+            { hook: "This member lost 30 lbs in 90 days.", caption: "No fad diets. No crazy supplements. Just consistency, accountability, and a trainer who actually cares. Your transformation starts with one decision.", tags: "#transformation #weightloss #fitnessmotivation #gymlife", likes: "3,412", eng: "7.2%" },
+        ],
+        restaurant: [
+            { hook: "This dish sells out every single night.", caption: "Our chef's signature wagyu burger isn't just food — it's an experience. Hand-ground daily, smashed on a 500° flat top, topped with truffle aioli. People drive 2 hours for this.", tags: "#restaurant #foodie #burgers #cheflife #foodporn", likes: "2,156", eng: "6.1%" },
+            { hook: "We turned 20 Google reviews into 180. Here's how.", caption: "Simple: we asked. After every great meal, a friendly text goes out. 'Loved your dinner? Leave us a review.' That's it. No gimmicks. Just great food and follow-through.", tags: "#restaurantmarketing #googlereviews #smallbusiness #foodbusiness", likes: "487", eng: "3.5%" },
+        ],
+        salon: [
+            { hook: "Your hair color is 3 shades wrong.", caption: "Most colorists match to a chart. We match to your skin undertone, eye color, and lifestyle. That's the difference between 'nice hair' and 'WHO does your hair?!'", tags: "#salon #haircolor #hairstylist #balayage #hairgoals", likes: "1,678", eng: "5.3%" },
+            { hook: "She asked for a 'subtle change.' We delivered.", caption: "From brassy blonde to dimensional ash. Same length, completely different person. This is what happens when you trust the process (and your stylist).", tags: "#hairtransformation #beforeandafter #salonlife #haircare", likes: "2,234", eng: "6.8%" },
+        ],
+        realestate: [
+            { hook: "This house sold in 12 hours. Here's why.", caption: "Professional photos. Drone video. Social media blitz to 50,000 local followers. Virtual staging. The listing went live at 9 AM and had 6 offers by 9 PM. That's AI-powered marketing.", tags: "#realestate #realtor #homeselling #justsold #realtorlife", likes: "1,034", eng: "4.2%" },
+            { hook: "Stop scrolling Zillow. Here's what it won't tell you.", caption: "Zillow estimates are wrong 30% of the time. Market conditions change weekly. The best deals never hit the app. DM me 'READY' and I'll send you off-market listings first.", tags: "#realestateagent #homebuying #firsttimehomebuyer #housingmarket", likes: "756", eng: "3.6%" },
+        ],
+    };
+
+    if (previewBtn) {
+        previewBtn.addEventListener('click', () => {
+            const bizName = document.getElementById('preview-biz').value.trim() || 'Your Business';
+            const niche = document.getElementById('preview-niche').value;
+            const templates = contentTemplates[niche] || contentTemplates.medspa;
+            const t = templates[Math.floor(Math.random() * templates.length)];
+
+            document.getElementById('preview-handle-display').textContent = bizName.toLowerCase().replace(/\s+/g, '');
+            document.getElementById('preview-image').textContent = t.hook;
+            document.getElementById('preview-likes').textContent = t.likes + ' likes';
+            document.getElementById('preview-caption').innerHTML = `<strong>${bizName.toLowerCase().replace(/\s+/g, '')}</strong> ${t.caption}`;
+            document.getElementById('preview-tags').textContent = t.tags;
+            document.getElementById('preview-eng-rate').textContent = t.eng;
+
+            previewResult.classList.add('show');
+            previewResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    }
+
+    /* ═══════════════════════════════════════════
+       AI DEMO CHAT WIDGET
+       ═══════════════════════════════════════════ */
+    const chatFab = document.getElementById('ai-chat-fab');
+    const chatWindow = document.getElementById('ai-chat-window');
+    const chatMessages = document.getElementById('ai-chat-messages');
+    const chatInput = document.getElementById('ai-chat-input');
+    const chatSend = document.getElementById('ai-chat-send');
+
+    const chatScenarios = {
+        medspa: [
+            { role: 'bot', text: "Hi! Welcome to Glow Med Spa. I'm your AI assistant. How can I help you today?" },
+            { role: 'user', text: "How much is Botox?" },
+            { role: 'bot', text: "Great question! Our Botox starts at $12/unit. Most patients need 20-40 units depending on the area. That's $240-$480 per session. We're also running a new patient special — first treatment is 20% off. Would you like to book a free consultation?" },
+            { role: 'user', text: "Yeah when are you available?" },
+            { role: 'bot', text: "We have openings this Thursday at 2pm and Friday at 10am. Both with Dr. Mitchell, who has 15 years of experience. Which works better for you? I'll get you locked in right now." },
+            { role: 'user', text: "Thursday works" },
+            { role: 'bot', text: "Done! You're booked for Thursday at 2pm with Dr. Mitchell. I'll send a confirmation to your email along with pre-treatment instructions. Anything else I can help with?" },
+        ],
+        law: [
+            { role: 'bot', text: "Hello, you've reached Rivera Law Group. I'm the AI intake assistant. How can I help?" },
+            { role: 'user', text: "I was in a car accident and I think it's the other driver's fault" },
+            { role: 'bot', text: "I'm sorry to hear that. Let me help. A few quick questions: Was anyone injured? Have you filed a police report? And has the other driver's insurance contacted you yet?" },
+            { role: 'user', text: "Yes I have back pain. Yes police report filed. Insurance called but I haven't talked to them" },
+            { role: 'bot', text: "Important: do NOT speak to their insurance without legal representation. They'll try to minimize your claim. Your case sounds like it qualifies for a free consultation with Mr. Rivera. He's recovered over $5M for car accident victims. Can I schedule you for tomorrow?" },
+            { role: 'user', text: "Yes please" },
+            { role: 'bot', text: "You're booked for tomorrow at 11am. Bring your police report and any medical records. The consultation is 100% free and there's no obligation. We only get paid if you win. I'll text you a reminder in the morning." },
+        ],
+        dental: [
+            { role: 'bot', text: "Hi there! Welcome to Chen Family Dental. I'm the AI assistant. Looking to schedule an appointment or have a question?" },
+            { role: 'user', text: "I want to get my teeth whitened but I'm nervous about sensitivity" },
+            { role: 'bot', text: "Totally understandable — sensitivity is the #1 concern. We use Zoom WhiteSpeed, which has a desensitizing agent built in. 95% of our patients report zero sensitivity. The whole thing takes about 45 minutes, and you'll leave 6-8 shades whiter. Interested in booking?" },
+            { role: 'user', text: "How much does it cost?" },
+            { role: 'bot', text: "Our in-office whitening is $399, which includes the treatment plus a take-home touch-up kit (worth $150). We also offer payment plans through CareCredit — as low as $35/month. We have an opening this Saturday morning if you'd like to get it done before the weekend!" },
+            { role: 'user', text: "Saturday morning sounds perfect" },
+            { role: 'bot', text: "Awesome! You're all set for Saturday at 9:30am with Dr. Chen. I'll send you a reminder Friday evening. Pro tip: avoid coffee and red wine for 48 hours after for the best results. See you Saturday!" },
+        ],
+        realestate: [
+            { role: 'bot', text: "Hey! Thanks for reaching out. I'm the AI assistant for Premier Realty. Are you looking to buy, sell, or just exploring?" },
+            { role: 'user', text: "Looking to sell my house, what's it worth?" },
+            { role: 'bot', text: "I can help with that! To give you an accurate estimate, I'll need your address. I'll pull recent comps, market trends, and neighborhood data. It takes about 60 seconds. What's the address?" },
+            { role: 'user', text: "123 Oak Street" },
+            { role: 'bot', text: "Based on recent sales in your area, homes like yours are selling between $385K-$420K. The market is hot right now — average days on market is just 14. Would you like a detailed CMA (Comparative Market Analysis) from our top agent? It's free and way more accurate than Zillow." },
+            { role: 'user', text: "Yes that would be great" },
+            { role: 'bot', text: "Perfect! I've scheduled a CMA for you. Our agent Sarah will have a full report ready within 24 hours, including recommended listing price, staging tips, and a marketing plan. She'll reach out tomorrow morning. Selling in this market = top dollar. You're making a smart move!" },
+        ],
+    };
+
+    let currentScenario = 'medspa';
+    let chatStep = 0;
+    let chatPlaying = false;
+
+    function addChatMessage(role, text) {
+        const msg = document.createElement('div');
+        msg.className = `ai-chat-msg ${role}`;
+        msg.textContent = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+        const typing = document.createElement('div');
+        typing.className = 'ai-chat-typing';
+        typing.id = 'chat-typing';
+        typing.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typing);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTyping() {
+        const t = document.getElementById('chat-typing');
+        if (t) t.remove();
+    }
+
+    async function playScenario(scenario) {
+        chatPlaying = true;
+        chatStep = 0;
+        chatMessages.innerHTML = '';
+        currentScenario = scenario;
+        const convo = chatScenarios[scenario];
+        if (!convo) return;
+
+        for (let i = 0; i < convo.length; i++) {
+            if (!chatPlaying) break;
+            const msg = convo[i];
+            if (msg.role === 'bot') {
+                showTyping();
+                await new Promise(r => setTimeout(r, 800 + Math.random() * 600));
+                removeTyping();
+            } else {
+                await new Promise(r => setTimeout(r, 400 + Math.random() * 300));
+            }
+            addChatMessage(msg.role, msg.text);
+            chatStep = i + 1;
+        }
+        chatPlaying = false;
+    }
+
+    if (chatFab) {
+        chatFab.addEventListener('click', () => {
+            const isOpen = chatWindow.classList.toggle('open');
+            chatFab.classList.toggle('open', isOpen);
+            if (isOpen && chatMessages.children.length === 0) {
+                playScenario(currentScenario);
+            }
+        });
+
+        document.querySelectorAll('.ai-chat-scenario-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ai-chat-scenario-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                chatPlaying = false;
+                setTimeout(() => playScenario(btn.dataset.scenario), 100);
+            });
+        });
+
+        // Handle user typing
+        function handleChatSend() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addChatMessage('user', text);
+            chatInput.value = '';
+
+            // Auto-respond with a CTA
+            showTyping();
+            setTimeout(() => {
+                removeTyping();
+                addChatMessage('bot', "That's a great question! To give you the best answer, I'd love to connect you with our team. Want me to book a quick 15-minute call? It's completely free.");
+            }, 1000 + Math.random() * 500);
+        }
+
+        if (chatSend) chatSend.addEventListener('click', handleChatSend);
+        if (chatInput) chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleChatSend(); });
+    }
 
     // ═══ TESTIMONIAL CAROUSEL ═══
     const testTrack = document.getElementById('testimonial-track');
