@@ -1,0 +1,12 @@
+name = "ascend-audit"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+[vars]
+OPENROUTER_API_KEY = "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"
+ALLOWED_ORIGIN = "https://ascendagency.xyz"
+
+# KV namespace for caching audit results (bind after creating via dashboard or CLI)
+# [[kv_namespaces]]
+# binding = "AUDIT_CACHE"
+# id = "<your-kv-namespace-id>"
