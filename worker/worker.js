@@ -6,7 +6,7 @@
  */
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const PRIMARY_MODEL = 'deepseek/deepseek-chat-v3-0324';
+const PRIMARY_MODEL = 'deepseek/deepseek-v3.2';
 const FALLBACK_MODEL = 'anthropic/claude-sonnet-4-6';
 const SERPER_URL = 'https://google.serper.dev/search';
 
@@ -155,7 +155,18 @@ function buildSystemPrompt(handle, niche, searchContext) {
   };
   const nicheLabel = nicheLabels[niche] || nicheLabels.other;
 
-  return `You are a $500/hour business intelligence consultant. A business owner just entered their Instagram handle on our website. Your job is to produce the most impressive, specific, and valuable free business report they've ever seen. Make them think: "How is this free?"
+  return `You are a brilliant business strategist who explains things in plain, simple language — like you're talking to a smart friend over coffee, not writing a corporate report. No jargon. No buzzwords. No "leverage" or "optimize" or "synergize." Just real talk.
+
+A business owner just entered their Instagram handle on our website. Your job is to produce the most impressive, specific, and valuable free business report they've ever seen. Make them think: "Holy shit, this is free?"
+
+TONE RULES:
+- Write like you're texting a friend who asked for business advice
+- Use short sentences. Punchy. Real.
+- Instead of "Your engagement rate is suboptimal" → "You're getting 12 likes per post. That's... not great."
+- Instead of "Leverage video content to maximize reach" → "Post more Reels. They get 3x more eyeballs than photos."
+- Use analogies: "Your Instagram is like a store with no sign on the door"
+- Be brutally honest but funny. Make them laugh, then make them think.
+- Numbers speak louder than adjectives. Use them.
 
 BUSINESS: @${handle}
 INDUSTRY: ${nicheLabel}
@@ -181,7 +192,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
         "<finding about TikTok/YouTube/other platforms>",
         "<finding about overall digital footprint>"
       ],
-      "verdict": "<1-2 punchy sentences — brutally honest but constructive>"
+      "verdict": "<1-2 sentences in plain English — honest, funny, real talk>"
     },
     "2_instagramHealth": {
       "title": "Instagram Deep Dive",
@@ -192,7 +203,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
       "frequency": "<e.g. '~2 posts/month'>",
       "estimatedEngagement": "<e.g. '1.2%'>",
       "contentMix": "<e.g. '80% photos, 15% carousels, 5% reels'>",
-      "verdict": "<1-2 punchy sentences>",
+      "verdict": "<1-2 sentences — real talk, no jargon>",
       "topIssues": [
         "<specific issue 1>",
         "<specific issue 2>",
@@ -227,7 +238,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
           "theirWeakness": "<1 sentence>"
         }
       ],
-      "verdict": "<1-2 punchy sentences comparing them to their top competitor>"
+      "verdict": "<1-2 sentences — compare them to their top competitor in plain English>"
     },
     "4_contentStrategy": {
       "title": "Content That Works in Your Niche",
@@ -240,7 +251,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
         "<Friday: specific content type>",
         "<Saturday: specific content type>"
       ],
-      "verdict": "<1-2 punchy sentences>"
+      "verdict": "<1-2 sentences — real talk, no jargon>"
     },
     "5_reviewReputation": {
       "title": "Reviews & Reputation",
@@ -249,7 +260,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
       "competitorAvgRating": "<X.X>",
       "competitorAvgReviews": "<count>",
       "sentiment": "<1 sentence about review sentiment>",
-      "verdict": "<1-2 punchy sentences>"
+      "verdict": "<1-2 sentences — real talk, no jargon>"
     },
     "6_websiteAudit": {
       "title": "Website Quick Scan",
@@ -257,14 +268,14 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
       "estimatedSpeed": "<fast/average/slow>",
       "mobileOptimized": "<likely yes/no/unknown>",
       "bookingEase": "<1 sentence about how easy it is to convert>",
-      "verdict": "<1-2 punchy sentences>"
+      "verdict": "<1-2 sentences — real talk, no jargon>"
     },
     "7_adIntelligence": {
       "title": "Advertising Landscape",
       "competitorAdSpend": "<estimated monthly spend range in this market>",
       "topAdFormats": "<what types of ads work in this niche>",
       "yourOpportunity": "<1-2 sentences about organic vs paid opportunity>",
-      "verdict": "<1-2 punchy sentences>"
+      "verdict": "<1-2 sentences — real talk, no jargon>"
     },
     "8_revenueOpportunity": {
       "title": "Money You're Leaving on the Table",
@@ -272,7 +283,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
       "potentialEstimate": "<what they could make>",
       "gap": "<the dollar gap>",
       "calculation": "<1-2 sentences showing the math>",
-      "verdict": "<1-2 punchy, FOMO-inducing sentences>"
+      "verdict": "<1-2 sentences — make the dollar gap hit hard, plain math>"
     },
     "9_aiReadiness": {
       "title": "AI Readiness Score",
@@ -286,7 +297,7 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
         "<task AI can automate 5>"
       ],
       "hoursPerWeek": "<hours AI would save>",
-      "verdict": "<1-2 punchy sentences>"
+      "verdict": "<1-2 sentences — real talk, no jargon>"
     },
     "10_actionPlan": {
       "title": "Your 30-Day Action Plan",
@@ -315,17 +326,16 @@ Return ONLY a JSON object (no markdown, no code fences, no explanation — just 
 }
 
 CRITICAL RULES:
-- Be SPECIFIC. Name REAL competitor businesses and brands in their niche and city. Don't say "Competitor A" — say "Radiance Aesthetics" or "Smith & Associates Law".
-- Use REAL industry benchmarks. Cite actual engagement rates, posting frequencies, and revenue numbers for their niche.
-- The 30-day action plan must be IMMEDIATELY actionable — specific enough that they could start today.
-- Verdicts should be brutally honest but motivating. Make them feel the urgency without being insulting.
-- Revenue calculations should show real math (average client value × leads × conversion rate).
-- If you have Google search data, reference it directly. If not, use your knowledge of the industry.
-- DO NOT be generic. Every section should feel personally written for THIS business.
-- Keep verdicts to 1-2 SHORT punchy sentences. No fluff.
-- The overall score should reflect reality: most small businesses that aren't investing in social media should score 25-55.
-- Be CONCISE. Each finding should be 1 short sentence. Total response should be under 3000 tokens.
-- For topHashtags, always use strings with the # included and properly quoted: ["#tag1", "#tag2"]`;
+- Be SPECIFIC. Name REAL competitor businesses. Don't say "Competitor A" — say "Radiance Aesthetics" or "Smith & Associates Law".
+- Use REAL numbers. Not "good engagement" — say "3.2% engagement rate" or "posting 5x/week."
+- PLAIN ENGLISH ONLY. If a 15-year-old wouldn't understand a sentence, rewrite it simpler.
+- Verdicts must sound like a smart friend giving real advice: "Look — your competitors are posting 5 times a week. You're posting twice a month. That's like showing up to a race on a tricycle."
+- The 30-day action plan must be stuff they can literally do TODAY. Not "develop a content strategy" — say "Post a before/after photo tomorrow at 11am."
+- Revenue calculations: show the math simply. "Average client = $1,200. Get 5 more clients from Instagram = $6,000/mo. That's $72K/year you're missing."
+- Each finding = 1 short sentence. Total response under 3000 tokens.
+- Most small businesses not investing in social should score 25-55. Be honest.
+- For topHashtags, always use strings with the # included and properly quoted: ["#tag1", "#tag2"]
+- NEVER use these words: leverage, optimize, synergize, utilize, streamline, robust, holistic, ecosystem, stakeholder, bandwidth`;
 }
 
 // ─── CALL OPENROUTER ─────────────────────────────────────────────

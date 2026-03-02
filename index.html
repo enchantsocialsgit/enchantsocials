@@ -85,6 +85,109 @@
         .code-font { font-family: var(--font-mono); }
 
         /* ═══════════════════════════════════════════
+           21.DEV SUPERCHARGE EFFECTS
+           ═══════════════════════════════════════════ */
+
+        /* Shiny text sweep — accent words get a light streak */
+        @keyframes shiny-sweep {
+            0%, 90%, 100% { background-position: -200% center; }
+            30%, 60% { background-position: 200% center; }
+        }
+        .shiny-text {
+            background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 40%, rgba(255,255,255,0.9) 50%, var(--accent) 60%, var(--accent) 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shiny-sweep 6s ease-in-out infinite;
+        }
+
+        /* Shimmer sweep on buttons */
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .shimmer-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Spotlight card — mouse-tracking radial glow */
+        .spotlight-card {
+            position: relative;
+        }
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(200,162,255,0.08), transparent 40%);
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Focus cards — siblings dim on hover */
+        .focus-grid:hover > .visible,
+        .focus-grid:hover > .price-card {
+            opacity: 0.4;
+            filter: blur(1px);
+            transition: all 0.4s ease;
+        }
+        .focus-grid:hover > .visible:hover,
+        .focus-grid:hover > .price-card:hover {
+            opacity: 1;
+            filter: none;
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        /* Flip words animation */
+        .flip-words {
+            display: inline-block;
+            position: relative;
+            height: 1.2em;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+        .flip-words-inner {
+            display: flex;
+            flex-direction: column;
+            animation: flip-cycle 8s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+        }
+        .flip-word {
+            height: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+        @keyframes flip-cycle {
+            0%, 20%   { transform: translateY(0); }
+            25%, 45%  { transform: translateY(-1.2em); }
+            50%, 70%  { transform: translateY(-2.4em); }
+            75%, 95%  { transform: translateY(-3.6em); }
+            100%      { transform: translateY(-4.8em); }
+        }
+
+        /* Encrypted text reveal */
+        .decrypt-text [data-char] {
+            display: inline-block;
+            transition: opacity 0.1s;
+        }
+
+        /* ═══════════════════════════════════════════
            PRELOADER — CINEMATIC LETTER REVEAL
            ═══════════════════════════════════════════ */
         #preloader {
@@ -1984,33 +2087,51 @@
             margin-bottom: 16px;
         }
         .ba-post {
-            aspect-ratio: 1;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 8px;
-            text-align: center;
+            overflow: hidden;
             transition: transform 0.3s ease;
         }
         .ba-post.bad {
-            background: rgba(255,107,107,0.06);
-            border: 1px solid rgba(255,107,107,0.15);
+            background: rgba(255,107,107,0.04);
+            border: 1px solid rgba(255,107,107,0.1);
         }
         .ba-post.good {
-            background: rgba(125,235,160,0.06);
+            background: rgba(125,235,160,0.04);
             border: 1px solid rgba(125,235,160,0.15);
+            box-shadow: 0 0 20px rgba(125,235,160,0.06);
         }
-        .ba-post-inner {
-            font-size: 11px;
-            color: var(--muted);
-            line-height: 1.3;
+        .ba-post-thumb {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            position: relative;
+        }
+        .ba-post.good .ba-post-thumb {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .ba-thumb-reel::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 16px;
+            height: 16px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 4px;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+        }
+        .ba-empty {
+            aspect-ratio: 1;
+            border: 1px dashed rgba(255,107,107,0.15);
+            border-radius: 6px;
         }
         .ba-stat {
             font-family: var(--font-mono);
             font-size: 10px;
-            margin-top: 4px;
+            padding: 4px 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         .ba-post.bad .ba-stat { color: var(--danger); opacity: 0.7; }
         .ba-post.good .ba-stat { color: var(--success); }
@@ -2533,7 +2654,7 @@
         <div class="hero-tag" id="hero-tag">FREE BUSINESS INTELLIGENCE REPORT</div>
         <h1>
             <span id="hero-line1" class="hero-line">Find out what your competitors</span><br>
-            <span id="hero-line2" class="hero-line">know <span class="accent">that you don't.</span></span>
+            <span id="hero-line2" class="hero-line">know <span class="shiny-text">that you don't.</span></span>
         </h1>
         <p class="hero-sub" id="hero-sub">Enter your Instagram handle. In 15 seconds, AI will research your business, analyze your top competitors, grade your online presence, and build you a 30-day action plan. For free.</p>
 
@@ -2557,7 +2678,7 @@
                 <option value="coaching">Coach / Consultant</option>
                 <option value="healthcare">Doctor / Healthcare</option>
             </select>
-            <button class="audit-btn" id="audit-btn" data-magnetic>Analyze My Business &rarr;</button>
+            <button class="audit-btn shimmer-btn" id="audit-btn" data-magnetic>Analyze My Business &rarr;</button>
         </div>
         <p class="hero-trust" id="hero-trust">Free. No email required. Powered by 6 AI models.</p>
 
@@ -2621,7 +2742,7 @@
             </div>
 
             <!-- 10 Section Cards -->
-            <div class="report-grid" id="report-grid"></div>
+            <div class="report-grid focus-grid" id="report-grid"></div>
 
             <!-- Email Capture -->
             <div class="audit-email-capture" id="audit-capture">
@@ -2761,34 +2882,42 @@
     <div class="container">
         <div class="section-label code-font reveal">// THE DIFFERENCE</div>
         <h2 class="reveal">This is what AI does to your Instagram.</h2>
-        <p class="section-desc reveal">Drag the slider. Left is without us. Right is with us. See the difference yourself.</p>
+        <p class="section-desc reveal">Drag the slider. Left is you now. Right is you with us.</p>
         <div class="ba-wrapper reveal">
             <div class="ba-container" id="ba-container">
                 <div class="ba-side ba-before" id="ba-before">
                     <div class="ba-label">WITHOUT AI</div>
                     <div class="ba-ig-grid">
-                        <div class="ba-post bad"><div class="ba-post-inner">Low effort photo</div><div class="ba-stat">23 likes</div></div>
-                        <div class="ba-post bad"><div class="ba-post-inner">No caption</div><div class="ba-stat">8 likes</div></div>
-                        <div class="ba-post bad"><div class="ba-post-inner">Blurry pic</div><div class="ba-stat">12 likes</div></div>
-                        <div class="ba-post bad"><div class="ba-post-inner">Stock image</div><div class="ba-stat">5 likes</div></div>
-                        <div class="ba-post bad"><div class="ba-post-inner">Last post: 3 weeks ago</div><div class="ba-stat">0 likes</div></div>
-                        <div class="ba-post bad"><div class="ba-post-inner">Nothing here</div><div class="ba-stat">&mdash;</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#2a1a1a,#1a1015);filter:blur(1px) grayscale(60%)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 23 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#1a1a20,#15121a);filter:blur(2px) grayscale(80%)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 8 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#201515,#1a1218);filter:blur(3px) grayscale(70%)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 12 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#181820,#121218);filter:grayscale(100%) brightness(0.5)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 5 likes</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb" style="background:#12101a"></div><div class="ba-stat" style="opacity:0.3">3 weeks ago</div></div>
+                        <div class="ba-post bad"><div class="ba-post-thumb ba-empty"></div><div class="ba-stat" style="opacity:0.2">&mdash;</div></div>
                     </div>
-                    <div class="ba-stats-row"><span>247 followers</span><span>2 posts/month</span><span>0.3% engagement</span></div>
+                    <div class="ba-stats-row">
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 247 followers</span>
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 2/month</span>
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> 0.3%</span>
+                    </div>
                 </div>
                 <div class="ba-side ba-after">
                     <div class="ba-label">WITH ASCEND AI</div>
                     <div class="ba-ig-grid">
-                        <div class="ba-post good"><div class="ba-post-inner">Carousel: 5 Tips</div><div class="ba-stat">842 likes</div></div>
-                        <div class="ba-post good"><div class="ba-post-inner">Reel: Before/After</div><div class="ba-stat">2.1K likes</div></div>
-                        <div class="ba-post good"><div class="ba-post-inner">Testimonial post</div><div class="ba-stat">634 likes</div></div>
-                        <div class="ba-post good"><div class="ba-post-inner">Educational reel</div><div class="ba-stat">1.8K likes</div></div>
-                        <div class="ba-post good"><div class="ba-post-inner">Transformation</div><div class="ba-stat">3.2K likes</div></div>
-                        <div class="ba-post good"><div class="ba-post-inner">Client story</div><div class="ba-stat">956 likes</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#6c3fd4,#c8a2ff)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 842</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb ba-thumb-reel" style="background:linear-gradient(135deg,#e040fb,#ff6090)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 2.1K</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#4fc3f7,#29b6f6)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 634</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb ba-thumb-reel" style="background:linear-gradient(135deg,#ff8a65,#ffb74d)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 1.8K</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#66bb6a,#26a69a)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 3.2K</div></div>
+                        <div class="ba-post good"><div class="ba-post-thumb" style="background:linear-gradient(135deg,#ab47bc,#7c4dff)"></div><div class="ba-stat"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 956</div></div>
                     </div>
-                    <div class="ba-stats-row"><span>12.4K followers</span><span>5 posts/week</span><span>4.7% engagement</span></div>
+                    <div class="ba-stats-row">
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 12.4K followers</span>
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 5/week</span>
+                        <span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#7deba0" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> 4.7%</span>
+                    </div>
                 </div>
-                <div class="ba-handle" id="ba-handle"><div class="ba-handle-line"></div><div class="ba-handle-grip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></div><div class="ba-handle-line"></div></div>
+                <div class="ba-handle" id="ba-handle"><div class="ba-handle-line"></div><div class="ba-handle-grip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg></div><div class="ba-handle-line"></div></div>
             </div>
         </div>
     </div>
@@ -2942,8 +3071,8 @@
         <div class="section-label code-font reveal">// SIMPLE MATH</div>
         <h2 class="reveal">One AI operator replaces <span class="accent2">$4,500/mo</span> in payroll.</h2>
         <p class="pricing-sub reveal">No contracts. Cancel anytime. Deployed in 48 hours.</p>
-        <div class="pricing-cards">
-            <div class="price-card reveal">
+        <div class="pricing-cards focus-grid">
+            <div class="price-card spotlight-card reveal">
                 <div class="price-name">AI Operator</div>
                 <div class="price-amount"><span data-count="997" data-prefix="$" data-duration="2000">$0</span><span>/mo</span></div>
                 <p class="price-desc">One core workflow automated. Perfect for businesses ready to see what AI can do.</p>
@@ -2955,7 +3084,7 @@
                 </ul>
                 <a href="book.html" class="btn-ghost">Get Started &rarr;</a>
             </div>
-            <div class="price-card featured reveal">
+            <div class="price-card featured spotlight-card reveal">
                 <div class="price-badge">Most Popular</div>
                 <div class="price-name">AI Department</div>
                 <div class="price-amount"><span data-count="2497" data-prefix="$" data-duration="2000">$0</span><span>/mo</span></div>
@@ -2967,9 +3096,9 @@
                     <li>Priority support</li>
                     <li>Custom AI training on your data</li>
                 </ul>
-                <a href="book.html" class="btn-primary" data-magnetic>Deploy AI Now &rarr;</a>
+                <a href="book.html" class="btn-primary shimmer-btn" data-magnetic>Deploy AI Now &rarr;</a>
             </div>
-            <div class="price-card reveal">
+            <div class="price-card spotlight-card reveal">
                 <div class="price-name">AI Partner</div>
                 <div class="price-amount"><span data-count="4997" data-prefix="$" data-duration="2000">$0</span><span>/mo</span></div>
                 <p class="price-desc">White-glove. Dedicated infrastructure. Your AI, built entirely around your business.</p>
@@ -3187,6 +3316,45 @@
         document.body.style.cursor = 'none';
         document.querySelectorAll('a, button').forEach(el => el.style.cursor = 'none');
     }
+
+    /* ═══════════════════════════════════════════
+       SPOTLIGHT CARDS — Mouse-tracking radial glow
+       ═══════════════════════════════════════════ */
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+        });
+    });
+
+    /* ═══════════════════════════════════════════
+       DECRYPT TEXT — Section labels scramble in on scroll
+       ═══════════════════════════════════════════ */
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
+    const decryptObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting || entry.target.dataset.decrypted) return;
+            entry.target.dataset.decrypted = '1';
+            const text = entry.target.textContent;
+            let iteration = 0;
+            const interval = setInterval(() => {
+                entry.target.textContent = text.split('').map((c, i) => {
+                    if (c === ' ' || c === '/' || i < iteration) return text[i];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                iteration += 1/2;
+                if (iteration >= text.length) {
+                    entry.target.textContent = text;
+                    clearInterval(interval);
+                }
+            }, 30);
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.section-label').forEach(label => {
+        decryptObserver.observe(label);
+    });
 
     /* ═══════════════════════════════════════════
        SCROLL PROGRESS BAR
@@ -3658,7 +3826,7 @@
             if (!sec) return;
 
             const card = document.createElement('div');
-            card.className = 'report-card' + (key === '10_actionPlan' ? ' action-plan-card' : '');
+            card.className = 'report-card spotlight-card' + (key === '10_actionPlan' ? ' action-plan-card' : '');
 
             // Score display for sections that have score/maxScore
             let scoreHtml = '';
@@ -3689,6 +3857,13 @@
             }
 
             grid.appendChild(card);
+
+            // Spotlight mouse-tracking for dynamic cards
+            card.addEventListener('mousemove', (e) => {
+                const r = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+                card.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+            });
 
             // Stagger animation
             setTimeout(() => { card.classList.add('visible'); }, 150 * idx);
