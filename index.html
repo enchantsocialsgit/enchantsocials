@@ -472,7 +472,7 @@
             box-shadow: 0 0 20px rgba(200,162,255,0.1);
         }
         .hero-trust {
-            margin-top: 64px;
+            margin-top: 24px;
             font-size: 13px;
             color: var(--dim);
             letter-spacing: 0.5px;
@@ -630,6 +630,15 @@
             padding: 48px 0;
         }
         .audit-loading.show { display: block; }
+        .audit-loading-header {
+            margin-bottom: 32px;
+        }
+        .audit-loading-header h2 {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 700;
+            color: var(--white);
+            margin-top: 8px;
+        }
         .audit-loading-steps {
             display: flex;
             flex-direction: column;
@@ -678,157 +687,246 @@
         /* Audit Results Dashboard */
         .audit-results {
             display: none;
-            max-width: 700px;
+            max-width: 820px;
             margin: 0 auto;
         }
         .audit-results.show { display: block; }
-        .audit-results-header {
+
+        /* Report Header */
+        .report-header {
             text-align: center;
-            margin-bottom: 36px;
+            margin-bottom: 40px;
         }
-        .audit-score-ring {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
-        .audit-score-ring svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-        .audit-score-ring .score-bg {
-            fill: none;
-            stroke: var(--border);
-            stroke-width: 6;
-        }
-        .audit-score-ring .score-fill {
-            fill: none;
-            stroke-width: 6;
-            stroke-linecap: round;
-            transition: stroke-dashoffset 1.5s cubic-bezier(0.33, 1, 0.68, 1);
-        }
-        .audit-score-number {
-            position: absolute;
-            inset: 0;
+        .report-biz-line {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: var(--font-display);
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--white);
+            gap: 10px;
+            margin-bottom: 28px;
         }
-        .audit-score-label {
-            font-family: var(--font-mono);
-            font-size: 10px;
-            letter-spacing: 1px;
-            color: var(--dim);
-            margin-top: 2px;
-        }
-        .audit-handle-name {
+        .report-biz-name {
             font-family: var(--font-display);
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--white);
-            margin-bottom: 4px;
         }
-        .audit-niche-label {
-            font-family: var(--font-mono);
-            font-size: 11px;
+        .report-biz-sep {
             color: var(--dim);
-            letter-spacing: 1px;
+            font-size: 18px;
         }
-        .audit-grades {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-        .audit-grade-card {
-            padding: 24px 20px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-        }
-        .audit-grade-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .audit-grade-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--white);
-        }
-        .audit-grade-letter {
-            font-family: var(--font-display);
-            font-size: 20px;
-            font-weight: 800;
-        }
-        .audit-grade-letter.grade-a { color: var(--success); }
-        .audit-grade-letter.grade-b { color: #7dd3fc; }
-        .audit-grade-letter.grade-c { color: var(--accent2); }
-        .audit-grade-letter.grade-d { color: #ff9f43; }
-        .audit-grade-letter.grade-f { color: var(--danger); }
-        .audit-grade-desc {
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-        .audit-actions {
-            margin-bottom: 28px;
-        }
-        .audit-actions-title {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            color: var(--accent);
-            margin-bottom: 14px;
-        }
-        .audit-action-item {
-            display: flex;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
-            color: var(--light);
-            line-height: 1.6;
-        }
-        .audit-action-num {
+        .report-biz-niche {
             font-family: var(--font-mono);
             font-size: 12px;
-            color: var(--accent);
-            flex-shrink: 0;
-            padding-top: 2px;
+            color: var(--muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .audit-revenue {
-            padding: 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-align: center;
-            margin-bottom: 36px;
+
+        /* Score Bar */
+        .report-score-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .audit-revenue-label {
+        .report-score-label {
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 1.5px;
             color: var(--dim);
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
-        .audit-revenue-amount {
+        .report-score-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        .report-score-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 100px;
+            background: var(--success);
+            transition: width 1.8s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.6s;
+        }
+        .report-score-num {
             font-family: var(--font-display);
             font-size: 32px;
             font-weight: 800;
-            color: var(--accent2);
+            color: var(--white);
+            min-width: 32px;
+            text-align: right;
         }
-        .audit-revenue-basis {
+        .report-score-max {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--dim);
+        }
+
+        /* Report Grid — 10 Section Cards */
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+        .report-card {
+            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.35s ease;
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        .report-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .report-card:hover {
+            border-color: var(--border-h);
+            background: var(--surface-h);
+        }
+        .report-card.expanded {
+            grid-column: 1 / -1;
+        }
+        .report-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        .report-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.3;
+        }
+        .report-card-score {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 800;
+            white-space: nowrap;
+            padding-left: 12px;
+        }
+        .report-card-verdict {
             font-size: 13px;
             color: var(--muted);
-            margin-top: 6px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        .report-card-detail {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--light);
+            line-height: 1.7;
+        }
+        .report-card.expanded .report-card-detail {
+            display: block;
+        }
+        .report-card-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .report-card:hover .report-card-toggle { opacity: 1; }
+        .report-card.expanded .report-card-toggle span::after { content: 'COLLAPSE'; }
+        .report-card:not(.expanded) .report-card-toggle span::after { content: 'DETAILS'; }
+
+        /* Detail lists */
+        .report-detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 12px;
+        }
+        .report-detail-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+        .report-detail-list li::before {
+            content: '\2022';
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .report-competitor-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .report-competitor-item:last-child { border-bottom: none; }
+        .report-competitor-name {
+            font-weight: 600;
+            color: var(--white);
+            font-size: 14px;
+        }
+        .report-competitor-handle {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent-dim);
+            margin-left: 8px;
+        }
+        .report-competitor-stats {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .report-competitor-better {
+            color: var(--success);
+            font-size: 12px;
+        }
+        .report-competitor-weakness {
+            color: var(--accent2);
+            font-size: 12px;
+        }
+
+        /* Action Plan section (full-width card) */
+        .report-card.action-plan-card {
+            grid-column: 1 / -1;
+        }
+        .report-week {
+            margin-bottom: 14px;
+        }
+        .report-week:last-child { margin-bottom: 0; }
+        .report-week-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .report-week-tasks {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .report-week-tasks li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--light);
+            display: flex;
+            gap: 8px;
+        }
+        .report-week-tasks li::before {
+            content: '\2610';
+            color: var(--dim);
+            flex-shrink: 0;
         }
 
         /* Audit Email Capture */
@@ -2312,7 +2410,8 @@
             .steps { grid-template-columns: 1fr; gap: 40px; }
             .steps-line { display: none; }
             .pricing-cards { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
-            .audit-grades { grid-template-columns: 1fr; }
+            .report-grid { grid-template-columns: 1fr; }
+            .report-card.expanded, .report-card.action-plan-card { grid-column: 1; }
             .roi-calc { grid-template-columns: 1fr; gap: 32px; }
             .compare-inputs { flex-direction: column; }
             .compare-vs-text { padding-top: 0; }
@@ -2329,6 +2428,10 @@
             .hero h1 { letter-spacing: 0; }
             .audit-form { flex-direction: column; }
             .audit-email-form { flex-direction: column; }
+            .report-score-bar { flex-wrap: wrap; gap: 8px; }
+            .report-score-num { font-size: 26px; }
+            .report-biz-line { flex-direction: column; gap: 4px; }
+            .report-biz-name { font-size: 18px; }
             .footer-inner { flex-direction: column; text-align: center; }
             .result-number { font-size: 56px; }
             .compare-section, .roi-section, .ba-section, .content-preview-section { padding: 80px 0; }
@@ -2405,7 +2508,7 @@
             <div class="nav-status"><div class="nav-status-dot"></div>6 AI models live</div>
         </div>
         <div class="nav-links">
-            <a href="#audit">Free Audit</a>
+            <a href="#audit">Free Report</a>
             <a href="#how">How It Works</a>
             <a href="#pricing">Pricing</a>
             <a href="book.html" class="nav-cta" data-magnetic>Book a Call</a>
@@ -2416,57 +2519,26 @@
     </div>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-    <a href="#audit" class="mobile-menu-link">Free Audit</a>
+    <a href="#audit" class="mobile-menu-link">Free Report</a>
     <a href="#how" class="mobile-menu-link">How It Works</a>
     <a href="#pricing" class="mobile-menu-link">Pricing</a>
     <a href="#faq" class="mobile-menu-link">FAQ</a>
     <a href="book.html" class="mobile-menu-link" style="color:var(--accent)">Book a Call &rarr;</a>
 </div>
 
-<!-- ═══ HERO ════════════════════════════════════════ -->
+<!-- ═══ HERO — BUSINESS INTELLIGENCE REPORT ═══════════ -->
 <section class="hero" id="hero">
     <div class="hero-grid-bg"></div>
     <div class="hero-content">
-        <div class="hero-tag" id="hero-tag">YOUR BUSINESS. ON AUTOPILOT.</div>
+        <div class="hero-tag" id="hero-tag">FREE BUSINESS INTELLIGENCE REPORT</div>
         <h1>
-            <span id="hero-line1" class="hero-line">Your business gets its own</span><br>
-            <span id="hero-line2" class="hero-line"><span class="accent">AI team.</span></span>
+            <span id="hero-line1" class="hero-line">Find out what your competitors</span><br>
+            <span id="hero-line2" class="hero-line">know <span class="accent">that you don't.</span></span>
         </h1>
-        <p class="hero-sub" id="hero-sub">It posts for you. Talks to your customers. Runs your marketing. Creates your content. Works 24 hours a day, 7 days a week. No salary. No days off. No sick days. While your competitors figure out what AI even is &mdash; you're already using it.</p>
-        <div class="hero-models" id="hero-models">
-            <span>Claude Opus</span> &middot; <span>Gemini 3.1</span> &middot; <span>Sora 2 Pro</span> &middot; <span>Deepseek</span> &middot; <span>Kling</span>
-        </div>
-        <div class="hero-actions" id="hero-actions">
-            <a href="#audit" class="btn-primary" data-magnetic>Get Your Free Instagram Audit &rarr;</a>
-            <a href="#how" class="btn-ghost">See How It Works</a>
-        </div>
-        <p class="hero-trust" id="hero-trust">Your competitors are already looking into this. Don't be last.</p>
-    </div>
-</section>
+        <p class="hero-sub" id="hero-sub">Enter your Instagram handle. In 15 seconds, AI will research your business, analyze your top competitors, grade your online presence, and build you a 30-day action plan. For free.</p>
 
-<!-- ═══ MARQUEE ═════════════════════════════════════ -->
-<div class="marquee">
-    <div class="marquee-inner">
-        <span class="marquee-item">CLAUDE OPUS &middot; GEMINI &middot; SORA 2 PRO &middot; DEEPSEEK &middot; KLING</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">POSTS &middot; MARKETING &middot; CUSTOMER SERVICE &middot; LEAD GEN</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">LIVE IN 48 HOURS &middot; CANCEL ANYTIME</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">ANY BUSINESS &middot; ANY SIZE</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">CLAUDE OPUS &middot; GEMINI &middot; SORA 2 PRO &middot; DEEPSEEK &middot; KLING</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">POSTS &middot; MARKETING &middot; CUSTOMER SERVICE &middot; LEAD GEN</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">LIVE IN 48 HOURS &middot; CANCEL ANYTIME</span><span class="marquee-dot">&bull;</span>
-        <span class="marquee-item">ANY BUSINESS &middot; ANY SIZE</span><span class="marquee-dot">&bull;</span>
-    </div>
-</div>
-
-<!-- ═══ AUDIT TOOL — LIVE AI-POWERED ═══════════════ -->
-<section class="audit-section" id="audit">
-    <div class="container">
-        <div class="section-label code-font reveal">// FREE INSTAGRAM AUDIT</div>
-        <h2 class="reveal">See what AI sees about <span class="accent">your business.</span></h2>
-        <p class="audit-desc reveal">Enter your Instagram handle. Our AI will analyze your profile, grade your content, identify your top competitors, and show you exactly how much revenue you're leaving on the table.</p>
-
-        <!-- Input Form -->
-        <div class="audit-form reveal" id="audit-form-wrapper">
+        <!-- Audit Form (now in hero) -->
+        <div class="audit-form" id="audit-form-wrapper">
             <input type="text" class="audit-input" id="audit-input" placeholder="@yourbusiness" autocomplete="off" spellcheck="false">
             <select class="audit-niche-select" id="audit-niche">
                 <option value="other">Industry</option>
@@ -2485,72 +2557,78 @@
                 <option value="coaching">Coach / Consultant</option>
                 <option value="healthcare">Doctor / Healthcare</option>
             </select>
-            <button class="audit-btn" id="audit-btn" data-magnetic>Scan Now</button>
+            <button class="audit-btn" id="audit-btn" data-magnetic>Analyze My Business &rarr;</button>
         </div>
+        <p class="hero-trust" id="hero-trust">Free. No email required. Powered by 6 AI models.</p>
 
+        <div class="hero-models" id="hero-models">
+            <span>Claude</span> &middot; <span>DeepSeek</span> &middot; <span>Gemini</span> &middot; <span>Sora</span> &middot; <span>Kling</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MARQUEE ═════════════════════════════════════ -->
+<div class="marquee">
+    <div class="marquee-inner">
+        <span class="marquee-item">CLAUDE OPUS &middot; GEMINI &middot; SORA 2 PRO &middot; DEEPSEEK &middot; KLING</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">POSTS &middot; MARKETING &middot; CUSTOMER SERVICE &middot; LEAD GEN</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">LIVE IN 48 HOURS &middot; CANCEL ANYTIME</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">ANY BUSINESS &middot; ANY SIZE</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">CLAUDE OPUS &middot; GEMINI &middot; SORA 2 PRO &middot; DEEPSEEK &middot; KLING</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">POSTS &middot; MARKETING &middot; CUSTOMER SERVICE &middot; LEAD GEN</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">LIVE IN 48 HOURS &middot; CANCEL ANYTIME</span><span class="marquee-dot">&bull;</span>
+        <span class="marquee-item">ANY BUSINESS &middot; ANY SIZE</span><span class="marquee-dot">&bull;</span>
+    </div>
+</div>
+
+<!-- ═══ REPORT DASHBOARD (loading + results) ═══════ -->
+<section class="audit-section" id="audit">
+    <div class="container">
         <!-- Loading Steps -->
         <div class="audit-loading" id="audit-loading">
+            <div class="audit-loading-header">
+                <div class="section-label code-font">// RESEARCHING YOUR BUSINESS</div>
+                <h2>Analyzing @<span id="audit-handle-display"></span></h2>
+            </div>
             <div class="audit-loading-steps" id="audit-steps">
-                <div class="audit-step" data-step="0">
-                    <div class="audit-step-icon"></div>
-                    <span>Scanning @<span id="audit-handle-display"></span>...</span>
-                </div>
-                <div class="audit-step" data-step="1">
-                    <div class="audit-step-icon"></div>
-                    <span>Analyzing posting frequency...</span>
-                </div>
-                <div class="audit-step" data-step="2">
-                    <div class="audit-step-icon"></div>
-                    <span>Identifying top competitors...</span>
-                </div>
-                <div class="audit-step" data-step="3">
-                    <div class="audit-step-icon"></div>
-                    <span>Calculating revenue opportunity...</span>
-                </div>
-                <div class="audit-step" data-step="4">
-                    <div class="audit-step-icon"></div>
-                    <span>Building your report...</span>
-                </div>
+                <div class="audit-step" data-step="0"><div class="audit-step-icon"></div><span>Searching Google for your business...</span></div>
+                <div class="audit-step" data-step="1"><div class="audit-step-icon"></div><span>Analyzing your online presence...</span></div>
+                <div class="audit-step" data-step="2"><div class="audit-step-icon"></div><span>Identifying your top 5 competitors...</span></div>
+                <div class="audit-step" data-step="3"><div class="audit-step-icon"></div><span>Evaluating competitor content strategies...</span></div>
+                <div class="audit-step" data-step="4"><div class="audit-step-icon"></div><span>Calculating your revenue opportunity...</span></div>
+                <div class="audit-step" data-step="5"><div class="audit-step-icon"></div><span>Building your 30-day action plan...</span></div>
+                <div class="audit-step" data-step="6"><div class="audit-step-icon"></div><span>Finalizing your report...</span></div>
             </div>
         </div>
 
-        <!-- Results Dashboard -->
+        <!-- Report Dashboard -->
         <div class="audit-results" id="audit-results">
-            <div class="audit-results-header">
-                <div class="audit-score-ring">
-                    <svg viewBox="0 0 120 120">
-                        <circle class="score-bg" cx="60" cy="60" r="52"/>
-                        <circle class="score-fill" id="score-fill" cx="60" cy="60" r="52"
-                            stroke-dasharray="326.73"
-                            stroke-dashoffset="326.73"/>
-                    </svg>
-                    <div class="audit-score-number">
-                        <span id="score-number">0</span>
-                        <span class="audit-score-label" id="score-label"></span>
-                    </div>
+            <div class="report-header">
+                <div class="section-label code-font">// BUSINESS INTELLIGENCE REPORT</div>
+                <div class="report-biz-line">
+                    <span class="report-biz-name" id="audit-biz-name"></span>
+                    <span class="report-biz-sep">&middot;</span>
+                    <span class="report-biz-niche" id="audit-niche-label"></span>
                 </div>
-                <div class="audit-handle-name" id="audit-biz-name"></div>
-                <div class="audit-niche-label" id="audit-niche-label"></div>
+                <div class="report-score-bar">
+                    <div class="report-score-label">Overall Score</div>
+                    <div class="report-score-track">
+                        <div class="report-score-fill" id="report-score-fill"></div>
+                    </div>
+                    <div class="report-score-num" id="score-number">0</div>
+                    <div class="report-score-max">/100</div>
+                </div>
             </div>
 
-            <div class="audit-grades" id="audit-grades"></div>
-
-            <div class="audit-actions" id="audit-action-list">
-                <div class="audit-actions-title">TOP ACTION ITEMS</div>
-            </div>
-
-            <div class="audit-revenue" id="audit-revenue">
-                <div class="audit-revenue-label">ESTIMATED MONTHLY OPPORTUNITY</div>
-                <div class="audit-revenue-amount" id="audit-revenue-amount"></div>
-                <div class="audit-revenue-basis" id="audit-revenue-basis"></div>
-            </div>
+            <!-- 10 Section Cards -->
+            <div class="report-grid" id="report-grid"></div>
 
             <!-- Email Capture -->
-            <div class="audit-email-capture show" id="audit-capture">
-                <h4>Want the full competitor deep-dive?</h4>
-                <p>Get this report emailed to you with expanded competitor analysis and a personalized action plan.</p>
+            <div class="audit-email-capture" id="audit-capture">
+                <h4>Get the PDF version of this report</h4>
+                <p>We'll email you a formatted version you can share with your team.</p>
                 <form class="audit-email-form" action="https://formsubmit.co/enchantsocials@gmail.com" method="POST">
-                    <input type="hidden" name="_subject" value="Instagram Audit Request">
+                    <input type="hidden" name="_subject" value="Business Intelligence Report Request">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_next" value="https://ascendagency.xyz/thanks.html">
                     <input type="hidden" name="_template" value="table">
@@ -2559,14 +2637,18 @@
                     <input type="hidden" name="niche" id="audit-niche-hidden">
                     <input type="hidden" name="score" id="audit-score-hidden">
                     <input type="email" name="email" class="audit-email-input" placeholder="Your email address" required>
-                    <button type="submit" class="audit-email-btn">Send My Report</button>
+                    <button type="submit" class="audit-email-btn">Send My Report &rarr;</button>
                 </form>
+            </div>
+
+            <div style="text-align:center;margin-top:24px">
+                <a href="book.html" class="btn-primary" data-magnetic>Let Us Fix This For You &rarr;</a>
             </div>
         </div>
 
         <!-- Error State -->
         <div class="audit-error" id="audit-error">
-            <p>Something went wrong generating your audit. Please try again.</p>
+            <p>Something went wrong generating your report. Please try again.</p>
             <button class="audit-retry-btn" id="audit-retry">Try Again</button>
         </div>
     </div>
@@ -3024,7 +3106,7 @@
 
     function startHeroAnimation() {
         if (prefersReducedMotion) {
-            document.querySelectorAll('.hero-tag, .hero-line, .hero-sub, .hero-models, .hero-actions, .hero-trust').forEach(el => {
+            document.querySelectorAll('.hero-tag, .hero-line, .hero-sub, .hero-models, .hero-trust, #audit-form-wrapper').forEach(el => {
                 el.style.opacity = '1';
             });
             return;
@@ -3035,16 +3117,16 @@
           .to('#hero-line1', { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
           .to('#hero-line2', { opacity: 1, y: 0, duration: 0.8 }, '-=0.4')
           .to('#hero-sub', { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
-          .to('#hero-models', { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
-          .to('#hero-actions', { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
-          .to('#hero-trust', { opacity: 1, duration: 0.8 }, '-=0.3');
+          .to('#audit-form-wrapper', { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
+          .to('#hero-trust', { opacity: 1, duration: 0.6 }, '-=0.3')
+          .to('#hero-models', { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
     }
 
     gsap.set('#hero-tag', { y: 20 });
     gsap.set('#hero-line1, #hero-line2', { y: 30 });
     gsap.set('#hero-sub', { y: 20 });
     gsap.set('#hero-models', { y: 15 });
-    gsap.set('#hero-actions', { y: 20 });
+    gsap.set('#audit-form-wrapper', { y: 20, opacity: 0 });
 
     // Preloader auto-dismiss after animation completes
     setTimeout(() => {
@@ -3382,79 +3464,253 @@
         return '#ff6b6b';
     }
 
-    function getGradeClass(grade) {
-        const g = grade.toUpperCase();
-        if (g === 'A') return 'grade-a';
-        if (g === 'B') return 'grade-b';
-        if (g === 'C') return 'grade-c';
-        if (g === 'D') return 'grade-d';
-        return 'grade-f';
+    function escHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str || '';
+        return d.innerHTML;
+    }
+
+    function buildSectionDetail(key, sec) {
+        let html = '';
+
+        // Section-specific detailed content
+        if (key === '1_onlinePresence' && sec.findings) {
+            html += '<ul class="report-detail-list">';
+            sec.findings.forEach(f => { html += `<li>${escHtml(f)}</li>`; });
+            html += '</ul>';
+        }
+
+        if (key === '2_instagramHealth') {
+            const stats = [];
+            if (sec.followers) stats.push(`Followers: ${escHtml(sec.followers)}`);
+            if (sec.posts) stats.push(`Posts: ${escHtml(sec.posts)}`);
+            if (sec.frequency) stats.push(`Frequency: ${escHtml(sec.frequency)}`);
+            if (sec.estimatedEngagement) stats.push(`Engagement: ${escHtml(sec.estimatedEngagement)}`);
+            if (sec.contentMix) stats.push(`Content mix: ${escHtml(sec.contentMix)}`);
+            if (stats.length) {
+                html += '<ul class="report-detail-list">';
+                stats.forEach(s => { html += `<li>${s}</li>`; });
+                html += '</ul>';
+            }
+            if (sec.topIssues?.length) {
+                html += '<div style="margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin-bottom:6px">Top Issues</div>';
+                html += '<ul class="report-detail-list">';
+                sec.topIssues.forEach(i => { html += `<li>${escHtml(i)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '3_competitorAnalysis' && sec.competitors?.length) {
+            sec.competitors.forEach(c => {
+                html += `<div class="report-competitor-item">`;
+                html += `<span class="report-competitor-name">${escHtml(c.name)}</span>`;
+                if (c.handle) html += `<span class="report-competitor-handle">${escHtml(c.handle)}</span>`;
+                const cStats = [];
+                if (c.followers) cStats.push(c.followers + ' followers');
+                if (c.postsPerWeek) cStats.push(c.postsPerWeek + ' posts/wk');
+                if (cStats.length) html += `<div class="report-competitor-stats">${escHtml(cStats.join(' · '))}</div>`;
+                if (c.whatTheyDoBetter) html += `<div class="report-competitor-better">+ ${escHtml(c.whatTheyDoBetter)}</div>`;
+                if (c.theirWeakness) html += `<div class="report-competitor-weakness">- ${escHtml(c.theirWeakness)}</div>`;
+                html += `</div>`;
+            });
+        }
+
+        if (key === '4_contentStrategy') {
+            if (sec.topFormats?.length) {
+                html += '<div style="margin-bottom:8px"><strong style="color:var(--white);font-size:12px">Top formats:</strong> ' + sec.topFormats.map(f => escHtml(f)).join(', ') + '</div>';
+            }
+            if (sec.topHashtags?.length) {
+                html += '<div style="margin-bottom:8px"><strong style="color:var(--white);font-size:12px">Hashtags:</strong> ' + sec.topHashtags.map(h => escHtml(h)).join(' ') + '</div>';
+            }
+            if (sec.bestPostingTimes) {
+                html += '<div style="margin-bottom:8px"><strong style="color:var(--white);font-size:12px">Best times:</strong> ' + escHtml(sec.bestPostingTimes) + '</div>';
+            }
+            if (sec.contentCalendar?.length) {
+                html += '<ul class="report-detail-list">';
+                sec.contentCalendar.forEach(d => { html += `<li>${escHtml(d)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '5_reviewReputation') {
+            const items = [];
+            if (sec.googleRating) items.push(`Google rating: ${sec.googleRating}`);
+            if (sec.googleReviews) items.push(`Reviews: ${sec.googleReviews}`);
+            if (sec.competitorAvgRating) items.push(`Competitor avg: ${sec.competitorAvgRating}`);
+            if (sec.competitorAvgReviews) items.push(`Competitor reviews: ${sec.competitorAvgReviews}`);
+            if (sec.sentiment) items.push(sec.sentiment);
+            if (items.length) {
+                html += '<ul class="report-detail-list">';
+                items.forEach(i => { html += `<li>${escHtml(i)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '6_websiteAudit') {
+            const items = [];
+            if (sec.estimatedSpeed) items.push(`Load speed: ${sec.estimatedSpeed}`);
+            if (sec.mobileOptimized) items.push(`Mobile: ${sec.mobileOptimized}`);
+            if (sec.bookingEase) items.push(sec.bookingEase);
+            if (items.length) {
+                html += '<ul class="report-detail-list">';
+                items.forEach(i => { html += `<li>${escHtml(i)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '7_adIntelligence') {
+            const items = [];
+            if (sec.competitorAdSpend) items.push(`Competitor spend: ${sec.competitorAdSpend}`);
+            if (sec.topAdFormats) items.push(`Top formats: ${sec.topAdFormats}`);
+            if (sec.yourOpportunity) items.push(sec.yourOpportunity);
+            if (items.length) {
+                html += '<ul class="report-detail-list">';
+                items.forEach(i => { html += `<li>${escHtml(i)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '8_revenueOpportunity') {
+            const items = [];
+            if (sec.currentEstimate) items.push(`Current: ${sec.currentEstimate}`);
+            if (sec.potentialEstimate) items.push(`Potential: ${sec.potentialEstimate}`);
+            if (sec.gap) items.push(`Gap: ${sec.gap}`);
+            if (sec.calculation) items.push(sec.calculation);
+            if (items.length) {
+                html += '<ul class="report-detail-list">';
+                items.forEach(i => { html += `<li>${escHtml(i)}</li>`; });
+                html += '</ul>';
+            }
+        }
+
+        if (key === '9_aiReadiness' && sec.automatable?.length) {
+            html += '<ul class="report-detail-list">';
+            sec.automatable.forEach(a => { html += `<li>${escHtml(a)}</li>`; });
+            html += '</ul>';
+            if (sec.hoursPerWeek) html += `<div style="color:var(--success);font-size:13px;margin-top:4px">Save ~${escHtml(sec.hoursPerWeek)}</div>`;
+        }
+
+        if (key === '10_actionPlan') {
+            const weeks = [
+                { label: 'WEEK 1', data: sec.week1 },
+                { label: 'WEEK 2', data: sec.week2 },
+                { label: 'WEEK 3', data: sec.week3 },
+                { label: 'WEEK 4', data: sec.week4 },
+            ];
+            weeks.forEach(w => {
+                if (!w.data?.length) return;
+                html += `<div class="report-week">`;
+                html += `<div class="report-week-label">${w.label}</div>`;
+                html += `<ul class="report-week-tasks">`;
+                w.data.forEach(t => { html += `<li>${escHtml(t)}</li>`; });
+                html += `</ul></div>`;
+            });
+        }
+
+        return html;
+    }
+
+    function getCardPreview(key, sec) {
+        // Show a short preview stat on the card
+        if (key === '2_instagramHealth' && sec.followers) return sec.followers + ' followers';
+        if (key === '3_competitorAnalysis' && sec.competitors?.length) return sec.competitors.length + ' found';
+        if (key === '5_reviewReputation' && sec.googleRating) return sec.googleRating;
+        if (key === '8_revenueOpportunity' && sec.gap) return sec.gap;
+        if (key === '9_aiReadiness' && sec.hoursPerWeek) return 'Save ' + sec.hoursPerWeek;
+        return '';
     }
 
     function renderAuditResults(data) {
-        // Score ring
-        const scoreFill = document.getElementById('score-fill');
-        const circumference = 326.73;
-        const offset = circumference - (data.score / 100) * circumference;
-        scoreFill.style.stroke = getScoreColor(data.score);
-        setTimeout(() => { scoreFill.style.strokeDashoffset = offset; }, 100);
+        const score = data.overallScore || data.score || 0;
+        const scoreLabel = data.scoreLabel || '';
 
-        document.getElementById('score-number').textContent = data.score;
-        document.getElementById('score-label').textContent = data.scoreLabel || '';
-        document.getElementById('audit-biz-name').textContent = data.businessName || data.handle;
+        // Score bar
+        const scoreFill = document.getElementById('report-score-fill');
+        scoreFill.style.width = '0%';
+        scoreFill.style.backgroundColor = getScoreColor(score);
+        setTimeout(() => { scoreFill.style.width = score + '%'; }, 100);
+
+        // Animate score number
+        const scoreNum = document.getElementById('score-number');
+        let current = 0;
+        const scoreInterval = setInterval(() => {
+            current += Math.ceil(score / 30);
+            if (current >= score) { current = score; clearInterval(scoreInterval); }
+            scoreNum.textContent = current;
+        }, 40);
+
+        // Business info
+        document.getElementById('audit-biz-name').textContent = data.businessName || data.handle || '';
         document.getElementById('audit-niche-label').textContent = data.niche || '';
 
-        // Grade cards
-        const gradesContainer = document.getElementById('audit-grades');
-        gradesContainer.innerHTML = '';
+        // Build 10 section cards
+        const grid = document.getElementById('report-grid');
+        grid.innerHTML = '';
         const sections = data.sections || {};
-        const gradeMap = [
-            { key: 'postingFrequency', title: 'Posting Frequency', descKey: 'insight' },
-            { key: 'contentQuality', title: 'Content Quality', descKey: 'insight' },
-            { key: 'competitorGap', title: 'Competitor Gap', descKey: 'gap' },
-            { key: 'audienceEngagement', title: 'Engagement', descKey: 'insight' },
+        const sectionOrder = [
+            '1_onlinePresence', '2_instagramHealth', '3_competitorAnalysis',
+            '4_contentStrategy', '5_reviewReputation', '6_websiteAudit',
+            '7_adIntelligence', '8_revenueOpportunity', '9_aiReadiness', '10_actionPlan'
         ];
-        gradeMap.forEach(({ key, title, descKey }) => {
-            const s = sections[key];
-            if (!s) return;
-            const grade = s.grade || '—';
-            const desc = s[descKey] || s.insight || '';
+
+        sectionOrder.forEach((key, idx) => {
+            const sec = sections[key];
+            if (!sec) return;
+
             const card = document.createElement('div');
-            card.className = 'audit-grade-card';
+            card.className = 'report-card' + (key === '10_actionPlan' ? ' action-plan-card' : '');
+
+            // Score display for sections that have score/maxScore
+            let scoreHtml = '';
+            if (sec.score !== undefined && sec.maxScore) {
+                const c = getScoreColor(sec.score * 10);
+                scoreHtml = `<span class="report-card-score" style="color:${c}">${sec.score}/${sec.maxScore}</span>`;
+            } else {
+                const preview = getCardPreview(key, sec);
+                if (preview) scoreHtml = `<span class="report-card-score" style="color:var(--accent-dim)">${escHtml(preview)}</span>`;
+            }
+
+            const detailHtml = buildSectionDetail(key, sec);
+
             card.innerHTML = `
-                <div class="audit-grade-top">
-                    <span class="audit-grade-title">${title}</span>
-                    <span class="audit-grade-letter ${getGradeClass(grade)}">${grade}</span>
+                <div class="report-card-top">
+                    <span class="report-card-title">${escHtml(sec.title || key)}</span>
+                    ${scoreHtml}
                 </div>
-                <div class="audit-grade-desc">${desc}</div>
+                <div class="report-card-verdict">${escHtml(sec.verdict || '')}</div>
+                ${detailHtml ? `<div class="report-card-detail">${detailHtml}</div><div class="report-card-toggle"><span></span></div>` : ''}
             `;
-            gradesContainer.appendChild(card);
-        });
 
-        // Action items
-        const actionList = document.getElementById('audit-action-list');
-        actionList.innerHTML = '<div class="audit-actions-title">TOP ACTION ITEMS</div>';
-        (data.actionItems || []).forEach((item, i) => {
-            const div = document.createElement('div');
-            div.className = 'audit-action-item';
-            div.innerHTML = `<span class="audit-action-num">0${i + 1}</span><span>${item}</span>`;
-            actionList.appendChild(div);
-        });
+            // Click to expand/collapse
+            if (detailHtml) {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('expanded');
+                });
+            }
 
-        // Revenue
-        if (data.revenueOpportunity) {
-            document.getElementById('audit-revenue-amount').textContent = data.revenueOpportunity.monthlyEstimate || '';
-            document.getElementById('audit-revenue-basis').textContent = data.revenueOpportunity.basis || '';
-        }
+            grid.appendChild(card);
+
+            // Stagger animation
+            setTimeout(() => { card.classList.add('visible'); }, 150 * idx);
+        });
 
         // Hidden fields for email form
         document.getElementById('audit-handle-hidden').value = data.handle || '';
         document.getElementById('audit-niche-hidden').value = data.niche || '';
-        document.getElementById('audit-score-hidden').value = data.score || '';
+        document.getElementById('audit-score-hidden').value = score;
+
+        // Show email capture
+        const capture = document.getElementById('audit-capture');
+        if (capture) capture.classList.add('show');
 
         // Show results
         auditLoading.classList.remove('show');
         auditResults.classList.add('show');
+
+        // Scroll to results
+        setTimeout(() => {
+            document.getElementById('audit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 400);
     }
 
     async function runAudit(handle, niche) {
@@ -3464,12 +3720,18 @@
         auditResults.classList.remove('show');
         auditLoading.classList.add('show');
 
-        // Reset score ring for re-runs
-        const scoreFill = document.getElementById('score-fill');
-        scoreFill.style.strokeDashoffset = '326.73';
+        // Reset score bar
+        const scoreFill = document.getElementById('report-score-fill');
+        scoreFill.style.width = '0%';
+        document.getElementById('score-number').textContent = '0';
 
         const cleanHandle = handle.replace(/^@/, '').trim();
         document.getElementById('audit-handle-display').textContent = cleanHandle;
+
+        // Scroll to loading section
+        setTimeout(() => {
+            document.getElementById('audit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
 
         // Animate loading steps
         auditSteps.forEach(s => { s.classList.remove('active', 'done'); });
@@ -3483,7 +3745,7 @@
                 currentStep++;
                 auditSteps[currentStep].classList.add('active');
             }
-        }, 2000);
+        }, 2200);
 
         try {
             const resp = await fetch(AUDIT_WORKER_URL, {

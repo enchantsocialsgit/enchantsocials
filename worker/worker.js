@@ -1,32 +1,27 @@
 /**
- * Ascend AI — Instagram Audit Worker
- * Cloudflare Worker that powers the live audit tool on ascendagency.xyz
+ * Ascend AI — Deep Business Research Engine
+ * Cloudflare Worker that powers the free business intelligence report on ascendagency.xyz
  *
- * Flow: Accept IG handle + niche → attempt IG data scrape → call OpenRouter (Claude Sonnet) → return structured audit
+ * Flow: Accept IG handle/business + niche → Google search (Serper) → AI analysis (DeepSeek) → 10-section report
  */
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const PRIMARY_MODEL = 'anthropic/claude-sonnet-4-6';
-const FALLBACK_MODEL = 'deepseek/deepseek-chat-v3-0324';
+const PRIMARY_MODEL = 'deepseek/deepseek-chat-v3-0324';
+const FALLBACK_MODEL = 'anthropic/claude-sonnet-4-6';
+const SERPER_URL = 'https://google.serper.dev/search';
 
-// In-memory rate limiting (resets on cold start — good enough for abuse prevention)
 const rateLimitMap = new Map();
-const RATE_LIMIT = 10; // max audits per IP per hour
-const RATE_WINDOW = 3600000; // 1 hour in ms
+const RATE_LIMIT = 10;
+const RATE_WINDOW = 3600000;
 
-// Simple in-memory cache (fallback when KV not bound)
 const memCache = new Map();
-const CACHE_TTL = 86400000; // 24 hours
+const CACHE_TTL = 86400000;
 
 function corsHeaders(origin, allowedOrigin) {
-  // Allow localhost for dev + production domain
   const allowed = origin === allowedOrigin
     || origin === 'https://ascendagency.xyz'
-    || origin === 'http://localhost:8080'
-    || origin === 'http://127.0.0.1:8080'
     || origin?.startsWith('http://localhost:')
     || origin?.startsWith('http://127.0.0.1:');
-
   return {
     'Access-Control-Allow-Origin': allowed ? origin : 'https://ascendagency.xyz',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -48,83 +43,99 @@ function checkRateLimit(ip) {
 }
 
 async function getCached(key, env) {
-  // Try KV first
   if (env.AUDIT_CACHE) {
     try {
       const val = await env.AUDIT_CACHE.get(key);
       if (val) return JSON.parse(val);
     } catch (_) {}
   }
-  // Fallback to memory cache
   const entry = memCache.get(key);
   if (entry && Date.now() - entry.ts < CACHE_TTL) return entry.data;
   return null;
 }
 
 async function setCache(key, data, env) {
-  // Try KV first
   if (env.AUDIT_CACHE) {
     try {
       await env.AUDIT_CACHE.put(key, JSON.stringify(data), { expirationTtl: 86400 });
     } catch (_) {}
   }
-  // Always set memory cache too
   memCache.set(key, { data, ts: Date.now() });
 }
 
-async function scrapeInstagramData(handle) {
-  const cleanHandle = handle.replace(/^@/, '').trim().toLowerCase();
-  if (!cleanHandle) return null;
-
+// ─── SERPER GOOGLE SEARCH ────────────────────────────────────────
+async function searchGoogle(query, apiKey) {
   try {
-    // Try fetching the IG profile page and extracting meta tags
-    const resp = await fetch(`https://www.instagram.com/${cleanHandle}/`, {
+    const resp = await fetch(SERPER_URL, {
+      method: 'POST',
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-US,en;q=0.9',
+        'X-API-KEY': apiKey,
+        'Content-Type': 'application/json',
       },
-      redirect: 'follow',
+      body: JSON.stringify({ q: query, num: 10 }),
     });
-
     if (!resp.ok) return null;
-
-    const html = await resp.text();
-
-    // Extract from meta tags
-    const ogDesc = html.match(/<meta\s+(?:property|name)="og:description"\s+content="([^"]*?)"/i);
-    const ogTitle = html.match(/<meta\s+(?:property|name)="og:title"\s+content="([^"]*?)"/i);
-    const ogImage = html.match(/<meta\s+(?:property|name)="og:image"\s+content="([^"]*?)"/i);
-
-    // Try to extract follower/following/post counts from og:description
-    // Format: "X Followers, Y Following, Z Posts - ..."
-    let followers = null, following = null, posts = null, bio = null;
-    if (ogDesc?.[1]) {
-      const desc = ogDesc[1];
-      const followersMatch = desc.match(/([\d,.]+[KkMm]?)\s*Followers/i);
-      const followingMatch = desc.match(/([\d,.]+[KkMm]?)\s*Following/i);
-      const postsMatch = desc.match(/([\d,.]+[KkMm]?)\s*Posts/i);
-      if (followersMatch) followers = followersMatch[1];
-      if (followingMatch) following = followingMatch[1];
-      if (postsMatch) posts = postsMatch[1];
-      // Bio is usually after the counts
-      const bioMatch = desc.match(/Posts\s*[-–—]\s*(.*)/i);
-      if (bioMatch) bio = bioMatch[1].trim().replace(/"/g, '');
-    }
-
-    const name = ogTitle?.[1]?.replace(/\s*\(@\w+\).*/, '').trim() || cleanHandle;
-    const profilePic = ogImage?.[1] || null;
-
-    if (followers || posts || bio) {
-      return { handle: cleanHandle, name, followers, following, posts, bio, profilePic, scraped: true };
-    }
-    return null;
+    const data = await resp.json();
+    return data;
   } catch (_) {
     return null;
   }
 }
 
-function buildSystemPrompt(igData, niche) {
+function extractSearchContext(searchResults1, searchResults2) {
+  if (!searchResults1 && !searchResults2) return '';
+
+  let context = '\n\nGOOGLE SEARCH DATA (real, from live search):\n';
+
+  if (searchResults1) {
+    // Knowledge graph (Google Business info)
+    if (searchResults1.knowledgeGraph) {
+      const kg = searchResults1.knowledgeGraph;
+      context += `\nGoogle Knowledge Panel:\n`;
+      if (kg.title) context += `- Business name: ${kg.title}\n`;
+      if (kg.type) context += `- Type: ${kg.type}\n`;
+      if (kg.rating) context += `- Google rating: ${kg.rating}/5`;
+      if (kg.ratingCount) context += ` (${kg.ratingCount} reviews)`;
+      context += '\n';
+      if (kg.address) context += `- Address: ${kg.address}\n`;
+      if (kg.phone) context += `- Phone: ${kg.phone}\n`;
+      if (kg.website) context += `- Website: ${kg.website}\n`;
+      if (kg.description) context += `- Description: ${kg.description}\n`;
+    }
+
+    // Organic results
+    if (searchResults1.organic?.length) {
+      context += `\nTop Google results for this business:\n`;
+      searchResults1.organic.slice(0, 6).forEach((r, i) => {
+        context += `${i + 1}. "${r.title}" — ${r.link}\n`;
+        if (r.snippet) context += `   ${r.snippet}\n`;
+      });
+    }
+
+    // People Also Ask
+    if (searchResults1.peopleAlsoAsk?.length) {
+      context += `\nPeople also ask about this business/niche:\n`;
+      searchResults1.peopleAlsoAsk.slice(0, 3).forEach(q => {
+        context += `- ${q.question}\n`;
+      });
+    }
+  }
+
+  if (searchResults2) {
+    if (searchResults2.organic?.length) {
+      context += `\nCompetitor/industry search results:\n`;
+      searchResults2.organic.slice(0, 6).forEach((r, i) => {
+        context += `${i + 1}. "${r.title}" — ${r.link}\n`;
+        if (r.snippet) context += `   ${r.snippet}\n`;
+      });
+    }
+  }
+
+  return context;
+}
+
+// ─── BUILD THE MEGA PROMPT ───────────────────────────────────────
+function buildSystemPrompt(handle, niche, searchContext) {
   const nicheLabels = {
     medspa: 'Med Spa / Aesthetics',
     dental: 'Cosmetic Dentistry',
@@ -132,149 +143,273 @@ function buildSystemPrompt(igData, niche) {
     realestate: 'Real Estate',
     law: 'Law Firm',
     restaurant: 'Restaurant / Food Service',
-    ecommerce: 'E-commerce',
+    ecommerce: 'E-commerce / Retail',
+    gym: 'Gym / Fitness Studio',
+    salon: 'Hair Salon / Barbershop',
+    auto: 'Auto Dealer / Mechanic',
+    contractor: 'Contractor / Home Services',
+    agency: 'Marketing Agency',
+    coaching: 'Coach / Consultant',
+    healthcare: 'Doctor / Healthcare',
     other: 'Local Business',
   };
   const nicheLabel = nicheLabels[niche] || nicheLabels.other;
 
-  let igContext = '';
-  if (igData?.scraped) {
-    igContext = `
-REAL DATA FOUND for @${igData.handle}:
-- Display name: ${igData.name}
-- Followers: ${igData.followers || 'unknown'}
-- Following: ${igData.following || 'unknown'}
-- Posts: ${igData.posts || 'unknown'}
-- Bio: ${igData.bio || 'none found'}
+  return `You are a $500/hour business intelligence consultant. A business owner just entered their Instagram handle on our website. Your job is to produce the most impressive, specific, and valuable free business report they've ever seen. Make them think: "How is this free?"
 
-Use this real data in your analysis. Reference specific numbers.`;
-  } else {
-    igContext = `
-No public data could be scraped for @${igData?.handle || 'unknown'}.
-Provide a general audit based on common patterns in the ${nicheLabel} industry.
-Frame recommendations around what you'd typically find for businesses in this niche that aren't maximizing their Instagram.`;
-  }
-
-  return `You are a senior Instagram growth strategist at Ascend AI. You produce concise, high-value Instagram audits.
-
+BUSINESS: @${handle}
 INDUSTRY: ${nicheLabel}
-${igContext}
+${searchContext || '\nNo Google search data available. Use your knowledge of this industry and typical businesses in this niche to produce the report. Be specific — name real competitor brands, cite real industry benchmarks, reference real trends.'}
 
-Return a JSON object (no markdown, no code fences, just raw JSON) with this exact structure:
+Return ONLY a JSON object (no markdown, no code fences, no explanation — just the raw JSON) with this EXACT structure:
+
 {
-  "score": <number 1-100, overall Instagram health score>,
-  "scoreLabel": "<one of: Critical, Poor, Below Average, Average, Good, Strong, Excellent>",
-  "handle": "@<their handle>",
-  "businessName": "<their business name or handle>",
+  "businessName": "<their business name — infer from handle, or use handle if unknown>",
+  "handle": "@${handle}",
   "niche": "${nicheLabel}",
+  "overallScore": <number 1-100>,
+  "scoreLabel": "<Critical|Poor|Below Average|Average|Good|Strong|Excellent>",
   "sections": {
-    "postingFrequency": {
-      "grade": "<A/B/C/D/F>",
-      "current": "<e.g. '2x per week' or 'estimated based on industry'>",
-      "recommended": "<e.g. '5-7x per week'>",
-      "insight": "<1 sentence>"
+    "1_onlinePresence": {
+      "title": "Online Presence",
+      "score": <1-10>,
+      "maxScore": 10,
+      "findings": [
+        "<finding about their website>",
+        "<finding about Google Business / reviews>",
+        "<finding about their Instagram>",
+        "<finding about TikTok/YouTube/other platforms>",
+        "<finding about overall digital footprint>"
+      ],
+      "verdict": "<1-2 punchy sentences — brutally honest but constructive>"
     },
-    "contentQuality": {
-      "grade": "<A/B/C/D/F>",
-      "insight": "<1-2 sentences about content mix, format variety, visual consistency>"
+    "2_instagramHealth": {
+      "title": "Instagram Deep Dive",
+      "score": <1-10>,
+      "maxScore": 10,
+      "followers": "<estimated or known>",
+      "posts": "<estimated or known>",
+      "frequency": "<e.g. '~2 posts/month'>",
+      "estimatedEngagement": "<e.g. '1.2%'>",
+      "contentMix": "<e.g. '80% photos, 15% carousels, 5% reels'>",
+      "verdict": "<1-2 punchy sentences>",
+      "topIssues": [
+        "<specific issue 1>",
+        "<specific issue 2>",
+        "<specific issue 3>"
+      ]
     },
-    "competitorGap": {
-      "topCompetitor": "<name a real or plausible competitor in their niche/market>",
-      "competitorAdvantage": "<what the competitor does better, 1 sentence>",
-      "gap": "<how far behind, 1 sentence>"
+    "3_competitorAnalysis": {
+      "title": "Your Top 5 Competitors",
+      "competitors": [
+        {
+          "name": "<real or plausible competitor name>",
+          "handle": "<their IG handle>",
+          "followers": "<estimated>",
+          "postsPerWeek": "<estimated>",
+          "whatTheyDoBetter": "<1 sentence>",
+          "theirWeakness": "<1 sentence>"
+        },
+        {
+          "name": "<competitor 2>",
+          "handle": "<handle>",
+          "followers": "<est>",
+          "postsPerWeek": "<est>",
+          "whatTheyDoBetter": "<1 sentence>",
+          "theirWeakness": "<1 sentence>"
+        },
+        {
+          "name": "<competitor 3>",
+          "handle": "<handle>",
+          "followers": "<est>",
+          "postsPerWeek": "<est>",
+          "whatTheyDoBetter": "<1 sentence>",
+          "theirWeakness": "<1 sentence>"
+        }
+      ],
+      "verdict": "<1-2 punchy sentences comparing them to their top competitor>"
     },
-    "audienceEngagement": {
-      "grade": "<A/B/C/D/F>",
-      "insight": "<1 sentence about engagement rate, comments, saves>"
+    "4_contentStrategy": {
+      "title": "Content That Works in Your Niche",
+      "topFormats": ["<format 1>", "<format 2>", "<format 3>"],
+      "topHashtags": ["<tag1>", "<tag2>", "<tag3>", "<tag4>", "<tag5>"],
+      "bestPostingTimes": "<specific times>",
+      "contentCalendar": [
+        "<Monday: specific content type>",
+        "<Wednesday: specific content type>",
+        "<Friday: specific content type>",
+        "<Saturday: specific content type>"
+      ],
+      "verdict": "<1-2 punchy sentences>"
+    },
+    "5_reviewReputation": {
+      "title": "Reviews & Reputation",
+      "googleRating": "<X.X / 5.0 — estimated or from search data>",
+      "googleReviews": "<count>",
+      "competitorAvgRating": "<X.X>",
+      "competitorAvgReviews": "<count>",
+      "sentiment": "<1 sentence about review sentiment>",
+      "verdict": "<1-2 punchy sentences>"
+    },
+    "6_websiteAudit": {
+      "title": "Website Quick Scan",
+      "hasWebsite": <true/false>,
+      "estimatedSpeed": "<fast/average/slow>",
+      "mobileOptimized": "<likely yes/no/unknown>",
+      "bookingEase": "<1 sentence about how easy it is to convert>",
+      "verdict": "<1-2 punchy sentences>"
+    },
+    "7_adIntelligence": {
+      "title": "Advertising Landscape",
+      "competitorAdSpend": "<estimated monthly spend range in this market>",
+      "topAdFormats": "<what types of ads work in this niche>",
+      "yourOpportunity": "<1-2 sentences about organic vs paid opportunity>",
+      "verdict": "<1-2 punchy sentences>"
+    },
+    "8_revenueOpportunity": {
+      "title": "Money You're Leaving on the Table",
+      "currentEstimate": "<current estimated monthly revenue from social>",
+      "potentialEstimate": "<what they could make>",
+      "gap": "<the dollar gap>",
+      "calculation": "<1-2 sentences showing the math>",
+      "verdict": "<1-2 punchy, FOMO-inducing sentences>"
+    },
+    "9_aiReadiness": {
+      "title": "AI Readiness Score",
+      "score": <1-10>,
+      "maxScore": 10,
+      "automatable": [
+        "<task AI can automate 1>",
+        "<task AI can automate 2>",
+        "<task AI can automate 3>",
+        "<task AI can automate 4>",
+        "<task AI can automate 5>"
+      ],
+      "hoursPerWeek": "<hours AI would save>",
+      "verdict": "<1-2 punchy sentences>"
+    },
+    "10_actionPlan": {
+      "title": "Your 30-Day Action Plan",
+      "week1": [
+        "<specific actionable task>",
+        "<specific actionable task>",
+        "<specific actionable task>"
+      ],
+      "week2": [
+        "<specific actionable task>",
+        "<specific actionable task>",
+        "<specific actionable task>"
+      ],
+      "week3": [
+        "<specific actionable task>",
+        "<specific actionable task>",
+        "<specific actionable task>"
+      ],
+      "week4": [
+        "<specific actionable task>",
+        "<specific actionable task>",
+        "<specific actionable task>"
+      ]
     }
-  },
-  "actionItems": [
-    "<specific, actionable recommendation 1>",
-    "<specific, actionable recommendation 2>",
-    "<specific, actionable recommendation 3>",
-    "<specific, actionable recommendation 4>",
-    "<specific, actionable recommendation 5>"
-  ],
-  "revenueOpportunity": {
-    "monthlyEstimate": "<e.g. '$3,000 - $8,000'>",
-    "basis": "<1 sentence explaining the estimate>"
   }
 }
 
-RULES:
-- Be specific and data-driven, not generic
-- Reference real industry benchmarks
-- If you have real follower/post data, use it to calculate engagement estimates
-- Action items must be immediately actionable (not "post more" but "post 5 Reels per week featuring before/after transformations")
-- Revenue opportunity should be realistic for the niche and audience size
-- Keep all text concise — this renders in a dashboard card`;
+CRITICAL RULES:
+- Be SPECIFIC. Name REAL competitor businesses and brands in their niche and city. Don't say "Competitor A" — say "Radiance Aesthetics" or "Smith & Associates Law".
+- Use REAL industry benchmarks. Cite actual engagement rates, posting frequencies, and revenue numbers for their niche.
+- The 30-day action plan must be IMMEDIATELY actionable — specific enough that they could start today.
+- Verdicts should be brutally honest but motivating. Make them feel the urgency without being insulting.
+- Revenue calculations should show real math (average client value × leads × conversion rate).
+- If you have Google search data, reference it directly. If not, use your knowledge of the industry.
+- DO NOT be generic. Every section should feel personally written for THIS business.
+- Keep verdicts to 1-2 SHORT punchy sentences. No fluff.
+- The overall score should reflect reality: most small businesses that aren't investing in social media should score 25-55.
+- Be CONCISE. Each finding should be 1 short sentence. Total response should be under 3000 tokens.
+- For topHashtags, always use strings with the # included and properly quoted: ["#tag1", "#tag2"]`;
 }
 
+// ─── CALL OPENROUTER ─────────────────────────────────────────────
 async function callOpenRouter(systemPrompt, handle, apiKey) {
+  const headers = {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+    'HTTP-Referer': 'https://ascendagency.xyz',
+    'X-Title': 'Ascend AI Business Intelligence',
+  };
+
   const body = {
     model: PRIMARY_MODEL,
     messages: [
       { role: 'system', content: systemPrompt },
-      { role: 'user', content: `Generate the Instagram audit for @${handle}.` },
+      { role: 'user', content: `Generate the full business intelligence report for @${handle}. Return only the JSON object.` },
     ],
-    max_tokens: 2000,
+    max_tokens: 4000,
     temperature: 0.3,
   };
 
   let resp = await fetch(OPENROUTER_URL, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://ascendagency.xyz',
-      'X-Title': 'Ascend AI Audit Tool',
-    },
+    headers,
     body: JSON.stringify(body),
   });
 
-  // If primary model fails, try fallback
+  // Fallback to Claude if DeepSeek fails
   if (!resp.ok) {
     body.model = FALLBACK_MODEL;
+    body.max_tokens = 4000;
     resp = await fetch(OPENROUTER_URL, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://ascendagency.xyz',
-        'X-Title': 'Ascend AI Audit Tool',
-      },
+      headers,
       body: JSON.stringify(body),
     });
   }
 
   if (!resp.ok) {
     const errText = await resp.text();
-    throw new Error(`OpenRouter API error ${resp.status}: ${errText}`);
+    throw new Error(`AI API error ${resp.status}: ${errText}`);
   }
 
   const data = await resp.json();
   const content = data.choices?.[0]?.message?.content;
-  if (!content) throw new Error('Empty response from OpenRouter');
+  if (!content) throw new Error('Empty response from AI');
 
-  // Parse JSON — extract the JSON object robustly
-  const cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  // Robust JSON extraction + repair
+  let cleaned = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
   const start = cleaned.indexOf('{');
   const end = cleaned.lastIndexOf('}');
   if (start === -1 || end === -1) throw new Error('No JSON object in response');
-  return JSON.parse(cleaned.slice(start, end + 1));
+  let jsonStr = cleaned.slice(start, end + 1);
+
+  // Fix common LLM JSON issues
+  // 1. Unquoted hashtags: [#medspa, #glowup] → ["#medspa", "#glowup"]
+  jsonStr = jsonStr.replace(/(?<=[\[,])\s*#(\w+)/g, ' "#$1"');
+  // 2. Trailing commas before ] or }
+  jsonStr = jsonStr.replace(/,\s*([\]}])/g, '$1');
+  // 3. Single quotes → double quotes (but not inside strings)
+  // 4. Unquoted values that aren't true/false/null/numbers
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    // Second attempt: more aggressive repair
+    // Fix any remaining unquoted string values
+    jsonStr = jsonStr.replace(/:\s*([a-zA-Z][a-zA-Z0-9_ ]*?)(\s*[,}\]])/g, (m, val, end) => {
+      if (['true', 'false', 'null'].includes(val.trim())) return m;
+      return `: "${val.trim()}"${end}`;
+    });
+    return JSON.parse(jsonStr);
+  }
 }
 
+// ─── MAIN HANDLER ────────────────────────────────────────────────
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     const headers = corsHeaders(origin, env.ALLOWED_ORIGIN);
 
-    // Handle CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers });
     }
 
-    // Only accept POST
     if (request.method !== 'POST') {
       return new Response(JSON.stringify({ error: 'Method not allowed' }), {
         status: 405,
@@ -282,7 +417,6 @@ export default {
       });
     }
 
-    // Rate limiting
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
     if (!checkRateLimit(clientIP)) {
       return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again in an hour.' }), {
@@ -302,7 +436,7 @@ export default {
       }
 
       const cleanHandle = handle.replace(/^@/, '').trim().toLowerCase();
-      const cacheKey = `audit:${cleanHandle}:${niche}`;
+      const cacheKey = `report:${cleanHandle}:${niche}`;
 
       // Check cache
       const cached = await getCached(cacheKey, env);
@@ -313,28 +447,38 @@ export default {
         });
       }
 
-      // Attempt Instagram scrape
-      const igData = await scrapeInstagramData(cleanHandle) || { handle: cleanHandle, scraped: false };
+      // Stage 1: Google search (if Serper key available)
+      let searchResults1 = null;
+      let searchResults2 = null;
 
-      // Build prompt and call OpenRouter
-      const systemPrompt = buildSystemPrompt(igData, niche);
-      const audit = await callOpenRouter(systemPrompt, cleanHandle, env.OPENROUTER_API_KEY);
+      if (env.SERPER_API_KEY) {
+        const nicheLabel = {
+          medspa: 'med spa', dental: 'dentist', chiro: 'chiropractor',
+          realestate: 'real estate', law: 'law firm', restaurant: 'restaurant',
+          gym: 'gym fitness', salon: 'salon', other: 'business',
+        }[niche] || 'business';
 
-      // Merge scraped data into result
+        // Parallel Google searches
+        [searchResults1, searchResults2] = await Promise.all([
+          searchGoogle(`"${cleanHandle}" instagram ${nicheLabel}`, env.SERPER_API_KEY),
+          searchGoogle(`best ${nicheLabel} instagram competitors ${new Date().getFullYear()}`, env.SERPER_API_KEY),
+        ]);
+      }
+
+      const searchContext = extractSearchContext(searchResults1, searchResults2);
+
+      // Stage 2: AI analysis
+      const systemPrompt = buildSystemPrompt(cleanHandle, niche, searchContext);
+      const report = await callOpenRouter(systemPrompt, cleanHandle, env.OPENROUTER_API_KEY);
+
+      // Stage 3: Return + cache
       const result = {
-        ...audit,
-        igData: igData.scraped ? {
-          followers: igData.followers,
-          following: igData.following,
-          posts: igData.posts,
-          bio: igData.bio,
-          profilePic: igData.profilePic,
-        } : null,
+        ...report,
         generatedAt: new Date().toISOString(),
         cached: false,
+        searchDataUsed: !!(searchResults1 || searchResults2),
       };
 
-      // Cache the result
       await setCache(cacheKey, result, env);
 
       return new Response(JSON.stringify(result), {
