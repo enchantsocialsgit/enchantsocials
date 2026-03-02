@@ -21,6 +21,7 @@
     <meta name="twitter:image" content="https://ascendagency.xyz/assets/og-image.png">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Ascend Agency","url":"https://ascendagency.xyz","email":"enchantsocials@gmail.com","description":"Done-for-you Instagram management for med spas, cosmetic dentists, and wellness practices.","sameAs":["https://instagram.com/ascendagencyy"]}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Ascend Agency","description":"Instagram management and content creation for med spas, cosmetic dentists, and wellness brands.","url":"https://ascendagency.xyz","email":"enchantsocials@gmail.com","sameAs":["https://instagram.com/ascendagencyy"],"serviceType":["Social Media Management","Instagram Marketing","Content Creation"],"areaServed":"US","priceRange":"$$"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the data on this page real?","acceptedAnswer":{"@type":"Answer","text":"Every number comes from a public source. Competitor follower counts from Instagram. Ad counts from Facebook Ad Library. Industry stats from published research. We'll show you exactly where during your free audit."}},{"@type":"Question","name":"What AI do you use to create content?","acceptedAnswer":{"@type":"Answer","text":"Sora 2 and Kling for video, Midjourney for imagery, Claude for copywriting. Everything is reviewed and refined by our team before it goes live. AI creates 20+ pieces — we pick the best 5."}},{"@type":"Question","name":"I have followers but I don't post consistently.","acceptedAnswer":{"@type":"Answer","text":"That's actually our specialty. You're sitting on a goldmine. We had one audit where the practice had 31K followers and was posting once a week. The audience is already there — they just need to hear from you."}},{"@type":"Question","name":"Can you run paid ads too?","acceptedAnswer":{"@type":"Answer","text":"Yes. We integrate with Meta Business Suite for Instagram and Facebook ads. We start with organic content to prove what resonates, then amplify your best-performing posts with targeted spend."}},{"@type":"Question","name":"How fast can you start?","acceptedAnswer":{"@type":"Answer","text":"Your first posts go live within 48 hours of onboarding. We move fast because your competitors already are."}},{"@type":"Question","name":"Is there a contract?","acceptedAnswer":{"@type":"Answer","text":"No. Month-to-month. Cancel anytime. We keep clients because we deliver results, not because of fine print."}}]}</script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,8 +39,8 @@
             --surface-h: rgba(200,162,255,0.06);
             --border: rgba(200,162,255,0.08);
             --border-h: rgba(200,162,255,0.18);
-            --dim: #3a3a4a;
-            --muted: #6a6a7a;
+            --dim: #5a5a6a;
+            --muted: #8a8a9a;
             --light: #b8b8c8;
             --white: #f0f0f5;
             --accent: #c8a2ff;
@@ -921,7 +922,7 @@
             overflow: hidden;
             transition: max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1), padding 0.45s;
         }
-        .faq-item.open .faq-a { max-height: 200px; }
+        .faq-item.open .faq-a { max-height: 400px; }
         .faq-a p {
             padding: 0 0 24px;
             font-size: 15px;
@@ -1019,6 +1020,11 @@
         /* ═══════════════════════════════════════════
            RESPONSIVE
            ═══════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .niche-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; gap: 32px; }
+            .steps-line { display: none; }
+        }
         @media (max-width: 768px) {
             section { padding: 80px 0; }
             .problem-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1047,6 +1053,10 @@
         /* ═══════════════════════════════════════════
            SCROLLBAR
            ═══════════════════════════════════════════ */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-h) var(--bg);
+        }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 3px; }
@@ -1068,7 +1078,7 @@
 <div id="scroll-progress"></div>
 
 <!-- ═══ PARTICLES ═══════════════════════════════════ -->
-<canvas id="particles"></canvas>
+<canvas id="particles" aria-hidden="true"></canvas>
 
 <!-- ═══ NAV ═════════════════════════════════════════ -->
 <nav id="nav">
@@ -1092,7 +1102,7 @@
             <span id="hero-line1" class="hero-line">Your competitors are running</span><br>
             <span id="hero-line2" class="hero-line accent">ads you don't even know about.</span>
         </h1>
-        <p class="hero-sub" id="hero-sub">We found 190 active med spa ads in Miami last week. 3 of the top 5 spas post 5x/week on Instagram. We build the strategy to put you ahead of all of them.</p>
+        <p class="hero-sub" id="hero-sub">We found 190 active med spa ads in Miami last week. 3 of the top 5 spas post 5x/week on Instagram. We build the content machine that puts you ahead of all of them.</p>
         <div class="hero-actions" id="hero-actions">
             <a href="book.html" class="btn-primary" data-magnetic>Get Your Free Audit &rarr;</a>
             <a href="#how" class="btn-ghost">How It Works</a>
@@ -1172,6 +1182,9 @@
                 </div>
             </div>
         </div>
+        <div class="reveal" style="text-align:center; margin-top:48px;">
+            <a href="book.html" class="btn-ghost" data-magnetic>See how your competitors stack up &rarr;</a>
+        </div>
     </div>
 </section>
 
@@ -1239,11 +1252,14 @@
             </div>
             <div class="result-card reveal" data-tilt>
                 <div class="card-glow"></div>
-                <div class="result-number"><span data-count="0" data-suffix="">0</span></div>
-                <div class="result-label">Active Competitor Ads in Your Area</div>
-                <div class="result-desc">We check the Facebook Ad Library for every market we enter. Most local practices run zero paid ads &mdash; organic content wins by default.</div>
-                <div class="result-source">Source: Your free audit reveals the exact number</div>
+                <div class="result-number"><span data-count="48" data-suffix="hrs">0</span></div>
+                <div class="result-label">From Signup to Live</div>
+                <div class="result-desc">We onboard and launch within 48 hours. Your first 5 posts go live before the week is out &mdash; while your competitors are still planning.</div>
+                <div class="result-source">Source: Ascend Agency client data</div>
             </div>
+        </div>
+        <div class="reveal" style="text-align:center; margin-top:48px;">
+            <a href="book.html" class="btn-primary" data-magnetic>Get Your Free Audit &rarr;</a>
         </div>
     </div>
 </section>
@@ -1255,17 +1271,17 @@
         <h2 class="reveal">Built for <span class="accent">beauty &amp; wellness.</span></h2>
         <div class="niche-grid">
             <div class="niche-card reveal">
-                <span class="niche-icon">&#128137;</span>
+                <span class="niche-icon" aria-hidden="true">&#128137;</span>
                 <h3>Med Spas</h3>
                 <p>Botox, fillers, body contouring, facials. We know what content converts consultations in the aesthetics space.</p>
             </div>
             <div class="niche-card reveal">
-                <span class="niche-icon">&#129463;</span>
+                <span class="niche-icon" aria-hidden="true">&#129463;</span>
                 <h3>Cosmetic Dentists</h3>
                 <p>Veneers, Invisalign, smile makeovers. Before-and-afters that stop the scroll and fill your calendar.</p>
             </div>
             <div class="niche-card reveal">
-                <span class="niche-icon">&#129495;</span>
+                <span class="niche-icon" aria-hidden="true">&#129495;</span>
                 <h3>Wellness Practices</h3>
                 <p>Chiropractors, functional medicine, IV therapy, wellness studios. Content that builds authority and trust.</p>
             </div>
@@ -1278,7 +1294,7 @@
     <div class="container">
         <div class="section-label code-font reveal">// SIMPLE MATH</div>
         <h2 class="reveal">You're losing <span class="accent2">$4,500/mo.</span> This costs <span class="accent">$1,200.</span></h2>
-        <p class="pricing-sub reveal">One new client pays for the entire month. No contracts. Cancel anytime. First post in 48 hours.</p>
+        <p class="pricing-sub reveal">One new client pays for the entire month. No contracts. Cancel anytime. First post in 48 hours.<br><span style="color:var(--accent); font-size:14px;">Currently onboarding 3 new partners this month.</span></p>
         <div class="pricing-cards">
             <div class="price-card featured reveal">
                 <div class="price-badge">Most Popular</div>
@@ -1407,6 +1423,26 @@
     /* ═══════════════════════════════════════════
        CUSTOM CURSOR
        ═══════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       PARTICLES
+       ═══════════════════════════════════════════ */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = -1000, mouseY = -1000;
+    const PARTICLE_COUNT = isMobile ? 12 : 28;
+    const CONNECT_DIST = 140;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    /* ═══════════════════════════════════════════
+       CUSTOM CURSOR + SHARED MOUSEMOVE
+       ═══════════════════════════════════════════ */
     if (!isTouch) {
         const cursor = document.getElementById('cursor');
         let cx = 0, cy = 0, tx = 0, ty = 0;
@@ -1414,6 +1450,8 @@
         document.addEventListener('mousemove', (e) => {
             tx = e.clientX;
             ty = e.clientY;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
         function updateCursor() {
@@ -1446,30 +1484,6 @@
         scrollProgress.style.width = pct + '%';
     }, { passive: true });
 
-    /* ═══════════════════════════════════════════
-       PARTICLES
-       ═══════════════════════════════════════════ */
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouseX = -1000, mouseY = -1000;
-    const PARTICLE_COUNT = isMobile ? 12 : 28;
-    const CONNECT_DIST = 140;
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    if (!isTouch) {
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-    }
-
     function createParticle() {
         return {
             x: Math.random() * canvas.width,
@@ -1484,6 +1498,7 @@
     for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
 
     function animateParticles() {
+        if (!isAnimating) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         particles.forEach(p => {
@@ -1532,9 +1547,23 @@
             }
         }
 
-        requestAnimationFrame(animateParticles);
+        animationId = requestAnimationFrame(animateParticles);
     }
-    if (!prefersReducedMotion) animateParticles();
+    let animationId;
+    let isAnimating = false;
+    if (!prefersReducedMotion) {
+        isAnimating = true;
+        animateParticles();
+    }
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            isAnimating = false;
+            if (animationId) cancelAnimationFrame(animationId);
+        } else if (!prefersReducedMotion) {
+            isAnimating = true;
+            animateParticles();
+        }
+    });
 
     /* ═══════════════════════════════════════════
        HERO ANIMATION
@@ -1742,7 +1771,9 @@
        ═══════════════════════════════════════════ */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
-            const target = document.querySelector(anchor.getAttribute('href'));
+            const href = anchor.getAttribute('href');
+            if (href === '#' || href.length < 2) return;
+            const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 const offset = nav.offsetHeight + 20;
